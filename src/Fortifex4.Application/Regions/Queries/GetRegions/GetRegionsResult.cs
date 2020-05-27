@@ -4,6 +4,11 @@ namespace Fortifex4.Application.Regions.Queries.GetRegions
 {
     public class GetRegionsResult
     {
-        public IEnumerable<RegionDTO> Regions { get; set; }
+        public IList<RegionDTO> Regions { get; set; }
+
+        public GetRegionsResult()
+        {
+            this.Regions = new List<RegionDTO>();
+        }
     }
 }

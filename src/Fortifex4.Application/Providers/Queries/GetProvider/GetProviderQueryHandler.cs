@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
@@ -13,12 +12,10 @@ namespace Fortifex4.Application.Providers.Queries.GetProvider
     public class GetProviderQueryHandler : IRequestHandler<GetProviderQuery, GetProviderResult>
     {
         private readonly IFortifex4DBContext _context;
-        private readonly IMapper _mapper;
 
-        public GetProviderQueryHandler(IFortifex4DBContext context, IMapper mapper)
+        public GetProviderQueryHandler(IFortifex4DBContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<GetProviderResult> Handle(GetProviderQuery request, CancellationToken cancellationToken)
@@ -30,7 +27,15 @@ namespace Fortifex4.Application.Providers.Queries.GetProvider
             if (provider == null)
                 throw new NotFoundException(nameof(Provider), request.ProviderID);
 
-            return _mapper.Map<GetProviderResult>(provider);
+            var result = new GetProviderResult
+            {
+                ProviderID = provider.ProviderID,
+                Name = provider.Name,
+                ProviderType = provider.ProviderType,
+                SiteURL = provider.SiteURL
+            };
+
+            return result;
         }
     }
 }

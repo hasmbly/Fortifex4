@@ -1,29 +1,37 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Fortifex4.Application.Common.Interfaces;
+﻿using Fortifex4.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fortifex4.Application.TimeFrames.Queries.GetAllTimeFrames
 {
     public class GetAllTimeFramesQueryHandler : IRequestHandler<GetAllTimeFramesQuery, GetAllTimeFramesResult>
     {
         private readonly IFortifex4DBContext _context;
-        private readonly IMapper _mapper;
 
-        public GetAllTimeFramesQueryHandler(IFortifex4DBContext context, IMapper mapper)
+        public GetAllTimeFramesQueryHandler(IFortifex4DBContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<GetAllTimeFramesResult> Handle(GetAllTimeFramesQuery request, CancellationToken cancellationToken)
         {
-            var timeFrames = await _context.TimeFrames.ProjectTo<TimeFrameDTO>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
+            var result = new GetAllTimeFramesResult();
 
-            return new GetAllTimeFramesResult { TimeFrames = timeFrames };
+            var timeFrames = await _context.TimeFrames.ToListAsync(cancellationToken);
+
+            foreach (var timeFrame in timeFrames)
+            {
+                result.TimeFrames.Add(new TimeFrameDTO
+                {
+                    TimeFrameID = timeFrame.TimeFrameID,
+                    Name = timeFrame.Name,
+                    TimeSpanInHours = timeFrame.TimeFrameID
+                });
+            }
+
+            return result;
         }
     }
 }

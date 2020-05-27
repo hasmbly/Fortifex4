@@ -23,13 +23,25 @@ namespace Fortifex4.Application.Blockchains.Queries.GetAllBlockchains
 
         public async Task<GetAllBlockchainsResult> Handle(GetAllBlockchainsQuery request, CancellationToken cancellationToken)
         {
+            var result = new GetAllBlockchainsResult();
+
             var blockchains = await _context.Blockchains
                 .Where(x => x.BlockchainID != BlockchainID.Fiat)
                 .OrderBy(x => x.Rank)
-                //.ProjectTo<BlockchainDTO>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            return new GetAllBlockchainsResult { Blockchains = blockchains };
+            foreach (var blockchain in blockchains)
+            {
+                result.Blockchains.Add(new BlockchainDTO
+                {
+                    BlockchainID = blockchain.BlockchainID,
+                    Symbol = blockchain.Symbol,
+                    Name = blockchain.Name,
+                    Rank = blockchain.Rank
+                });
+            }
+
+            return result;
         }
     }
 }
