@@ -1,0 +1,24 @@
+﻿dotnet ef database drop --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI --force
+dotnet ef migrations remove --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.API
+dotnet ef migrations add Fortifex4DB_001 --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI --output-dir Persistence/Migrations
+dotnet ef database update --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI
+----------------------------------------------------------------------------------------------------
+dotnet user-secrets init --project "src/Fortifex4.WebAPI"
+dotnet user-secrets set "Authentication:Google:ClientID" "234516294165-6knd1u19776eubgrobdc9oj8ku61dmd8.apps.googleusercontent.com" --project "src/Fortifex4.WebAPI"
+dotnet user-secrets set "Authentication:Google:ClientSecret" "FoPWyz2IdbmdfAw7Ks8fAxbD" --project "src/Fortifex4.WebAPI"
+dotnet user-secrets set "Authentication:Facebook:AppID" "2260839397335026" --project "src/Fortifex4.WebAPI"
+dotnet user-secrets set "Authentication:Facebook:AppSecret" "05d71a72036d69dfb9163ed93921ec69" --project "src/Fortifex4.WebAPI"
+----------------------------------------------------------------------------------------------------
+Sample Wallet Addresss
+
+Wallet Fu
+0xf05c02ef1ad22d4587a5b6d25940ecc93c761559
+
+Wallet Luke Sample
+0x51B0a9d661c4a616586887A1cd265940290EEc80
+
+Wallet Luke Real
+0x00d1522eb6dc8c8f13349337b57e55495255e24b
+
+Sample
+0xb297cacf0f91c86dd9d2fb47c6d12783121ab780
