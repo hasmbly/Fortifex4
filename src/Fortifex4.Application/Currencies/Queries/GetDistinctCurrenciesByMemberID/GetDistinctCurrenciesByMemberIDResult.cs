@@ -4,6 +4,11 @@ namespace Fortifex4.Application.Currencies.Queries.GetDistinctCurrenciesByMember
 {
     public class GetDistinctCurrenciesByMemberIDResult
     {
-        public IEnumerable<CurrencyDTO> Currencies { get; set; }
+        public IList<CurrencyDTO> Currencies { get; set; }
+
+        public GetDistinctCurrenciesByMemberIDResult()
+        {
+            this.Currencies = new List<CurrencyDTO>();
+        }
     }
 }

@@ -4,6 +4,11 @@ namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMe
 {
     public class GetDestinationCurrenciesForMemberResult
     {
-        public IEnumerable<CurrencyDTO> Currencies { get; set; }
+        public IList<CurrencyDTO> Currencies { get; set; }
+
+        public GetDestinationCurrenciesForMemberResult()
+        {
+            this.Currencies = new List<CurrencyDTO>();
+        }
     }
 }

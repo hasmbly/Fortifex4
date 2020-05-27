@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Domain.Common;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
 using MediatR;
@@ -17,21 +13,19 @@ namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMe
     public class GetDestinationCurrenciesForMemberQueryHandler : IRequestHandler<GetDestinationCurrenciesForMemberQuery, GetDestinationCurrenciesForMemberResult>
     {
         private readonly IFortifex4DBContext _context;
-        private readonly IMapper _mapper;
 
-        public GetDestinationCurrenciesForMemberQueryHandler(IFortifex4DBContext context, IMapper mapper)
+        public GetDestinationCurrenciesForMemberQueryHandler(IFortifex4DBContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<GetDestinationCurrenciesForMemberResult> Handle(GetDestinationCurrenciesForMemberQuery query, CancellationToken cancellationToken)
         {
-            List<CurrencyDTO> destinationCurrencies = new List<CurrencyDTO>();
+            var result = new GetDestinationCurrenciesForMemberResult();
 
             var member = await _context.Members
                 .Where(x => x.MemberUsername == query.MemberUsername)
-                .Include(a => a.PreferredFiatCurrency)
+                .Include(a => a.PreferredFiatCurrency).ThenInclude(b => b.Blockchain)
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (member == null)
@@ -39,24 +33,49 @@ namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMe
 
             if (member.PreferredFiatCurrency.Symbol != CurrencySymbol.USD)
             {
-                destinationCurrencies.Add(_mapper.Map<CurrencyDTO>(member.PreferredFiatCurrency));
+                result.Currencies.Add(new CurrencyDTO 
+                {
+                    CurrencyID = member.PreferredFiatCurrency.CurrencyID,
+                    Name = member.PreferredFiatCurrency.Name,
+                    Symbol = member.PreferredFiatCurrency.Symbol,
+                    CurrencyType = member.PreferredFiatCurrency.CurrencyType,
+                    BlockchainName = member.PreferredFiatCurrency.Blockchain.Name
+                });
             }
 
             var currencyUSD = await _context.Currencies
                 .Where(x => x.Symbol == CurrencySymbol.USD)
+                .Include(a => a.Blockchain)
                 .SingleOrDefaultAsync(cancellationToken);
 
-            destinationCurrencies.Add(_mapper.Map<CurrencyDTO>(currencyUSD));
+            result.Currencies.Add(new CurrencyDTO 
+            {
+                CurrencyID = currencyUSD.CurrencyID,
+                Name = currencyUSD.Name,
+                Symbol = currencyUSD.Symbol,
+                CurrencyType = currencyUSD.CurrencyType,
+                BlockchainName = currencyUSD.Blockchain.Name
+            });            
 
             var availableCoinCurrenciesForPreferredOptions = await _context.Currencies
                 .Where(x => x.CurrencyType == CurrencyType.Coin && x.IsForPreferredOption)
                 .OrderBy(x => x.Name)
-                .ProjectTo<CurrencyDTO>(_mapper.ConfigurationProvider)
+                .Include(a => a.Blockchain)
                 .ToListAsync(cancellationToken);
 
-            destinationCurrencies.AddRange(availableCoinCurrenciesForPreferredOptions);
+            foreach (var availableCoinCurrencyForPreferredOptions in availableCoinCurrenciesForPreferredOptions)
+            {
+                result.Currencies.Add(new CurrencyDTO
+                {
+                    CurrencyID = availableCoinCurrencyForPreferredOptions.CurrencyID,
+                    Name = availableCoinCurrencyForPreferredOptions.Name,
+                    Symbol = availableCoinCurrencyForPreferredOptions.Symbol,
+                    CurrencyType = availableCoinCurrencyForPreferredOptions.CurrencyType,
+                    BlockchainName = availableCoinCurrencyForPreferredOptions.Blockchain.Name
+                });
+            }
 
-            return new GetDestinationCurrenciesForMemberResult { Currencies = destinationCurrencies };
+            return result;
         }
     }
 }

@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using Fortifex4.Application.Common.Mappings;
-using Fortifex4.Domain.Entities;
+﻿using Fortifex4.Domain.Entities;
 
 namespace Fortifex4.Application.Currencies.Queries.GetPreferrableCoinCurrencies
 {
-    public class CoinCurrencyDTO : IMapFrom<Currency>
+    public class CoinCurrencyDTO
     {
         public int CurrencyID { get; set; }
         public int BlockchainID { get; set; }
@@ -12,11 +10,6 @@ namespace Fortifex4.Application.Currencies.Queries.GetPreferrableCoinCurrencies
         public string Name { get; set; }
         public bool IsShownInTradePair { get; set; }
         public bool IsForPreferredOption { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Currency, CoinCurrencyDTO>();
-        }
 
         public string NameWithSymbol
         {

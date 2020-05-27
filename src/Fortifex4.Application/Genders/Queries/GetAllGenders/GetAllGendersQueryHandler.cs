@@ -1,7 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Fortifex4.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,19 +9,28 @@ namespace Fortifex4.Application.Genders.Queries.GetAllGenders
     public class GetAllGendersQueryHandler : IRequestHandler<GetAllGendersQuery, GetAllGendersResult>
     {
         private readonly IFortifex4DBContext _context;
-        private readonly IMapper _mapper;
 
-        public GetAllGendersQueryHandler(IFortifex4DBContext context, IMapper mapper)
+        public GetAllGendersQueryHandler(IFortifex4DBContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<GetAllGendersResult> Handle(GetAllGendersQuery request, CancellationToken cancellationToken)
         {
-            var genders = await _context.Genders.ProjectTo<GenderDTO>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
+            var result = new GetAllGendersResult();
 
-            return new GetAllGendersResult { Genders = genders };
+            var genders = await _context.Genders.ToListAsync(cancellationToken);
+
+            foreach (var gender in genders)
+            {
+                result.Genders.Add(new GenderDTO
+                {
+                    GenderID = gender.GenderID,
+                    Name = gender.Name
+                });
+            }
+
+            return result;
         }
     }
 }

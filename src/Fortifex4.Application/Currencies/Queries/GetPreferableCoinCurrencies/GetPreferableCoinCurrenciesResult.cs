@@ -4,6 +4,11 @@ namespace Fortifex4.Application.Currencies.Queries.GetPreferrableCoinCurrencies
 {
     public class GetPreferableCoinCurrenciesResult
     {
-        public IEnumerable<CoinCurrencyDTO> CoinCurrencies { get; set; }
+        public IList<CoinCurrencyDTO> CoinCurrencies { get; set; }
+
+        public GetPreferableCoinCurrenciesResult()
+        {
+            this.CoinCurrencies = new List<CoinCurrencyDTO>();
+        }
     }
 }
