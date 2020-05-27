@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fortifex4.Domain", "src\For
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fortifex4.Application", "src\Fortifex4.Application\Fortifex4.Application.csproj", "{060C9C34-37AB-46E8-AD03-825D7491132E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fortifex4.Infrastructure", "src\Fortifex4.Infrastructure\Fortifex4.Infrastructure.csproj", "{7CAE5D55-4596-45A3-8836-21F34A956317}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,18 @@ Global
 		{060C9C34-37AB-46E8-AD03-825D7491132E}.Release|x64.Build.0 = Release|Any CPU
 		{060C9C34-37AB-46E8-AD03-825D7491132E}.Release|x86.ActiveCfg = Release|Any CPU
 		{060C9C34-37AB-46E8-AD03-825D7491132E}.Release|x86.Build.0 = Release|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Debug|x64.Build.0 = Debug|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Debug|x86.Build.0 = Debug|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Release|x64.ActiveCfg = Release|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Release|x64.Build.0 = Release|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Release|x86.ActiveCfg = Release|Any CPU
+		{7CAE5D55-4596-45A3-8836-21F34A956317}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +66,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{584EFCB1-1583-4186-9902-8C2829FF5B28} = {8A9455A7-1192-4771-A302-4B7EE113AC93}
 		{060C9C34-37AB-46E8-AD03-825D7491132E} = {8A9455A7-1192-4771-A302-4B7EE113AC93}
+		{7CAE5D55-4596-45A3-8836-21F34A956317} = {8A9455A7-1192-4771-A302-4B7EE113AC93}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {460A63CD-5196-495F-8951-FCED5622F1E2}

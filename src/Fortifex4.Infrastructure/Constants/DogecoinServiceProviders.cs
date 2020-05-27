@@ -1,4 +1,4 @@
-﻿namespace Fortifex4.Domain.Constants
+﻿namespace Fortifex4.Infrastructure.Constants
 {
     public static class DogecoinServiceProviders
     {
