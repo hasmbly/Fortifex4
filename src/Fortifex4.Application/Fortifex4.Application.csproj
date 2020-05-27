@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fortifex4.Domain\Fortifex4.Domain.csproj" />
+    <ProjectReference Include="..\Fortifex4.Shared\Fortifex4.Shared.csproj" />
   </ItemGroup>
 
 </Project>
