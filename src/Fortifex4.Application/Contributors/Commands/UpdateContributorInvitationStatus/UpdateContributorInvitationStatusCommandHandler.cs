@@ -1,5 +1,6 @@
 ﻿using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Contributors.Commands.UpdateContributorInvitationStatus;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Fortifex4.Application.Contributors.Commands.UpdateContributorInvitationStatus
 {
-    public class UpdateContributorInvitationStatusCommandHandler : IRequestHandler<UpdateContributorInvitationStatusCommand, UpdateContributorInvitationStatusResult>
+    public class UpdateContributorInvitationStatusCommandHandler : IRequestHandler<UpdateContributorInvitationStatusRequest, UpdateContributorInvitationStatusResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -16,9 +17,9 @@ namespace Fortifex4.Application.Contributors.Commands.UpdateContributorInvitatio
         {
             _context = context;
         }
-        public async Task<UpdateContributorInvitationStatusResult> Handle(UpdateContributorInvitationStatusCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateContributorInvitationStatusResponse> Handle(UpdateContributorInvitationStatusRequest request, CancellationToken cancellationToken)
         {
-            var result = new UpdateContributorInvitationStatusResult()
+            var result = new UpdateContributorInvitationStatusResponse()
             {
                 IsSuccessful = false
             };

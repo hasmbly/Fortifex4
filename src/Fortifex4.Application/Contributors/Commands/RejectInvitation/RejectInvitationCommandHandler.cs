@@ -1,5 +1,6 @@
 ﻿using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Contributors.Commands.RejectInvitation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fortifex4.Application.Contributors.Commands.RejectInvitation
 {
-    public class RejectInvitationCommandHandler : IRequestHandler<RejectInvitationCommand, RejectInvitationResult>
+    public class RejectInvitationCommandHandler : IRequestHandler<RejectInvitationRequest, RejectInvitationResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -18,9 +19,9 @@ namespace Fortifex4.Application.Contributors.Commands.RejectInvitation
             _context = context;
         }
 
-        public async Task<RejectInvitationResult> Handle(RejectInvitationCommand query, CancellationToken cancellationToken)
+        public async Task<RejectInvitationResponse> Handle(RejectInvitationRequest query, CancellationToken cancellationToken)
         {
-            RejectInvitationResult result = new RejectInvitationResult();
+            RejectInvitationResponse result = new RejectInvitationResponse();
 
             var contributor = await _context.Contributors
                 .Where(x => x.InvitationCode == new Guid(query.InvitationCode))

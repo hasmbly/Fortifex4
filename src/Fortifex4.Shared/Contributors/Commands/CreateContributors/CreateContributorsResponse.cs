@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace Fortifex4.Application.Contributors.Commands.CreateContributors
+namespace Fortifex4.Shared.Contributors.Commands.CreateContributors
 {
-    public class CreateContributorsResult
+    public class CreateContributorsResponse
     {
         public IList<ContributorDTO> Contributors { get; set; }
 
-        public CreateContributorsResult()
+        public CreateContributorsResponse()
         {
             this.Contributors = new List<ContributorDTO>();
         }

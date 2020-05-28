@@ -1,6 +1,6 @@
 ﻿using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Contributors.Queries.GetContributorsByMemberUsername
+namespace Fortifex4.Shared.Contributors.Queries.GetContributorsByMemberUsername
 {
     public class ContributorDTO
     {

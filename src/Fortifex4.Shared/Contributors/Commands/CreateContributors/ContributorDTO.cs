@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fortifex4.Application.Contributors.Commands.CreateContributors
+namespace Fortifex4.Shared.Contributors.Commands.CreateContributors
 {
     public class ContributorDTO
     {

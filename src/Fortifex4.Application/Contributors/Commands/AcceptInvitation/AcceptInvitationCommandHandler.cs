@@ -1,5 +1,6 @@
 ﻿using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Contributors.Commands.AcceptInvitation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fortifex4.Application.Contributors.Commands.AcceptInvitation
 {
-    public class AcceptInvitationCommandHandler : IRequestHandler<AcceptInvitationCommand, AcceptInvitationResult>
+    public class AcceptInvitationCommandHandler : IRequestHandler<AcceptInvitationRequest, AcceptInvitationResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -18,9 +19,9 @@ namespace Fortifex4.Application.Contributors.Commands.AcceptInvitation
             _context = context;
         }
 
-        public async Task<AcceptInvitationResult> Handle(AcceptInvitationCommand query, CancellationToken cancellationToken)
+        public async Task<AcceptInvitationResponse> Handle(AcceptInvitationRequest query, CancellationToken cancellationToken)
         {
-            AcceptInvitationResult result = new AcceptInvitationResult();
+            var result = new AcceptInvitationResponse();
 
             var contributor = await _context.Contributors
                 .Where(x => x.InvitationCode == new Guid(query.InvitationCode))

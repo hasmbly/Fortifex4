@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fortifex4.Application.Contributors.Queries.GetContributorsByMemberUsername
+namespace Fortifex4.Shared.Contributors.Queries.GetContributorsByMemberUsername
 {
     public class GetContributorsByMemberUsernameResult
     {

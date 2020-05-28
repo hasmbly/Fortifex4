@@ -7,12 +7,13 @@ using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Email;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Contributors.Commands.CreateContributors;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Contributors.Commands.CreateContributors
 {
-    public class CreateContributorsCommandHandler : IRequestHandler<CreateContributorsCommand, CreateContributorsResult>
+    public class CreateContributorsCommandHandler : IRequestHandler<CreateContributorsRequest, CreateContributorsResponse>
     {
         private readonly IFortifex4DBContext _context;
         private readonly IEmailService _emailService;
@@ -25,9 +26,9 @@ namespace Fortifex4.Application.Contributors.Commands.CreateContributors
             _currentWeb = currentWeb;
         }
 
-        public async Task<CreateContributorsResult> Handle(CreateContributorsCommand request, CancellationToken cancellationToken)
+        public async Task<CreateContributorsResponse> Handle(CreateContributorsRequest request, CancellationToken cancellationToken)
         {
-            var result = new CreateContributorsResult();
+            var result = new CreateContributorsResponse();
 
             foreach (var candidate in request.MemberUsername)
             {
@@ -84,6 +85,5 @@ namespace Fortifex4.Application.Contributors.Commands.CreateContributors
 
             return result;
         }
-
     }
 }

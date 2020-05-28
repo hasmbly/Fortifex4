@@ -1,17 +1,15 @@
 ﻿using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Contributors.Commands.DeleteContributor;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Fortifex4.Application.Contributors.Commands.DeleteContributor
 {
-    class DeleteContributorCommandHandler : IRequestHandler<DeleteContributorCommand, DeleteContributorResult>
+    public class DeleteContributorCommandHandler : IRequestHandler<DeleteContributorRequest, DeleteContributorResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -20,9 +18,9 @@ namespace Fortifex4.Application.Contributors.Commands.DeleteContributor
             _context = context;
         }
 
-        public async Task<DeleteContributorResult> Handle(DeleteContributorCommand request, CancellationToken cancellationToken)
+        public async Task<DeleteContributorResponse> Handle(DeleteContributorRequest request, CancellationToken cancellationToken)
         {
-            var result = new DeleteContributorResult()
+            var result = new DeleteContributorResponse()
             {
                 IsSuccessful = false
             };

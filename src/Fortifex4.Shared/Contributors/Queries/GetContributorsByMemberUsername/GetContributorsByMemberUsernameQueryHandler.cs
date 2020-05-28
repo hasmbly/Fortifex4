@@ -1,11 +1,11 @@
-﻿using Fortifex4.Application.Common.Interfaces;
+﻿using Fortifex4.Shared.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Fortifex4.Application.Contributors.Queries.GetContributorsByMemberUsername
+namespace Fortifex4.Shared.Contributors.Queries.GetContributorsByMemberUsername
 {
     public class GetContributorsByMemberUsernameQueryHandler : IRequestHandler<GetContributorsByMemberUsernameQuery, GetContributorsByMemberUsernameResult>
     {
