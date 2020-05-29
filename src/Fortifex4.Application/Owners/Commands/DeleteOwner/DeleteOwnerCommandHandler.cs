@@ -4,17 +4,14 @@ using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Constants;
+using Fortifex4.Shared.Owners.Commands.DeleteOwner;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Owners.Commands.DeleteOwner
 {
-    public class DeleteOwnerCommand : IRequest
-    {
-        public int OwnerID { get; set; }
-    }
-
-    public class DeleteOwnerCommandHandler : IRequestHandler<DeleteOwnerCommand>
+    public class DeleteOwnerCommandHandler : IRequestHandler<DeleteOwnerRequest, DeleteOwnerResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -23,8 +20,10 @@ namespace Fortifex4.Application.Owners.Commands.DeleteOwner
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteOwnerCommand request, CancellationToken cancellationToken)
+        public async Task<DeleteOwnerResponse> Handle(DeleteOwnerRequest request, CancellationToken cancellationToken)
         {
+            var result = new DeleteOwnerResponse();
+            
             var owner = await _context.Owners
                 .Where(x => x.OwnerID == request.OwnerID)
                 .Include(a => a.Wallets)
@@ -48,7 +47,8 @@ namespace Fortifex4.Application.Owners.Commands.DeleteOwner
                 .SingleOrDefaultAsync();
 
             if (owner == null)
-                throw new NotFoundException(nameof(Owner), request.OwnerID);
+                result.IsSucessful = false;
+                result.ErrorMeesage = ErrorMessage.OwnerNotFound;
 
             foreach (var wallet in owner.Wallets)
             {
@@ -74,7 +74,9 @@ namespace Fortifex4.Application.Owners.Commands.DeleteOwner
             _context.Owners.Remove(owner);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            result.IsSucessful = true;
+
+            return result;
         }
     }
 }

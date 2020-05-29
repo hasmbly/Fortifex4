@@ -3,19 +3,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Application.Owners.Common;
 using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Owners.Queries.GetOwner;
+using Fortifex4.Shared.Owners.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Owners.Queries.GetOwner
 {
-    public class GetOwnerQuery : IRequest<GetOwnerResult>
-    {
-        public int OwnerID { get; set; }
-    }
-
-    public class GetOwnerQueryHandler : IRequestHandler<GetOwnerQuery, GetOwnerResult>
+    public class GetOwnerQueryHandler : IRequestHandler<GetOwnerRequest, GetOwnerResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -24,7 +20,7 @@ namespace Fortifex4.Application.Owners.Queries.GetOwner
             _context = context;
         }
 
-        public async Task<GetOwnerResult> Handle(GetOwnerQuery request, CancellationToken cancellationToken)
+        public async Task<GetOwnerResponse> Handle(GetOwnerRequest request, CancellationToken cancellationToken)
         {
             var owner = await _context.Owners
                 .Where(x => x.OwnerID == request.OwnerID)
@@ -38,7 +34,7 @@ namespace Fortifex4.Application.Owners.Queries.GetOwner
             if (owner == null)
                 throw new NotFoundException(nameof(Owner), request.OwnerID);
 
-            var result = new GetOwnerResult
+            var result = new GetOwnerResponse
             {
                 OwnerID = owner.OwnerID,
                 MemberUsername = owner.MemberUsername,

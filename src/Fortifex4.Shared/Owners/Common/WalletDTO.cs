@@ -1,6 +1,6 @@
 ﻿using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Owners.Common
+namespace Fortifex4.Shared.Owners.Common
 {
     public class WalletDTO
     {

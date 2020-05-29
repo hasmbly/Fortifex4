@@ -1,7 +1,7 @@
-﻿using Fortifex4.Application.Owners.Common;
+﻿using Fortifex4.Shared.Owners.Common;
 using System.Collections.Generic;
 
-namespace Fortifex4.Application.Owners.Queries.GetExchangeOwners
+namespace Fortifex4.Shared.Owners.Queries.GetExchangeOwners
 {
     public class ExchangeOwnerDTO
     {

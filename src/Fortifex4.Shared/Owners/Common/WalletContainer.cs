@@ -1,6 +1,8 @@
-﻿namespace Fortifex4.Application.Owners.Common
+﻿using Fortifex4.Shared.Common;
+
+namespace Fortifex4.Shared.Owners.Common
 {
-    public abstract class WalletContainer
+    public abstract class WalletContainer : GeneralResponse
     {
         public int MemberPreferredFiatCurrencyID { get; set; }
         public string MemberPreferredFiatCurrencySymbol { get; set; }

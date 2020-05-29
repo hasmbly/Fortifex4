@@ -1,21 +1,15 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Constants;
+using Fortifex4.Shared.Owners.Commands.UpdateExchangeOwner;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Owners.Commands.UpdateExchangeOwner
 {
-    public class UpdateExchangeOwnerCommand : IRequest
-    {
-        public int OwnerID { get; set; }
-        public int ProviderID { get; set; }
-    }
-
-    public class UpdateExchangeOwnerCommandHandler : IRequestHandler<UpdateExchangeOwnerCommand>
+    public class UpdateExchangeOwnerCommandHandler : IRequestHandler<UpdateExchangeOwnerRequest, UpdateExchangeOwnerResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -24,20 +18,27 @@ namespace Fortifex4.Application.Owners.Commands.UpdateExchangeOwner
             _context = context;
         }
 
-        public async Task<Unit> Handle(UpdateExchangeOwnerCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateExchangeOwnerResponse> Handle(UpdateExchangeOwnerRequest request, CancellationToken cancellationToken)
         {
+            var result = new UpdateExchangeOwnerResponse();
+
             var owner = await _context.Owners
                 .Where(x => x.OwnerID == request.OwnerID)
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (owner == null)
-                throw new NotFoundException(nameof(Provider), request.ProviderID);
-
+            {
+                result.IsSucessful = false;
+                result.ErrorMeesage = ErrorMessage.OwnerNotFound;
+            }
+            
             owner.ProviderID = request.ProviderID;
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            result.IsSucessful = true;
+
+            return result;
         }
     }
 }

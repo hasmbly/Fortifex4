@@ -4,20 +4,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Application.Owners.Common;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Owners.Queries.GetExchangeOwners;
+using Fortifex4.Shared.Owners.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Owners.Queries.GetExchangeOwners
 {
-    public class GetExchangeOwnersQuery : IRequest<GetExchangeOwnersResult>
-    {
-        public string MemberUsername { get; set; }
-    }
-
-    public class GetExchangeOwnersQueryHandler : IRequestHandler<GetExchangeOwnersQuery, GetExchangeOwnersResult>
+    public class GetExchangeOwnersQueryHandler : IRequestHandler<GetExchangeOwnersRequest, GetExchangeOwnersResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -26,7 +22,7 @@ namespace Fortifex4.Application.Owners.Queries.GetExchangeOwners
             _context = context;
         }
 
-        public async Task<GetExchangeOwnersResult> Handle(GetExchangeOwnersQuery request, CancellationToken cancellationToken)
+        public async Task<GetExchangeOwnersResponse> Handle(GetExchangeOwnersRequest request, CancellationToken cancellationToken)
         {
             var member = await _context.Members
                 .Where(x => x.MemberUsername == request.MemberUsername)
@@ -37,7 +33,7 @@ namespace Fortifex4.Application.Owners.Queries.GetExchangeOwners
             if (member == null)
                 throw new NotFoundException(nameof(Member), request.MemberUsername);
 
-            var result = new GetExchangeOwnersResult
+            var result = new GetExchangeOwnersResponse
             {
                 MemberPreferredFiatCurrencyID = member.PreferredFiatCurrencyID,
                 MemberPreferredFiatCurrencySymbol = member.PreferredFiatCurrency.Symbol,

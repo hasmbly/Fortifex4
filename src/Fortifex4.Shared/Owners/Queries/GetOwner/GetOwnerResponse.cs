@@ -1,9 +1,9 @@
-﻿using Fortifex4.Application.Owners.Common;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Fortifex4.Shared.Owners.Common;
 
-namespace Fortifex4.Application.Owners.Queries.GetOwner
+namespace Fortifex4.Shared.Owners.Queries.GetOwner
 {
-    public class GetOwnerResult : WalletContainer
+    public class GetOwnerResponse : WalletContainer
     {
         public int OwnerID { get; set; }
         public string MemberUsername { get; set; }
@@ -14,7 +14,7 @@ namespace Fortifex4.Application.Owners.Queries.GetOwner
 
         public IList<WalletDTO> Wallets { get; set; }
 
-        public GetOwnerResult()
+        public GetOwnerResponse()
         {
             this.Wallets = new List<WalletDTO>();
         }

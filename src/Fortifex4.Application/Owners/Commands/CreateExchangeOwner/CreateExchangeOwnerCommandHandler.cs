@@ -5,17 +5,12 @@ using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Owners.Commands.CreateExchangeOwner;
 using MediatR;
 
 namespace Fortifex4.Application.Owners.Commands.CreateExchangeOwner
 {
-    public class CreateExchangeOwnerCommand : IRequest<int>
-    {
-        public string MemberUsername { get; set; }
-        public int ProviderID { get; set; }
-    }
-
-    public class CreateExchangeOwnerCommandHandler : IRequestHandler<CreateExchangeOwnerCommand, int>
+    public class CreateExchangeOwnerCommandHandler : IRequestHandler<CreateExchangeOwnerRequest, CreateExchangeOwnerResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -24,7 +19,7 @@ namespace Fortifex4.Application.Owners.Commands.CreateExchangeOwner
             _context = context;
         }
 
-        public async Task<int> Handle(CreateExchangeOwnerCommand request, CancellationToken cancellationToken)
+        public async Task<CreateExchangeOwnerResponse> Handle(CreateExchangeOwnerRequest request, CancellationToken cancellationToken)
         {
             if (_context.Owners.Any(x => x.MemberUsername == request.MemberUsername && x.ProviderID == request.ProviderID))
                 throw new ArgumentException($"Owner with username {request.MemberUsername} and ProviderID {request.ProviderID} already exists");
@@ -39,7 +34,11 @@ namespace Fortifex4.Application.Owners.Commands.CreateExchangeOwner
             _context.Owners.Add(entity);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return entity.OwnerID;
+            return new CreateExchangeOwnerResponse 
+            {
+                IsSucessful = true,
+                OwnerID = entity.OwnerID
+            };
         }
     }
 }
