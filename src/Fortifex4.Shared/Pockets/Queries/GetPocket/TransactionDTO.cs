@@ -1,7 +1,7 @@
 ﻿using System;
 using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Pockets.Queries.GetPocket
+namespace Fortifex4.Shared.Pockets.Queries.GetPocket
 {
     public class TransactionDTO
     {

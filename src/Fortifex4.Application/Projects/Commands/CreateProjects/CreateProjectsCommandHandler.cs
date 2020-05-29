@@ -3,12 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Projects.Commands.CreateProjects;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Projects.Commands.CreateProjects
 {
-    public class CreateProjectsCommandHandler : IRequestHandler<CreateProjectsCommand, CreateProjectsResult>
+    public class CreateProjectsCommandHandler : IRequestHandler<CreateProjectsRequest, CreateProjectsResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -17,9 +18,9 @@ namespace Fortifex4.Application.Projects.Commands.CreateProjects
             _context = context;
         }
 
-        public async Task<CreateProjectsResult> Handle(CreateProjectsCommand request, CancellationToken cancellationToken)
+        public async Task<CreateProjectsResponse> Handle(CreateProjectsRequest request, CancellationToken cancellationToken)
         {
-            var result = new CreateProjectsResult()
+            var result = new CreateProjectsResponse()
             {
                 IsSuccessful = false
             };

@@ -4,18 +4,13 @@ using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Pockets.Queries.GetPocket;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Pockets.Queries.GetPocket
 {
-    public class GetPocketQuery : IRequest<GetPocketResult>
-    {
-        public int PocketID { get; set; }
-        public string Address { get; set; }
-    }
-
-    public class GetPocketQueryHandler : IRequestHandler<GetPocketQuery, GetPocketResult>
+    public class GetPocketQueryHandler : IRequestHandler<GetPocketRequest, GetPocketResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -24,7 +19,7 @@ namespace Fortifex4.Application.Pockets.Queries.GetPocket
             _context = context;
         }
 
-        public async Task<GetPocketResult> Handle(GetPocketQuery query, CancellationToken cancellationToken)
+        public async Task<GetPocketResponse> Handle(GetPocketRequest query, CancellationToken cancellationToken)
         {
             var pocket = await _context.Pockets
                 .Where(x => x.PocketID == query.PocketID)
@@ -36,7 +31,7 @@ namespace Fortifex4.Application.Pockets.Queries.GetPocket
             if (pocket == null)
                 throw new NotFoundException(nameof(Pocket), query.PocketID);
 
-            var result = new GetPocketResult
+            var result = new GetPocketResponse
             {
                 PocketID = pocket.PocketID,
                 WalletID = pocket.WalletID,

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace Fortifex4.Application.Projects.Commands.CreateProjects
+namespace Fortifex4.Shared.Projects.Commands.CreateProjects
 {
-    public class CreateProjectsCommand : IRequest<CreateProjectsResult>
+    public class CreateProjectsRequest : IRequest<CreateProjectsResponse>
     {
         public string MemberUsername { get; set; }
         public int BlockchainID { get; set; }

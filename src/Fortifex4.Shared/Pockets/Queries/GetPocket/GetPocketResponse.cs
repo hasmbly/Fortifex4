@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Fortifex4.Application.Pockets.Queries.GetPocket
+namespace Fortifex4.Shared.Pockets.Queries.GetPocket
 {
-    public class GetPocketResult
+    public class GetPocketResponse
     {
         public int PocketID { get; set; }
         public int WalletID { get; set; }
@@ -16,7 +16,7 @@ namespace Fortifex4.Application.Pockets.Queries.GetPocket
 
         public IList<TransactionDTO> Transactions { get; set; }
 
-        public GetPocketResult()
+        public GetPocketResponse()
         {
             this.Transactions = new List<TransactionDTO>();
         }
