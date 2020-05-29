@@ -1,6 +1,6 @@
 ﻿using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Projects.Queries.GetProject
+namespace Fortifex4.Shared.Projects.Queries.GetProject
 {
     public class ContributorDTO
     {

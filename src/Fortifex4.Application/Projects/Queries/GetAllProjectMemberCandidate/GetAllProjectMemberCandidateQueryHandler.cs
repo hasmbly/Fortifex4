@@ -3,12 +3,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Projects.Queries.GetAllProjectMemberCandidate;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Projects.Queries.GetAllProjectMemberCandidate
 {
-    public class GetAllProjectMemberCandidateQueryHandler : IRequestHandler<GetAllProjectMemberCandidateQuery, GetAllProjectMemberCandidateResult>
+    public class GetAllProjectMemberCandidateQueryHandler : IRequestHandler<GetAllProjectMemberCandidateRequest, GetAllProjectMemberCandidateResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -17,13 +18,13 @@ namespace Fortifex4.Application.Projects.Queries.GetAllProjectMemberCandidate
             _context = context;
         }
 
-        public async Task<GetAllProjectMemberCandidateResult> Handle(GetAllProjectMemberCandidateQuery query, CancellationToken cancellationToken)
+        public async Task<GetAllProjectMemberCandidateResponse> Handle(GetAllProjectMemberCandidateRequest query, CancellationToken cancellationToken)
         {
             var members = await _context.Members
                 .Where(x => x.MemberUsername != query.ExcludeCreatorUsername)
                 .ToListAsync(cancellationToken);
 
-            var result = new GetAllProjectMemberCandidateResult()
+            var result = new GetAllProjectMemberCandidateResponse()
             {
                 Members = new List<MembersDTO>()
             };

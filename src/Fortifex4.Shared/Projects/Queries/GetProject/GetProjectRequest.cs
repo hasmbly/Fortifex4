@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace Fortifex4.Application.Projects.Queries.GetProject
+namespace Fortifex4.Shared.Projects.Queries.GetProject
 {
-    public class GetProjectQuery : IRequest<GetProjectResult>
+    public class GetProjectRequest : IRequest<GetProjectResponse>
     {
         public int ProjectID { get; set; }
         public string IsExistProjectByMemberUsername { get; set; }

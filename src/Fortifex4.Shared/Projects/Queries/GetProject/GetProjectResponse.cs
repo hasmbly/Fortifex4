@@ -1,10 +1,9 @@
-﻿using Fortifex4.Domain.Enums;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Fortifex4.Shared.Common;
 
-namespace Fortifex4.Application.Projects.Queries.GetProject
+namespace Fortifex4.Shared.Projects.Queries.GetProject
 {
-    public class GetProjectResult
+    public class GetProjectResponse : GeneralResponse
     {
         public int ProjectID { get; set; }
         public string MemberUsername { get; set; }
@@ -17,7 +16,7 @@ namespace Fortifex4.Application.Projects.Queries.GetProject
 
         public IList<ContributorDTO> Contributors { get; set; }
 
-        public GetProjectResult()
+        public GetProjectResponse()
         {
             this.Contributors = new List<ContributorDTO>();
         }

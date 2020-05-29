@@ -1,4 +1,5 @@
 ﻿using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Projects.Queries.GetMyProjects;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fortifex4.Application.Projects.Queries.GetMyProjects
 {
-    public class GetMyProjectsQueryHandler : IRequestHandler<GetMyProjectsQuery, GetMyProjectsResult>
+    public class GetMyProjectsQueryHandler : IRequestHandler<GetMyProjectsRequest, GetMyProjectsResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -16,9 +17,9 @@ namespace Fortifex4.Application.Projects.Queries.GetMyProjects
             _context = context;
         }
 
-        public async Task<GetMyProjectsResult> Handle(GetMyProjectsQuery query, CancellationToken cancellationToken)
+        public async Task<GetMyProjectsResponse> Handle(GetMyProjectsRequest query, CancellationToken cancellationToken)
         {
-            GetMyProjectsResult result = new GetMyProjectsResult();
+            var result = new GetMyProjectsResponse();
 
             var projects = await _context.Projects
                 .Where(x => x.MemberUsername == query.MemberUsername)

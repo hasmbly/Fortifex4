@@ -1,4 +1,4 @@
-﻿namespace Fortifex4.Application.Projects.Queries.GetMyProjects
+﻿namespace Fortifex4.Shared.Projects.Queries.GetMyProjects
 {
     public class ProjectDTO
     {

@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Projects.Queries.GetProject;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Projects.Queries.GetProject
 {
-    public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, GetProjectResult>
+    public class GetProjectQueryHandler : IRequestHandler<GetProjectRequest, GetProjectResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -19,9 +20,9 @@ namespace Fortifex4.Application.Projects.Queries.GetProject
             _context = context;
         }
 
-        public async Task<GetProjectResult> Handle(GetProjectQuery query, CancellationToken cancellationToken)
+        public async Task<GetProjectResponse> Handle(GetProjectRequest query, CancellationToken cancellationToken)
         {
-            var result = new GetProjectResult();
+            var result = new GetProjectResponse();
 
             if (query.IsExistProjectByMemberUsername != null)
             {

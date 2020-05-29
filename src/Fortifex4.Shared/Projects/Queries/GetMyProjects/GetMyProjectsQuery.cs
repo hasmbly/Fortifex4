@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace Fortifex4.Application.Projects.Queries.GetMyProjects
+namespace Fortifex4.Shared.Projects.Queries.GetMyProjects
 {
-    public class GetMyProjectsQuery : IRequest<GetMyProjectsResult>
+    public class GetMyProjectsRequest : IRequest<GetMyProjectsResponse>
     {
         public string MemberUsername { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿namespace Fortifex4.Application.Projects.Queries.GetAllProjectMemberCandidate
+﻿namespace Fortifex4.Shared.Projects.Queries.GetAllProjectMemberCandidate
 {
     public class MembersDTO
     {
