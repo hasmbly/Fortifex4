@@ -1,5 +1,6 @@
 ﻿using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Providers.Queries.GetAvailableExchangeProviders;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Fortifex4.Application.Providers.Queries.GetAvailableExchangeProviders
 {
-    public class GetAvailableExchangeProvidersQueryHandler : IRequestHandler<GetAvailableExchangeProvidersQuery, GetAvailableExchangeProvidersResult>
+    public class GetAvailableExchangeProvidersQueryHandler : IRequestHandler<GetAvailableExchangeProvidersRequest, GetAvailableExchangeProvidersResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -17,9 +18,9 @@ namespace Fortifex4.Application.Providers.Queries.GetAvailableExchangeProviders
             _context = context;
         }
 
-        public async Task<GetAvailableExchangeProvidersResult> Handle(GetAvailableExchangeProvidersQuery query, CancellationToken cancellationToken)
+        public async Task<GetAvailableExchangeProvidersResponse> Handle(GetAvailableExchangeProvidersRequest query, CancellationToken cancellationToken)
         {
-            var result = new GetAvailableExchangeProvidersResult();
+            var result = new GetAvailableExchangeProvidersResponse();
 
             var exchangeProviders = await _context.Providers
                 .Where(x => x.ProviderType == ProviderType.Exchange)
@@ -28,7 +29,6 @@ namespace Fortifex4.Application.Providers.Queries.GetAvailableExchangeProviders
             var memberExchangeOwners = await _context.Owners
                 .Where(x => x.MemberUsername == query.MemberUsername && x.ProviderType == ProviderType.Exchange)
                 .ToListAsync(cancellationToken);
-
 
             foreach (var exchangeProvider in exchangeProviders)
             {

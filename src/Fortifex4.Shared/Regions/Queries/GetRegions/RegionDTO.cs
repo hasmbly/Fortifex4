@@ -1,6 +1,4 @@
-﻿using Fortifex4.Domain.Entities;
-
-namespace Fortifex4.Application.Regions.Queries.GetRegions
+﻿namespace Fortifex4.Shared.Regions.Queries.GetRegions
 {
     public class RegionDTO
     {

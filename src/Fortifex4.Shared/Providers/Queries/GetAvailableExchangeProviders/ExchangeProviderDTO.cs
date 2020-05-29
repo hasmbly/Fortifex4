@@ -1,6 +1,4 @@
-﻿using Fortifex4.Domain.Entities;
-
-namespace Fortifex4.Application.Providers.Queries.GetAvailableExchangeProviders
+﻿namespace Fortifex4.Shared.Providers.Queries.GetAvailableExchangeProviders
 {
     public class ExchangeProviderDTO
     {

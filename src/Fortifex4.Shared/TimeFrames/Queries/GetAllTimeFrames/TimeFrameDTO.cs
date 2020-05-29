@@ -1,6 +1,4 @@
-﻿using Fortifex4.Domain.Entities;
-
-namespace Fortifex4.Application.TimeFrames.Queries.GetAllTimeFrames
+﻿namespace Fortifex4.Shared.TimeFrames.Queries.GetAllTimeFrames
 {
     public class TimeFrameDTO
     {

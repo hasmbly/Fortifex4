@@ -3,12 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Regions.Queries.GetRegions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Regions.Queries.GetRegions
 {
-    public class GetRegionsQueryHandler : IRequestHandler<GetRegionsQuery, GetRegionsResult>
+    public class GetRegionsQueryHandler : IRequestHandler<GetRegionsRequest, GetRegionsResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -17,9 +18,9 @@ namespace Fortifex4.Application.Regions.Queries.GetRegions
             _context = context;
         }
 
-        public async Task<GetRegionsResult> Handle(GetRegionsQuery request, CancellationToken cancellationToken)
+        public async Task<GetRegionsResponse> Handle(GetRegionsRequest request, CancellationToken cancellationToken)
         {
-            GetRegionsResult result = new GetRegionsResult();
+            var result = new GetRegionsResponse();
 
             var regions = await _context.Regions
                 .Where(x => x.CountryCode == request.CountryCode)

@@ -1,4 +1,4 @@
-﻿namespace Fortifex4.Application.System.Commands.SeedMasterData
+﻿namespace Fortifex4.Shared.System.Commands.SeedMasterData
 {
     public class CountryCSV
     {

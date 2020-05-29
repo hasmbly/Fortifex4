@@ -6,6 +6,7 @@ using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.File;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.System.Commands.SeedMasterData;
 
 namespace Fortifex4.Application.System.Commands.SeedMasterData
 {
@@ -26,9 +27,9 @@ namespace Fortifex4.Application.System.Commands.SeedMasterData
             _fileService = fileService;
         }
 
-        public async Task<SeedMasterDataResult> SeedAllAsync(CancellationToken cancellationToken)
+        public async Task<SeedMasterDataResponse> SeedAllAsync(CancellationToken cancellationToken)
         {
-            SeedMasterDataResult result = new SeedMasterDataResult();
+            var result = new SeedMasterDataResponse();
 
             #region Master Data Level 0 (Strong Entities)
             result.Entities.Add(nameof(Country), await SeedCountriesAsync(cancellationToken));

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Fortifex4.Application.System.Commands.SeedCryptoCurrencies
+namespace Fortifex4.Shared.System.Commands.SeedCryptoCurrencies
 {
     public class CryptoCurrencyListingLatestResultJSON
     {

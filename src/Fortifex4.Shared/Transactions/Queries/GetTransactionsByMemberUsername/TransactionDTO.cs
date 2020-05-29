@@ -1,7 +1,7 @@
 ﻿using Fortifex4.Domain.Enums;
 using System;
 
-namespace Fortifex4.Application.Transactions.Queries.GetTransactionsByMemberUsername
+namespace Fortifex4.Shared.Transactions.Queries.GetTransactionsByMemberUsername
 {
     public class TransactionDTO
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Fortifex4.Application.System.Commands.SeedFiatCurrencies
+namespace Fortifex4.Shared.System.Commands.SeedFiatCurrencies
 {
     public class FiatCurrencyMapJSON
     {

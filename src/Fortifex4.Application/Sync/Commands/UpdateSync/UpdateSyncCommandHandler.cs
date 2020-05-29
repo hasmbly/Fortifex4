@@ -1,6 +1,7 @@
 ﻿using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Sync.Commands.UpdateSync;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Transactions;
 
 namespace Fortifex4.Application.Sync.Commands.UpdateSync
 {
-    public class UpdateSyncCommandHandler : IRequestHandler<UpdateSyncCommand, UpdateSyncResult>
+    public class UpdateSyncCommandHandler : IRequestHandler<UpdateSyncRequest, UpdateSyncResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -19,9 +20,9 @@ namespace Fortifex4.Application.Sync.Commands.UpdateSync
             _context = context;
         }
 
-        public async Task<UpdateSyncResult> Handle(UpdateSyncCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateSyncResponse> Handle(UpdateSyncRequest request, CancellationToken cancellationToken)
         {
-            var result = new UpdateSyncResult();
+            var result = new UpdateSyncResponse();
 
             var transaction = await _context.Transactions
                 .Where(x => x.TransactionID == request.TransactionID)

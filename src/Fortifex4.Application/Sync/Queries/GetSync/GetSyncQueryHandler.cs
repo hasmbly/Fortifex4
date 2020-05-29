@@ -1,6 +1,7 @@
 ﻿using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Sync.Queries.GetSync;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Transactions;
 
 namespace Fortifex4.Application.Sync.Queries.GetSync
 {
-    public class GetSyncQueryHandler : IRequestHandler<GetSyncQuery, GetSyncResult>
+    public class GetSyncQueryHandler : IRequestHandler<GetSyncRequest, GetSyncResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -18,7 +19,7 @@ namespace Fortifex4.Application.Sync.Queries.GetSync
         {
             _context = context;
         }
-        public async Task<GetSyncResult> Handle(GetSyncQuery request, CancellationToken cancellationToken)
+        public async Task<GetSyncResponse> Handle(GetSyncRequest request, CancellationToken cancellationToken)
         {
             var transaction = await _context.Transactions
                 .Where(x => x.TransactionID == request.TransactionID)
@@ -33,7 +34,7 @@ namespace Fortifex4.Application.Sync.Queries.GetSync
 
             if (transaction.TransactionType == TransactionType.SyncBalanceImport)
             {
-                var result = new GetSyncResult
+                var result = new GetSyncResponse
                 {
                     WalletName = transaction.Pocket.Wallet.Name,
                     WalletMainPocketCurrencyName = transaction.Pocket.Currency.Name,
@@ -49,7 +50,7 @@ namespace Fortifex4.Application.Sync.Queries.GetSync
             }
             else
             {
-                var result = new GetSyncResult
+                var result = new GetSyncResponse
                 {
                     WalletName = transaction.Pocket.Wallet.Name,
                     WalletMainPocketCurrencyName = transaction.Pocket.Currency.Name,
