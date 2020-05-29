@@ -24,7 +24,7 @@ namespace Fortifex4.Application.Members.Queries.MemberUsernameAlreadyExists
             return new MemberUsernameAlreadyExistsResponse 
             {
                 IsSucessful = true,
-                DoesMemberExist = doesMemberExist
+                DoesMemberExist = await Task.FromResult(doesMemberExist)
             };
         }
     }

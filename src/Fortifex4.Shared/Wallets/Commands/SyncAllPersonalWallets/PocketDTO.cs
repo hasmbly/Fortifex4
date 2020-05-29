@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fortifex4.Application.Wallets.Commands.SyncAllPersonalWallets
+namespace Fortifex4.Shared.Wallets.Commands.SyncAllPersonalWallets
 {
     public class PocketDTO
     {

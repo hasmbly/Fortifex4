@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Fortifex4.Application.Enums;
+using Fortifex4.Shared.Enums;
 
 namespace Fortifex4.Shared.Currencies.Commands.UpdateCryptoCurrencies
 {

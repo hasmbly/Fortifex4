@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Crypto;
-using Fortifex4.Application.Enums;
+using Fortifex4.Shared.Enums;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Shared.Currencies.Commands.UpdateCryptoCurrencies;
 using MediatR;

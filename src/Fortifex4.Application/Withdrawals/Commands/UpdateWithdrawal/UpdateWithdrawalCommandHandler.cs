@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Withdrawals.Commands.UpdateWithdrawal;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Withdrawals.Commands.UpdateWithdrawal
 {
-    public class UpdateWithdrawalCommandHandler : IRequestHandler<UpdateWithdrawalCommand, UpdateWithdrawalResult>
+    public class UpdateWithdrawalCommandHandler : IRequestHandler<UpdateWithdrawalRequest, UpdateWithdrawalResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -18,9 +19,9 @@ namespace Fortifex4.Application.Withdrawals.Commands.UpdateWithdrawal
             _context = context;
         }
 
-        public async Task<UpdateWithdrawalResult> Handle(UpdateWithdrawalCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateWithdrawalResponse> Handle(UpdateWithdrawalRequest request, CancellationToken cancellationToken)
         {
-            UpdateWithdrawalResult result = new UpdateWithdrawalResult();
+            var result = new UpdateWithdrawalResponse();
 
             var transaction = await _context.Transactions
                 .Where(x => x.TransactionID == request.TransactionID)

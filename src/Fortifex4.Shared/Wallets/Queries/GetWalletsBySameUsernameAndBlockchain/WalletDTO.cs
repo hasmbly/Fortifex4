@@ -1,6 +1,6 @@
 ﻿using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Wallets.Queries.GetWalletsBySameUsernameAndBlockchain
+namespace Fortifex4.Shared.Wallets.Queries.GetWalletsBySameUsernameAndBlockchain
 {
     public class WalletDTO
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Wallets.Commands.SyncAllPersonalWallets
+namespace Fortifex4.Shared.Wallets.Commands.SyncAllPersonalWallets
 {
     public class TransactionDTO
     {

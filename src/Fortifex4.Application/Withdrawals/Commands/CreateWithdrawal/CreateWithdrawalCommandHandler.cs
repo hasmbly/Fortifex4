@@ -2,6 +2,7 @@
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Withdrawals.Commands.CreateWithdrawal;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Fortifex4.Application.Withdrawals.Commands.CreateWithdrawal
 {
-    public class CreateWithdrawalCommandHandler : IRequestHandler<CreateWithdrawalCommand, CreateWithdrawalResult>
+    public class CreateWithdrawalCommandHandler : IRequestHandler<CreateWithdrawalRequest, CreateWithdrawalResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -19,9 +20,9 @@ namespace Fortifex4.Application.Withdrawals.Commands.CreateWithdrawal
             _context = context;
         }
 
-        public async Task<CreateWithdrawalResult> Handle(CreateWithdrawalCommand request, CancellationToken cancellationToken)
+        public async Task<CreateWithdrawalResponse> Handle(CreateWithdrawalRequest request, CancellationToken cancellationToken)
         {
-            CreateWithdrawalResult result = new CreateWithdrawalResult();
+            var result = new CreateWithdrawalResponse();
 
             Wallet walletForWithdrawal = await _context.Wallets
                 .Where(x => x.WalletID == request.WalletID)

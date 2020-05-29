@@ -1,7 +1,7 @@
 ﻿using System;
 using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Wallets.Queries.GetWallet
+namespace Fortifex4.Shared.Wallets.Queries.GetWallet
 {
     public class TransactionDTO
     {

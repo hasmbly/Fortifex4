@@ -4,11 +4,12 @@ using System.Threading.Tasks;
 using FluentValidation;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Wallets.Commands.CreatePersonalWallet
 {
-    public class CreatePersonalWalletCommandValidator : AbstractValidator<CreatePersonalWalletCommand>
+    public class CreatePersonalWalletCommandValidator : AbstractValidator<CreatePersonalWalletRequest>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -28,7 +29,7 @@ namespace Fortifex4.Application.Wallets.Commands.CreatePersonalWallet
                 .MustAsync(BeUniqueName).WithMessage("The specified wallet name already exists.");
         }
 
-        public async Task<bool> BeUniqueName(CreatePersonalWalletCommand command, CancellationToken cancellationToken)
+        public async Task<bool> BeUniqueName(CreatePersonalWalletRequest command, CancellationToken cancellationToken)
         {
             bool isUnique = true;
 

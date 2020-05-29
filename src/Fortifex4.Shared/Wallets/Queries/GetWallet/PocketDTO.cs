@@ -1,7 +1,7 @@
 ﻿using Fortifex4.Domain.Enums;
 using System.Collections.Generic;
 
-namespace Fortifex4.Application.Wallets.Queries.GetWallet
+namespace Fortifex4.Shared.Wallets.Queries.GetWallet
 {
     public class PocketDTO
     {

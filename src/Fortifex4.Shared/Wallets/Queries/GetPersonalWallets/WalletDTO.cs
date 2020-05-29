@@ -1,6 +1,6 @@
 ﻿using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Wallets.Queries.GetPersonalWallets
+namespace Fortifex4.Shared.Wallets.Queries.GetPersonalWallets
 {
     public class WalletDTO
     {
@@ -17,7 +17,7 @@ namespace Fortifex4.Application.Wallets.Queries.GetPersonalWallets
         public decimal MainPocketCurrencyUnitPriceInUSD { get; set; }
         public decimal MainPocketBalance { get; set; }
 
-        public GetPersonalWalletsResult Container { get; set; }
+        public GetPersonalWalletsResponse Container { get; set; }
 
         public string IsSynchronizedDisplayText
         {
