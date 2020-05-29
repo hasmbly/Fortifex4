@@ -1,4 +1,4 @@
-﻿namespace Fortifex4.Application.Currencies.Queries.GetDistinctCurrenciesByMemberID
+﻿namespace Fortifex4.Shared.Currencies.Queries.GetDistinctCurrenciesByMemberID
 {
     public class CurrencyDTO
     {

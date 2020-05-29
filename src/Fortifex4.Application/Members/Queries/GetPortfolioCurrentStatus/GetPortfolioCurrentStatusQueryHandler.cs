@@ -6,12 +6,13 @@ using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Crypto;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Members.Queries.GetPortfolioCurrentStatus;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Members.Queries.GetPortfolioCurrentStatus
 {
-    public class GetPortfolioCurrentStatusQueryHandler : IRequestHandler<GetPortfolioCurrentStatusQuery, GetPortfolioCurrentStatusResult>
+    public class GetPortfolioCurrentStatusQueryHandler : IRequestHandler<GetPortfolioCurrentStatusRequest, GetPortfolioCurrentStatusResponse>
     {
         private readonly IFortifex4DBContext _context;
         private readonly ICryptoService _cryptoService;
@@ -24,7 +25,7 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolioCurrentStatus
             _dateTimeOffset = dateTimeOffset;
         }
 
-        public async Task<GetPortfolioCurrentStatusResult> Handle(GetPortfolioCurrentStatusQuery request, CancellationToken cancellationToken)
+        public async Task<GetPortfolioCurrentStatusResponse> Handle(GetPortfolioCurrentStatusRequest request, CancellationToken cancellationToken)
         {
             var member = await _context.Members
                 .Where(x => x.MemberUsername == request.MemberUsername)
@@ -37,7 +38,7 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolioCurrentStatus
             if (member == null)
                 throw new NotFoundException(nameof(Member), request.MemberUsername);
 
-            GetPortfolioCurrentStatusResult result = new GetPortfolioCurrentStatusResult
+            var result = new GetPortfolioCurrentStatusResponse
             {
                 MemberPreferredFiatCurrencySymbol = member.PreferredFiatCurrency.Symbol,
                 MemberPreferredCoinCurrencySymbol = member.PreferredCoinCurrency.Symbol

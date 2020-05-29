@@ -1,5 +1,6 @@
 ﻿using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Currencies.Queries.GetDistinctCurrenciesByMemberID;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Fortifex4.Application.Currencies.Queries.GetDistinctCurrenciesByMemberID
 {
-    public class GetDistinctCurrenciesByMemberIDQueryHandler : IRequestHandler<GetDistinctCurrenciesByMemberIDQuery, GetDistinctCurrenciesByMemberIDResult>
+    public class GetDistinctCurrenciesByMemberIDQueryHandler : IRequestHandler<GetDistinctCurrenciesByMemberIDRequest, GetDistinctCurrenciesByMemberIDResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -17,9 +18,9 @@ namespace Fortifex4.Application.Currencies.Queries.GetDistinctCurrenciesByMember
             _context = context;
         }
 
-        public async Task<GetDistinctCurrenciesByMemberIDResult> Handle(GetDistinctCurrenciesByMemberIDQuery request, CancellationToken cancellationToken)
+        public async Task<GetDistinctCurrenciesByMemberIDResponse> Handle(GetDistinctCurrenciesByMemberIDRequest request, CancellationToken cancellationToken)
         {
-            var result = new GetDistinctCurrenciesByMemberIDResult();
+            var result = new GetDistinctCurrenciesByMemberIDResponse();
 
             var currencies = await _context.Pockets
                 .Where(x => x.Wallet.Owner.MemberUsername == request.MemberUsername && x.CurrencyType == CurrencyType.Coin)

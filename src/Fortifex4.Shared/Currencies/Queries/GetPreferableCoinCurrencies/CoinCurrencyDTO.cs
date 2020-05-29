@@ -1,6 +1,4 @@
-﻿using Fortifex4.Domain.Entities;
-
-namespace Fortifex4.Application.Currencies.Queries.GetPreferrableCoinCurrencies
+﻿namespace Fortifex4.Shared.Currencies.Queries.GetPreferrableCoinCurrencies
 {
     public class CoinCurrencyDTO
     {

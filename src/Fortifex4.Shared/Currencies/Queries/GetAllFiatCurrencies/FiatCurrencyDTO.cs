@@ -1,4 +1,4 @@
-﻿namespace Fortifex4.Application.Currencies.Queries.GetAllFiatCurrencies
+﻿namespace Fortifex4.Shared.Currencies.Queries.GetAllFiatCurrencies
 {
     public class FiatCurrencyDTO
     {

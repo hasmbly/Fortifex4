@@ -1,7 +1,6 @@
-﻿using Fortifex4.Domain.Entities;
-using Fortifex4.Domain.Enums;
+﻿using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMember
+namespace Fortifex4.Shared.Currencies.Queries.GetDestinationCurrenciesForMember
 {
     public class CurrencyDTO
     {

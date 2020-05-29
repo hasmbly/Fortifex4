@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Fortifex4.Application.Currencies.Commands.UpdateFiatCurrencyCoinMarketCapIDs
+namespace Fortifex4.Shared.Currencies.Commands.UpdateFiatCurrencyCoinMarketCapIDs
 {
     public class FiatCurrencyMapJSON
     {

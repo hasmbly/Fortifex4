@@ -1,4 +1,5 @@
 ﻿using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Contributors.Queries.GetContributorsByMemberUsername;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fortifex4.Application.Contributors.Queries.GetContributorsByMemberUsername
 {
-    public class GetContributorsByMemberUsernameQueryHandler : IRequestHandler<GetContributorsByMemberUsernameQuery, GetContributorsByMemberUsernameResult>
+    public class GetContributorsByMemberUsernameQueryHandler : IRequestHandler<GetContributorsByMemberUsernameRequest, GetContributorsByMemberUsernameResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -16,9 +17,9 @@ namespace Fortifex4.Application.Contributors.Queries.GetContributorsByMemberUser
             _context = context;
         }
 
-        public async Task<GetContributorsByMemberUsernameResult> Handle(GetContributorsByMemberUsernameQuery query, CancellationToken cancellationToken)
+        public async Task<GetContributorsByMemberUsernameResponse> Handle(GetContributorsByMemberUsernameRequest query, CancellationToken cancellationToken)
         {
-            GetContributorsByMemberUsernameResult result = new GetContributorsByMemberUsernameResult();
+            var result = new GetContributorsByMemberUsernameResponse();
 
             var contributors = await _context.Contributors
                 .Where(x => x.MemberUsername == query.MemberUsername)

@@ -1,7 +1,7 @@
 ﻿using System;
 using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Members.Queries.GetPortfolio
+namespace Fortifex4.Shared.Members.Queries.GetPortfolio
 {
     public class TransactionDTO
     {

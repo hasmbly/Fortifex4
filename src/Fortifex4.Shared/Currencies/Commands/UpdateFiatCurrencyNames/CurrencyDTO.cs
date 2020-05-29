@@ -1,4 +1,4 @@
-﻿namespace Fortifex4.Application.Currencies.Commands.UpdateFiatCurrencyNames
+﻿namespace Fortifex4.Shared.Currencies.Commands.UpdateFiatCurrencyNames
 {
     public class CurrencyDTO
     {

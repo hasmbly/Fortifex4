@@ -1,4 +1,4 @@
-﻿namespace Fortifex4.Application.Enums
+﻿namespace Fortifex4.Shared.Enums
 {
     public enum UpdateStatus
     {

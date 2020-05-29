@@ -4,7 +4,7 @@ using System.Linq;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Members.Queries.GetPortfolio
+namespace Fortifex4.Shared.Members.Queries.GetPortfolio
 {
     public class CurrencyDTO
     {
@@ -21,7 +21,7 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolio
         public float PercentChange7d { get; set; }
         public float PercentChangeLifetime { get; set; }
 
-        public GetPortfolioResult Portfolio { get; set; }
+        public GetPortfolioResponse Portfolio { get; set; }
 
         public IList<TransactionDTO> Transactions { get; set; }
 

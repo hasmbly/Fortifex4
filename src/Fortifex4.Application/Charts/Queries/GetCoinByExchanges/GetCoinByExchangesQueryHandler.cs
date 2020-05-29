@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Fortifex4.Application.Common.Exceptions;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Crypto;
 using Fortifex4.Domain.Entities;
@@ -26,6 +26,8 @@ namespace Fortifex4.Application.Charts.Queries.GetCoinByExchanges
 
         public async Task<GetCoinByExchangesResponse> Handle(GetCoinByExchangesRequest request, CancellationToken cancellationToken)
         {
+            var result = new GetCoinByExchangesResponse();
+
             var member = await _context.Members
                 .Where(x => x.MemberUsername == request.MemberUsername)
                 .Include(a => a.Owners).ThenInclude(b => b.Wallets)
@@ -37,65 +39,69 @@ namespace Fortifex4.Application.Charts.Queries.GetCoinByExchanges
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (member == null)
-                throw new NotFoundException(nameof(Member), request.MemberUsername);
-
-            var result = new GetCoinByExchangesResponse
             {
-                MemberUsername = request.MemberUsername,
-                FiatCode = member.PreferredFiatCurrency.Symbol,
-                CryptoCode = member.PreferredCoinCurrency.Symbol
-            };
-
-            foreach (var owner in member.Owners)
+                result.IsSucessful = false;
+                result.ErrorMeesage = ErrorMessage.UsernameNotFound;
+            }
+            else
             {
-                List<decimal> amountExchangeCoin = new List<decimal>();
+                result.IsSucessful = true;
 
-                result.Labels.Add(owner.Provider.Name);
+                result.MemberUsername = request.MemberUsername;
+                result.FiatCode = member.PreferredFiatCurrency.Symbol;
+                result.CryptoCode = member.PreferredCoinCurrency.Symbol;
 
-                foreach (var wallet in owner.Wallets.Where(x => x.BlockchainID != BlockchainID.Fiat))
+                foreach (var owner in member.Owners)
                 {
-                    decimal amount = 0;
-                    decimal totalUnitPrice = 0;
-                    decimal currentUnitPriceInPreferredFiatCurrency = 0;
+                    List<decimal> amountExchangeCoin = new List<decimal>();
 
-                    var mainPocket = await _context.Pockets
-                                .Where(x => x.WalletID == wallet.WalletID && x.IsMain)
-                                .Include(a => a.Transactions)
-                                .Include(b => b.Currency)
-                                .AsNoTracking()
-                                .SingleOrDefaultAsync(cancellationToken);
+                    result.Labels.Add(owner.Provider.Name);
 
-                    if (mainPocket != null)
+                    foreach (var wallet in owner.Wallets.Where(x => x.BlockchainID != BlockchainID.Fiat))
                     {
-                        currentUnitPriceInPreferredFiatCurrency = await _cryptoService.GetUnitPriceAsync(mainPocket.Currency.Symbol, member.PreferredFiatCurrency.Symbol);
+                        decimal amount = 0;
+                        decimal totalUnitPrice = 0;
+                        decimal currentUnitPriceInPreferredFiatCurrency = 0;
 
-                        var selectedTransactions = mainPocket.Transactions
-                            .Where(x =>
-                                x.TransactionType == TransactionType.ExternalTransferIN ||
-                                x.TransactionType == TransactionType.ExternalTransferOUT ||
-                                x.TransactionType == TransactionType.BuyIN ||
-                                x.TransactionType == TransactionType.BuyOUT ||
-                                x.TransactionType == TransactionType.SellIN ||
-                                x.TransactionType == TransactionType.SellOUT ||
-                                x.TransactionType == TransactionType.SyncTransactionIN ||
-                                x.TransactionType == TransactionType.SyncTransactionOUT ||
-                                x.TransactionType == TransactionType.BuyOUTNonWithholding ||
-                                x.TransactionType == TransactionType.SellINNonWithholding)
-                            .OrderBy(o => o.TransactionDateTime)
-                            .ToList();
+                        var mainPocket = await _context.Pockets
+                                    .Where(x => x.WalletID == wallet.WalletID && x.IsMain)
+                                    .Include(a => a.Transactions)
+                                    .Include(b => b.Currency)
+                                    .AsNoTracking()
+                                    .SingleOrDefaultAsync(cancellationToken);
 
-                        foreach (var transaction in selectedTransactions)
+                        if (mainPocket != null)
                         {
-                            amount += transaction.Amount;
+                            currentUnitPriceInPreferredFiatCurrency = await _cryptoService.GetUnitPriceAsync(mainPocket.Currency.Symbol, member.PreferredFiatCurrency.Symbol);
+
+                            var selectedTransactions = mainPocket.Transactions
+                                .Where(x =>
+                                    x.TransactionType == TransactionType.ExternalTransferIN ||
+                                    x.TransactionType == TransactionType.ExternalTransferOUT ||
+                                    x.TransactionType == TransactionType.BuyIN ||
+                                    x.TransactionType == TransactionType.BuyOUT ||
+                                    x.TransactionType == TransactionType.SellIN ||
+                                    x.TransactionType == TransactionType.SellOUT ||
+                                    x.TransactionType == TransactionType.SyncTransactionIN ||
+                                    x.TransactionType == TransactionType.SyncTransactionOUT ||
+                                    x.TransactionType == TransactionType.BuyOUTNonWithholding ||
+                                    x.TransactionType == TransactionType.SellINNonWithholding)
+                                .OrderBy(o => o.TransactionDateTime)
+                                .ToList();
+
+                            foreach (var transaction in selectedTransactions)
+                            {
+                                amount += transaction.Amount;
+                            }
                         }
+
+                        totalUnitPrice = amount * currentUnitPriceInPreferredFiatCurrency;
+
+                        amountExchangeCoin.Add(totalUnitPrice);
                     }
 
-                    totalUnitPrice = amount * currentUnitPriceInPreferredFiatCurrency;
-
-                    amountExchangeCoin.Add(totalUnitPrice);
+                    result.Value.Add(amountExchangeCoin.Sum());
                 }
-
-                result.Value.Add(amountExchangeCoin.Sum());
             }
 
             return result;

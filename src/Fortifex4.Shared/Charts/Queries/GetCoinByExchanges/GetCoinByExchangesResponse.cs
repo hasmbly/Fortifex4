@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Fortifex4.Shared.Common;
 
 namespace Fortifex4.Shared.Charts.Queries.GetCoinByExchanges
 {
-    public class GetCoinByExchangesResponse
+    public class GetCoinByExchangesResponse : GeneralResponse
     {
         public string MemberUsername { get; set; }
         public int CryptocurrencyID { get; set; }

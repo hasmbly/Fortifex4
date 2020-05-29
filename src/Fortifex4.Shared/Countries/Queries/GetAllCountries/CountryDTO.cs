@@ -1,4 +1,4 @@
-﻿namespace Fortifex4.Application.Countries.Queries.GetAllCountries
+﻿namespace Fortifex4.Shared.Countries.Queries.GetAllCountries
 {
     public class CountryDTO
     {

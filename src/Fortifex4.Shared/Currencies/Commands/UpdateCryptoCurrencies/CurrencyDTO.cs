@@ -2,7 +2,7 @@
 using Fortifex4.Application.Enums;
 using Fortifex4.Domain.Enums;
 
-namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
+namespace Fortifex4.Shared.Currencies.Commands.UpdateCryptoCurrencies
 {
     public class CurrencyDTO
     {

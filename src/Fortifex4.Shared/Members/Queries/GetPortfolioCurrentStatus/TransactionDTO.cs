@@ -1,7 +1,4 @@
-﻿using System;
-using Fortifex4.Domain.Enums;
-
-namespace Fortifex4.Application.Members.Queries.GetPortfolioCurrentStatus
+﻿namespace Fortifex4.Shared.Members.Queries.GetPortfolioCurrentStatus
 {
     public class TransactionDTO
     {

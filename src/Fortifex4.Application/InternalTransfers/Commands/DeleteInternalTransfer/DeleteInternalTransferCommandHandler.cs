@@ -3,13 +3,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fortifex4.Application.InternalTransfers.Commands.DeleteInternalTransfer
+namespace Fortifex4.Shared.InternalTransfers.Commands.DeleteInternalTransfer
 {
-    public class DeleteInternalTransferCommandHandler : IRequestHandler<DeleteInternalTransferCommand, DeleteInternalTransferResult>
+    public class DeleteInternalTransferCommandHandler : IRequestHandler<DeleteInternalTransferRequest, DeleteInternalTransferResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -18,9 +17,9 @@ namespace Fortifex4.Application.InternalTransfers.Commands.DeleteInternalTransfe
             _context = context;
         }
 
-        public async Task<DeleteInternalTransferResult> Handle(DeleteInternalTransferCommand request, CancellationToken cancellationToken)
+        public async Task<DeleteInternalTransferResponse> Handle(DeleteInternalTransferRequest request, CancellationToken cancellationToken)
         {
-            DeleteInternalTransferResult result = new DeleteInternalTransferResult
+            var result = new DeleteInternalTransferResponse
             {
                 IsSuccessful = false
             };

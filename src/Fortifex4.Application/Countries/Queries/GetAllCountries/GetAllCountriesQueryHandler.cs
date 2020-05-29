@@ -1,12 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Countries.Queries.GetAllCountries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Countries.Queries.GetAllCountries
 {
-    public class GetAllCountriesQueryHandler : IRequestHandler<GetAllCountriesQuery, GetAllCountriesResult>
+    public class GetAllCountriesQueryHandler : IRequestHandler<GetAllCountriesRequest, GetAllCountriesResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -15,9 +16,9 @@ namespace Fortifex4.Application.Countries.Queries.GetAllCountries
             _context = context;
         }
 
-        public async Task<GetAllCountriesResult> Handle(GetAllCountriesQuery request, CancellationToken cancellationToken)
+        public async Task<GetAllCountriesResponse> Handle(GetAllCountriesRequest request, CancellationToken cancellationToken)
         {
-            var result = new GetAllCountriesResult();
+            var result = new GetAllCountriesResponse();
 
             var countries = await _context.Countries.ToListAsync(cancellationToken);
 

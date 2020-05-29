@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Fortifex4.Application.Members.Queries.GetPortfolio
+namespace Fortifex4.Shared.Members.Queries.GetPortfolio
 {
-    public class GetPortfolioResult
+    public class GetPortfolioResponse
     {
         public int MemberPreferredFiatCurrencyID { get; set; }
         public string MemberPreferredFiatCurrencySymbol { get; set; }
@@ -16,7 +16,7 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolio
 
         public IList<CurrencyDTO> Currencies { get; set; }
 
-        public GetPortfolioResult()
+        public GetPortfolioResponse()
         {
             this.Currencies = new List<CurrencyDTO>();
         }

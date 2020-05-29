@@ -6,12 +6,13 @@ using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Lookup.Queries.GetOwners;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Lookup.Queries.GetOwners
 {
-    public class GetOwnersQueryHandler : IRequestHandler<GetOwnersQuery, GetOwnersResult>
+    public class GetOwnersQueryHandler : IRequestHandler<GetOwnersRequest, GetOwnersResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -20,7 +21,7 @@ namespace Fortifex4.Application.Lookup.Queries.GetOwners
             _context = context;
         }
 
-        public async Task<GetOwnersResult> Handle(GetOwnersQuery query, CancellationToken cancellationToken)
+        public async Task<GetOwnersResponse> Handle(GetOwnersRequest query, CancellationToken cancellationToken)
         {
             var member = await _context.Members
                 .Where(x => x.MemberUsername == query.MemberUsername)
@@ -47,7 +48,7 @@ namespace Fortifex4.Application.Lookup.Queries.GetOwners
                 ownerDTOs.Add(ownerDTO);
             }
 
-            return new GetOwnersResult
+            return new GetOwnersResponse
             {
                 Owners = ownerDTOs
             };

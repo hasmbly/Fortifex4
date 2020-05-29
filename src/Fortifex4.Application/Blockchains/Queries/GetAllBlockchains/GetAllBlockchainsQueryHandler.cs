@@ -27,17 +27,22 @@ namespace Fortifex4.Application.Blockchains.Queries.GetAllBlockchains
                 .OrderBy(x => x.Rank)
                 .ToListAsync(cancellationToken);
 
-            foreach (var blockchain in blockchains)
+            if (blockchains.Count > 0)
             {
-                result.Blockchains.Add(new BlockchainDTO
-                {
-                    BlockchainID = blockchain.BlockchainID,
-                    Symbol = blockchain.Symbol,
-                    Name = blockchain.Name,
-                    Rank = blockchain.Rank
-                });
-            }
+                result.IsSucessful = true;
 
+                foreach (var blockchain in blockchains)
+                {
+                    result.Blockchains.Add(new BlockchainDTO
+                    {
+                        BlockchainID = blockchain.BlockchainID,
+                        Symbol = blockchain.Symbol,
+                        Name = blockchain.Name,
+                        Rank = blockchain.Rank
+                    });
+                }
+            }
+            
             return result;
         }
     }

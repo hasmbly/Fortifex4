@@ -1,7 +1,7 @@
 ﻿using System;
-using Fortifex4.Application.Enums;
+using Fortifex4.Shared.Enums;
 
-namespace Fortifex4.Application.Currencies.Commands.UpdateFiatCurrencies
+namespace Fortifex4.Shared.Currencies.Commands.UpdateFiatCurrencies
 {
     public class CurrencyDTO
     {

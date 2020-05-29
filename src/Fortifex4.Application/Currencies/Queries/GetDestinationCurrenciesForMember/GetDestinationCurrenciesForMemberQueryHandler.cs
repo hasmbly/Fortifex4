@@ -5,12 +5,13 @@ using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Currencies.Queries.GetDestinationCurrenciesForMember;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMember
 {
-    public class GetDestinationCurrenciesForMemberQueryHandler : IRequestHandler<GetDestinationCurrenciesForMemberQuery, GetDestinationCurrenciesForMemberResult>
+    public class GetDestinationCurrenciesForMemberQueryHandler : IRequestHandler<GetDestinationCurrenciesForMemberRequest, GetDestinationCurrenciesForMemberResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -19,9 +20,9 @@ namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMe
             _context = context;
         }
 
-        public async Task<GetDestinationCurrenciesForMemberResult> Handle(GetDestinationCurrenciesForMemberQuery query, CancellationToken cancellationToken)
+        public async Task<GetDestinationCurrenciesForMemberResponse> Handle(GetDestinationCurrenciesForMemberRequest query, CancellationToken cancellationToken)
         {
-            var result = new GetDestinationCurrenciesForMemberResult();
+            var result = new GetDestinationCurrenciesForMemberResponse();
 
             var member = await _context.Members
                 .Where(x => x.MemberUsername == query.MemberUsername)
@@ -48,7 +49,7 @@ namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMe
                 .Include(a => a.Blockchain)
                 .SingleOrDefaultAsync(cancellationToken);
 
-            result.Currencies.Add(new CurrencyDTO 
+            result.Currencies.Add(new CurrencyDTO
             {
                 CurrencyID = currencyUSD.CurrencyID,
                 Name = currencyUSD.Name,

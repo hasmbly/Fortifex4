@@ -6,23 +6,13 @@ using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.ExternalTransfers.Commands.UpdateExternalTransfer;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.ExternalTransfers.Commands.UpdateExternalTransfer
 {
-    public class UpdateExternalTransferCommand : IRequest<UpdateExternalTransferResult>
-    {
-        public int TransactionID { get; set; }
-        public TransferDirection TransferDirection { get; set; }
-        public decimal Amount { get; set; }
-        public decimal UnitPriceInUSD { get; set; }
-        public DateTimeOffset TransactionDateTime { get; set; }
-        public string PairWalletName { get; set; }
-        public string PairWalletAddress { get; set; }
-    }
-
-    public class UpdateExternalTransferCommandHandler : IRequestHandler<UpdateExternalTransferCommand, UpdateExternalTransferResult>
+    public class UpdateExternalTransferCommandHandler : IRequestHandler<UpdateExternalTransferRequest, UpdateExternalTransferResponse>
     {
         private readonly IFortifex4DBContext _context;
         private readonly IDateTimeOffsetService _dateTimeOffset;
@@ -33,9 +23,9 @@ namespace Fortifex4.Application.ExternalTransfers.Commands.UpdateExternalTransfe
             _dateTimeOffset = dateTimeOffset;
         }
 
-        public async Task<UpdateExternalTransferResult> Handle(UpdateExternalTransferCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateExternalTransferResponse> Handle(UpdateExternalTransferRequest request, CancellationToken cancellationToken)
         {
-            var result = new UpdateExternalTransferResult();
+            var result = new UpdateExternalTransferResponse();
 
             var transaction = await _context.Transactions
                 .Where(x => x.TransactionID == request.TransactionID)

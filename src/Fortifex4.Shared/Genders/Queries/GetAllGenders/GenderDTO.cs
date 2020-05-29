@@ -1,6 +1,6 @@
 ﻿using Fortifex4.Domain.Entities;
 
-namespace Fortifex4.Application.Genders.Queries.GetAllGenders
+namespace Fortifex4.Shared.Genders.Queries.GetAllGenders
 {
     public class GenderDTO
     {

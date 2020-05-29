@@ -1,4 +1,4 @@
-﻿namespace Fortifex4.Application.Lookup.Queries.GetOwners
+﻿namespace Fortifex4.Shared.Lookup.Queries.GetOwners
 {
     public class OwnerDTO
     {

@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Members.Queries.GetMember;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Members.Queries.GetMember
 {
-    public class GetMemberQueryHandler : IRequestHandler<GetMemberQuery, GetMemberResult>
+    public class GetMemberQueryHandler : IRequestHandler<GetMemberRequest, GetMemberResponse>
     {
         private readonly IFortifex4DBContext _context;
 
@@ -18,7 +19,7 @@ namespace Fortifex4.Application.Members.Queries.GetMember
             _context = context;
         }
 
-        public async Task<GetMemberResult> Handle(GetMemberQuery query, CancellationToken cancellationToken)
+        public async Task<GetMemberResponse> Handle(GetMemberRequest query, CancellationToken cancellationToken)
         {
             var member = await _context.Members.Where(x => x.MemberUsername == query.MemberUsername)
                 .Include(a => a.Gender)
@@ -31,7 +32,7 @@ namespace Fortifex4.Application.Members.Queries.GetMember
             if (member == null)
                 throw new NotFoundException(nameof(Member), query.MemberUsername);
 
-            var result = new GetMemberResult 
+            var result = new GetMemberResponse
             {
                 MemberUsername = member.MemberUsername,
                 FirstName = member.FirstName,

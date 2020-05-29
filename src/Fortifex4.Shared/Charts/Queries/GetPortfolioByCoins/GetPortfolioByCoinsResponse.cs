@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Fortifex4.Shared.Common;
 
 namespace Fortifex4.Shared.Charts.Queries.GetPortfolioByCoins
 {
-    public class GetPortfolioByCoinsResponse
+    public class GetPortfolioByCoinsResponse : GeneralResponse
     {
         public string MemberUsername { get; set; }
         public string Title { get; set; }
