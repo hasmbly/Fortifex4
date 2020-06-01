@@ -8,6 +8,7 @@ using Fortifex4.Application.Common.Interfaces.Crypto;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Charts.Queries.GetPortfolioByExchanges;
+using Fortifex4.Shared.Constants;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,8 @@ namespace Fortifex4.Application.Charts.Queries.GetPortfolioByExchanges
 
         public async Task<GetPortfolioByExchangesResponse> Handle(GetPortfolioByExchangesRequest request, CancellationToken cancellationToken)
         {
+            var result = new GetPortfolioByExchangesResponse();
+
             var member = await _context.Members
                 .Where(x => x.MemberUsername == request.MemberUsername)
                 .Include(a => a.Owners).ThenInclude(b => b.Wallets)
@@ -37,14 +40,16 @@ namespace Fortifex4.Application.Charts.Queries.GetPortfolioByExchanges
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (member == null)
-                throw new NotFoundException(nameof(Member), request.MemberUsername);
-
-            var result = new GetPortfolioByExchangesResponse
             {
-                MemberUsername = request.MemberUsername,
-                FiatCode = member.PreferredFiatCurrency.Symbol,
-                CryptoCode = member.PreferredCoinCurrency.Symbol
-            };
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.MemberUsernameNotFound;
+
+                return result;
+            }
+
+            result.MemberUsername = request.MemberUsername;
+            result.FiatCode = member.PreferredFiatCurrency.Symbol;
+            result.CryptoCode = member.PreferredCoinCurrency.Symbol;
 
             foreach (var owner in member.Owners)
             {

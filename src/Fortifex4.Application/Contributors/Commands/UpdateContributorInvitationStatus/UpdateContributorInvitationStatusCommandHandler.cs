@@ -1,5 +1,6 @@
 ﻿using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Contributors.Commands.UpdateContributorInvitationStatus;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,12 @@ namespace Fortifex4.Application.Contributors.Commands.UpdateContributorInvitatio
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (contributor == null)
-                throw new NotFoundException(nameof(contributor), request.ContributorID);
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.ContributorNotFound;
+
+                return result;
+            }
 
             contributor.InvitationStatus = request.InvitationStatus;
 

@@ -46,7 +46,7 @@ namespace Fortifex4.Application.Members.Commands.UpdatePreferredCoinCurrency
 
             return new UpdatePreferredCoinCurrencyResponse 
             {
-                IsSucessful = true
+                IsSuccessful = true
             };
         }
     }

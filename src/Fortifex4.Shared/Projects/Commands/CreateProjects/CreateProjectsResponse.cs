@@ -1,8 +1,9 @@
-﻿namespace Fortifex4.Shared.Projects.Commands.CreateProjects
+﻿using Fortifex4.Shared.Common;
+
+namespace Fortifex4.Shared.Projects.Commands.CreateProjects
 {
-    public class CreateProjectsResponse
+    public class CreateProjectsResponse : GeneralResponse
     {
-        public bool IsSuccessful { get; set; }
         public int ProjectID { get; set; }
     }
 }

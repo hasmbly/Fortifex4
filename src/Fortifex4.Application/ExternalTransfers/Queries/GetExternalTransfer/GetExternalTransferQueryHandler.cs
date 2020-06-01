@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.ExternalTransfers.Queries.GetExternalTransfer;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +20,8 @@ namespace Fortifex4.Application.ExternalTransfers.Queries.GetExternalTransfer
 
         public async Task<GetExternalTransferResponse> Handle(GetExternalTransferRequest request, CancellationToken cancellationToken)
         {
+            var result = new GetExternalTransferResponse();
+
             var transaction = await _context.Transactions
                 .Where(x => x.TransactionID == request.TransactionID)
                 .Include(a => a.Pocket)
@@ -32,21 +33,28 @@ namespace Fortifex4.Application.ExternalTransfers.Queries.GetExternalTransfer
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (transaction == null)
-                throw new NotFoundException(nameof(Transaction), request.TransactionID);
-
-            return new GetExternalTransferResponse
             {
-                WalletName = transaction.Pocket.Wallet.Name,
-                WalletOwnerProviderName = transaction.Pocket.Wallet.Owner.Provider.Name,
-                WalletMainPocketCurrencyName = transaction.Pocket.Currency.Name,
-                WalletMainPocketCurrencySymbol = transaction.Pocket.Currency.Symbol,
-                TransactionType = transaction.TransactionType,
-                Amount = transaction.Amount,
-                UnitPriceInUSD = transaction.UnitPriceInUSD,
-                TransactionDateTime = transaction.TransactionDateTime,
-                PairWalletName = transaction.PairWalletName,
-                PairWalletAddress = transaction.PairWalletAddress
-            };
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.TransactionNotFound;
+
+                return result;
+            }
+
+            result.IsSuccessful = true;
+            result.WalletName = transaction.Pocket.Wallet.Name;
+            result.WalletOwnerProviderName = transaction.Pocket.Wallet.Owner.Provider.Name;
+            result.WalletMainPocketCurrencyName = transaction.Pocket.Currency.Name;
+            result.WalletMainPocketCurrencySymbol = transaction.Pocket.Currency.Symbol;
+            result.TransactionType = transaction.TransactionType;
+            result.Amount = transaction.Amount;
+            result.UnitPriceInUSD = transaction.UnitPriceInUSD;
+            result.TransactionDateTime = transaction.TransactionDateTime;
+            result.PairWalletName = transaction.PairWalletName;
+            result.PairWalletAddress = transaction.PairWalletAddress;
+
+            result.IsSuccessful = true;
+
+            return result;
         }
     }
 }

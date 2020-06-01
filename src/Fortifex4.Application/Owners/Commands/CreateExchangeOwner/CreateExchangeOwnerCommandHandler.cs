@@ -36,7 +36,7 @@ namespace Fortifex4.Application.Owners.Commands.CreateExchangeOwner
 
             return new CreateExchangeOwnerResponse 
             {
-                IsSucessful = true,
+                IsSuccessful = true,
                 OwnerID = entity.OwnerID
             };
         }

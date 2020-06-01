@@ -38,7 +38,7 @@ namespace Fortifex4.Application.Members.Commands.UpdateMember
 
             return new UpdateMemberResponse
             {
-                IsSucessful = true
+                IsSuccessful = true
             };
         }
     }

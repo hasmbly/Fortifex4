@@ -1,8 +1,9 @@
-﻿namespace Fortifex4.Shared.Deposits.Commands.DeleteDeposit
+﻿using Fortifex4.Shared.Common;
+
+namespace Fortifex4.Shared.Deposits.Commands.DeleteDeposit
 {
-    public class DeleteDepositResponse
+    public class DeleteDepositResponse : GeneralResponse
     {
         public int WalletID { get; set; }
-        public bool IsSuccessful { get; set; }
     }
 }

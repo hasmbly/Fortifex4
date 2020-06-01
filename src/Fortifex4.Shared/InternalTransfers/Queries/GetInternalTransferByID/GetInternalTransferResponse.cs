@@ -1,8 +1,9 @@
 ﻿using System;
+using Fortifex4.Shared.Common;
 
 namespace Fortifex4.Shared.InternalTransfers.Queries.GetInternalTransfer
 {
-    public class GetInternalTransferResponse
+    public class GetInternalTransferResponse : GeneralResponse
     {
         public int InternalTransferID { get; set; }
         public decimal TransactionAmount { get; set; }

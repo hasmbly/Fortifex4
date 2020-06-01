@@ -1,7 +1,8 @@
-﻿namespace Fortifex4.Shared.Contributors.Commands.UpdateContributorInvitationStatus
+﻿using Fortifex4.Shared.Common;
+
+namespace Fortifex4.Shared.Contributors.Commands.UpdateContributorInvitationStatus
 {
-    public class UpdateContributorInvitationStatusResponse
+    public class UpdateContributorInvitationStatusResponse : GeneralResponse
     {
-        public bool IsSuccessful { get; set; }
     }
 }

@@ -1,7 +1,8 @@
-﻿namespace Fortifex4.Shared.InternalTransfers.Commands.UpdateInternalTransfer
+﻿using Fortifex4.Shared.Common;
+
+namespace Fortifex4.Shared.InternalTransfers.Commands.UpdateInternalTransfer
 {
-    public class UpdateInternalTransferResponse
+    public class UpdateInternalTransferResponse : GeneralResponse
     {
-        public bool IsSuccessful { get; set; }
     }
 }

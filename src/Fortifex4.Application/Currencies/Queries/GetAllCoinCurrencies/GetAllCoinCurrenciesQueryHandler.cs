@@ -1,5 +1,6 @@
 ﻿using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Currencies.Queries.GetAllCoinCurrencies;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,14 @@ namespace Fortifex4.Application.Currencies.Queries.GetAllCoinCurrencies
                 .OrderBy(x => x.Rank)
                 .ToListAsync(cancellationToken);
 
+            if (coinCurrencies.Count == 0)
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.CoinCurrenciesNotFound;
+
+                return result;
+            }
+
             foreach (var coinCurrency in coinCurrencies)
             {
                 result.CoinCurrencies.Add(new CoinCurrencyDTO
@@ -38,6 +47,8 @@ namespace Fortifex4.Application.Currencies.Queries.GetAllCoinCurrencies
                     Symbol = coinCurrency.Symbol
                 });
             }
+
+            result.IsSuccessful = true;
 
             return result;
         }

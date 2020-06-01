@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Currencies.Queries.GetUnitPriceInUSD;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +27,14 @@ namespace Fortifex4.Application.Currencies.Queries.GetUnitPriceInUSD
                 .OrderBy(x => x.Rank)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if (currency != null)
-                result.UnitPriceInUSD = currency.UnitPriceInUSD;
+            if (currency == null)
+            {
+                result.IsSuccessful = true;
+                result.ErrorMessage = ErrorMessage.CurrencyNotFound;
+            }
+
+            result.IsSuccessful = true;
+            result.UnitPriceInUSD = currency.UnitPriceInUSD;
 
             return result;
         }

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.InternalTransfers.Commands.UpdateInternalTransfer;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,12 @@ namespace Fortifex4.Application.InternalTransfers.Commands.UpdateInternalTransfe
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (internalTransfer == null)
-                throw new NotFoundException(nameof(internalTransfer), request.InternalTransferID);
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.InternalTransferNotFound;
+
+                return result;
+            }
 
             decimal amount = request.Amount;
 

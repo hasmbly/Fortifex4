@@ -42,6 +42,7 @@ namespace Fortifex4.Application.Trades.Queries.GetTrade
 
             var result = new GetTradeResponse
             {
+                IsSuccessful = true,
                 TradeID = trade.TradeID,
                 OwnerID = trade.FromTransaction.Pocket.Wallet.OwnerID,
                 SourceCurrencyID = trade.FromTransaction.Pocket.CurrencyID,

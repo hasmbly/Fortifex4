@@ -1,9 +1,10 @@
 ﻿using System;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Common;
 
 namespace Fortifex4.Shared.ExternalTransfers.Queries.GetExternalTransfer
 {
-    public class GetExternalTransferResponse
+    public class GetExternalTransferResponse : GeneralResponse
     {
         public string WalletName { get; set; }
         public string WalletOwnerProviderName { get; set; }

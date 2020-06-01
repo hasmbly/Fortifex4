@@ -7,17 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8A9455A7-119
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{489EE07F-4BDF-4A2C-8AF1-B172A0514CA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fortifex4.Domain", "src\Fortifex4.Domain\Fortifex4.Domain.csproj", "{584EFCB1-1583-4186-9902-8C2829FF5B28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortifex4.Domain", "src\Fortifex4.Domain\Fortifex4.Domain.csproj", "{584EFCB1-1583-4186-9902-8C2829FF5B28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fortifex4.Application", "src\Fortifex4.Application\Fortifex4.Application.csproj", "{060C9C34-37AB-46E8-AD03-825D7491132E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortifex4.Application", "src\Fortifex4.Application\Fortifex4.Application.csproj", "{060C9C34-37AB-46E8-AD03-825D7491132E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fortifex4.Infrastructure", "src\Fortifex4.Infrastructure\Fortifex4.Infrastructure.csproj", "{7CAE5D55-4596-45A3-8836-21F34A956317}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortifex4.Infrastructure", "src\Fortifex4.Infrastructure\Fortifex4.Infrastructure.csproj", "{7CAE5D55-4596-45A3-8836-21F34A956317}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fortifex4.WebAPI", "src\Fortifex4.WebAPI\Fortifex4.WebAPI.csproj", "{053AC6BC-2810-40FB-960D-DBE0B3169632}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortifex4.WebAPI", "src\Fortifex4.WebAPI\Fortifex4.WebAPI.csproj", "{053AC6BC-2810-40FB-960D-DBE0B3169632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fortifex4.Shared", "src\Fortifex4.Shared\Fortifex4.Shared.csproj", "{E4B3C942-E7E9-45A6-9A4B-C2E6C70BA5AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortifex4.Shared", "src\Fortifex4.Shared\Fortifex4.Shared.csproj", "{E4B3C942-E7E9-45A6-9A4B-C2E6C70BA5AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fortifex4.WebUI", "src\Fortifex4.WebUI\Fortifex4.WebUI.csproj", "{7C958AE3-AEAA-447A-B615-90F0A4904A21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortifex4.WebUI", "src\Fortifex4.WebUI\Fortifex4.WebUI.csproj", "{7C958AE3-AEAA-447A-B615-90F0A4904A21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

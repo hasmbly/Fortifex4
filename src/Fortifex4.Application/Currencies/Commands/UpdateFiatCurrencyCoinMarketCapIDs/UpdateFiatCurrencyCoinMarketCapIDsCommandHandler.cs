@@ -56,6 +56,8 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateFiatCurrencyCoinMarket
                 }
             }
 
+            result.IsSuccessful = true;
+
             return result;
         }
     }

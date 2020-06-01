@@ -5,6 +5,7 @@ using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Deposits.Commands.CreateDeposit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,12 @@ namespace Fortifex4.Application.Deposits.Commands.CreateDeposit
                     .SingleOrDefaultAsync(cancellationToken);
 
                 if (walletForDeposit == null)
-                    throw new NotFoundException(nameof(Wallet), request.WalletID.Value);
+                {
+                    result.IsSuccessful = false;
+                    result.ErrorMessage = ErrorMessage.WalletNotFound;
+
+                    return result;
+                }
 
                 pocketForDeposit = walletForDeposit.Pockets.Single(x => x.IsMain);
             }
@@ -49,14 +55,24 @@ namespace Fortifex4.Application.Deposits.Commands.CreateDeposit
                 .SingleOrDefaultAsync(cancellationToken);
 
                 if (owner == null)
-                    throw new NotFoundException(nameof(Owner), request.OwnerID);
+                {
+                    result.IsSuccessful = false;
+                    result.ErrorMessage = ErrorMessage.OwnerNotFound;
+
+                    return result;
+                }
 
                 Currency currency = await _context.Currencies
                     .Where(x => x.CurrencyID == request.CurrencyID)
                     .SingleOrDefaultAsync(cancellationToken);
 
                 if (currency == null)
-                    throw new NotFoundException(nameof(Currency), request.CurrencyID);
+                {
+                    result.IsSuccessful = false;
+                    result.ErrorMessage = ErrorMessage.CurrencyNotFound;
+
+                    return result;
+                }
 
                 #region Preparing Wallet and Pocket
 
@@ -120,6 +136,7 @@ namespace Fortifex4.Application.Deposits.Commands.CreateDeposit
             _context.Transactions.Add(transactionForDeposit);
             await _context.SaveChangesAsync(cancellationToken);
 
+            result.IsSuccessful = true;
             result.TransactionID = transactionForDeposit.TransactionID;
             result.PocketID = pocketForDeposit.PocketID;
             result.WalletID = walletForDeposit.WalletID;

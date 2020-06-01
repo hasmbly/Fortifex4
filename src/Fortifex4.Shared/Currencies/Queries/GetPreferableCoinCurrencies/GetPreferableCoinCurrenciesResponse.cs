@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Fortifex4.Shared.Common;
 
 namespace Fortifex4.Shared.Currencies.Queries.GetPreferrableCoinCurrencies
 {
-    public class GetPreferableCoinCurrenciesResponse
+    public class GetPreferableCoinCurrenciesResponse : GeneralResponse
     {
         public IList<CoinCurrencyDTO> CoinCurrencies { get; set; }
 

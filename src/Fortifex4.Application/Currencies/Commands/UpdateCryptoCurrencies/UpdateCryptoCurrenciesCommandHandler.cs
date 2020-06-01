@@ -29,6 +29,7 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
 
             if (cryptoBlockchainCollection != null)
             {
+                result.IsSuccessful = true;
                 // Segala sesuatunya haarus berdasarkan CoinMarketCapID
                 // Di entity Blockchain, isi BlockchainID adalah CoinMarketCapID
                 foreach (var cryptoBlockchain in cryptoBlockchainCollection.Blockchains)

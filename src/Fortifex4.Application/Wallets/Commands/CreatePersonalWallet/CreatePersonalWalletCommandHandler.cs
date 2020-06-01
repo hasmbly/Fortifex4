@@ -96,7 +96,7 @@ namespace Fortifex4.Application.Wallets.Commands.CreatePersonalWallet
 
             return new CreatePersonalWalletResponse 
             {
-                IsSucessful = true,
+                IsSuccessful = true,
                 WalletID = wallet.WalletID
             };
         }

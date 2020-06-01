@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Constants;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,7 +30,12 @@ namespace Fortifex4.Shared.InternalTransfers.Commands.DeleteInternalTransfer
                 .SingleOrDefaultAsync();
 
             if (internalTransfers == null)
-                throw new NotFoundException(nameof(InternalTransfers), request.InternalTransfersID);
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.InternalTransferNotFound;
+
+                return result;
+            }
 
             _context.InternalTransfers.Remove(internalTransfers);
             await _context.SaveChangesAsync(cancellationToken);

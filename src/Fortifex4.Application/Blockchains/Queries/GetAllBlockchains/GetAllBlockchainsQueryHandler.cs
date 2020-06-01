@@ -29,7 +29,7 @@ namespace Fortifex4.Application.Blockchains.Queries.GetAllBlockchains
 
             if (blockchains.Count > 0)
             {
-                result.IsSucessful = true;
+                result.IsSuccessful = true;
 
                 foreach (var blockchain in blockchains)
                 {

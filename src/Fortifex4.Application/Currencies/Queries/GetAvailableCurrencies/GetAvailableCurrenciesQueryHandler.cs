@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Currencies.Queries.GetAvailableCurrencies;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +32,12 @@ namespace Fortifex4.Application.Currencies.Queries.GetAvailableCurrencies
                    .SingleOrDefaultAsync(cancellationToken);
 
             if (owner == null)
-                throw new NotFoundException(nameof(Owner), request.OwnerID);
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.OwnerNotFound;
+
+                return result;
+            }
 
             List<int> usedCurrencyIDs = new List<int>();
 
@@ -66,6 +71,8 @@ namespace Fortifex4.Application.Currencies.Queries.GetAvailableCurrencies
                 }
             }
 
+            result.IsSuccessful = true;
+            
             return result;
         }
     }

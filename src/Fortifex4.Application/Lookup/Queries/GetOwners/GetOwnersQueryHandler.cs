@@ -6,6 +6,7 @@ using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Lookup.Queries.GetOwners;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,13 @@ namespace Fortifex4.Application.Lookup.Queries.GetOwners
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (member == null)
-                throw new NotFoundException(nameof(Member), query.MemberUsername);
+            {
+                return new GetOwnersResponse
+                {
+                    IsSuccessful = false,
+                    ErrorMessage = ErrorMessage.MemberUsernameNotFound
+                };
+            }
 
             var owners = await _context.Owners
                 .Where(x => x.MemberUsername == query.MemberUsername && x.ProviderType == ProviderType.Exchange)
@@ -50,6 +57,7 @@ namespace Fortifex4.Application.Lookup.Queries.GetOwners
 
             return new GetOwnersResponse
             {
+                IsSuccessful = true,
                 Owners = ownerDTOs
             };
         }

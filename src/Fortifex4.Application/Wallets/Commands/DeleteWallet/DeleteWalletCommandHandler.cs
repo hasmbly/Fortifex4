@@ -66,7 +66,7 @@ namespace Fortifex4.Application.Wallets.Commands.DeleteWallet
 
             return new DeleteWalletResponse 
             { 
-                IsSucessful = true
+                IsSuccessful = true
             };
         }
     }

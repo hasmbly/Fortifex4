@@ -1,10 +1,11 @@
-﻿using Fortifex4.Application.Common.Interfaces;
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Contributors.Queries.GetContributorsByMemberUsername;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Fortifex4.Application.Contributors.Queries.GetContributorsByMemberUsername
 {
@@ -26,6 +27,14 @@ namespace Fortifex4.Application.Contributors.Queries.GetContributorsByMemberUser
                 .Include(a => a.Project).ThenInclude(a => a.Blockchain)
                 .ToListAsync(cancellationToken);
 
+            if (contributors.Count != 0)
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.ContributorNotFound;
+
+                return result;
+            }
+
             foreach (var contributor in contributors)
             {
                 ContributorDTO contributorDTO = new ContributorDTO
@@ -36,9 +45,11 @@ namespace Fortifex4.Application.Contributors.Queries.GetContributorsByMemberUser
                     ProjectName = contributor.Project.Name,
                     ProjectBlockchainName = contributor.Project.Blockchain.Name
                 };
-                
+
                 result.Contributors.Add(contributorDTO);
             }
+
+            result.IsSuccessful = true;
 
             return result;
         }

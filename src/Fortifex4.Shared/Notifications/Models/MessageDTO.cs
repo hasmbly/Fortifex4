@@ -1,4 +1,4 @@
-﻿namespace Fortifex4.Application.Notifications.Models
+﻿namespace Fortifex4.Shared.Notifications.Models
 {
     public class MessageDTO
     {

@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Wallets.Commands.DeleteExternalTransfer;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +28,12 @@ namespace Fortifex4.Application.Wallets.Commands.DeleteExternalTransfer
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (transaction == null)
-                throw new NotFoundException(nameof(Transaction), request.TransactionID);
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.TransactionNotFound;
+
+                return result;
+            }
 
             _context.Transactions.Remove(transaction);
             await _context.SaveChangesAsync(cancellationToken);

@@ -6,6 +6,7 @@ using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Crypto;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Trades.Commands.CreateTrade;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,12 @@ namespace Fortifex4.Application.Trades.Commands.CreateTrade
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (owner == null)
-                throw new NotFoundException(nameof(Owner), request.OwnerID);
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.OwnerNotFound;
+
+                return result;
+            }
 
             Currency fromCurrency = await _context.Currencies
                 .Where(x => x.CurrencyID == request.FromCurrencyID)
@@ -207,6 +213,8 @@ namespace Fortifex4.Application.Trades.Commands.CreateTrade
             #endregion
 
             result.TradeID = trade.TradeID;
+
+            result.IsSuccessful = true;
 
             return result;
         }

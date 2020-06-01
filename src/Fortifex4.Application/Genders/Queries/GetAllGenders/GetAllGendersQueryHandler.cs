@@ -31,6 +31,8 @@ namespace Fortifex4.Application.Genders.Queries.GetAllGenders
                 });
             }
 
+            result.IsSuccessful = true;
+
             return result;
         }
     }

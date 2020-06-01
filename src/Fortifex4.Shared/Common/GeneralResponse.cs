@@ -2,7 +2,7 @@
 {
     public class GeneralResponse
     {
-        public bool IsSucessful { get; set; }
-        public string ErrorMeesage { get; set; } = string.Empty;
+        public bool IsSuccessful { get; set; }
+        public string ErrorMessage { get; set; } = string.Empty;
     }
 }

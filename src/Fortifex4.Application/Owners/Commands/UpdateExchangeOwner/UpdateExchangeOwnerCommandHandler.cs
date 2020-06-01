@@ -28,15 +28,15 @@ namespace Fortifex4.Application.Owners.Commands.UpdateExchangeOwner
 
             if (owner == null)
             {
-                result.IsSucessful = false;
-                result.ErrorMeesage = ErrorMessage.OwnerNotFound;
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.OwnerNotFound;
             }
             
             owner.ProviderID = request.ProviderID;
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            result.IsSucessful = true;
+            result.IsSuccessful = true;
 
             return result;
         }

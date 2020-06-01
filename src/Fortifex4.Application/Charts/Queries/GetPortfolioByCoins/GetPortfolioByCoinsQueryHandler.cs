@@ -8,6 +8,7 @@ using Fortifex4.Application.Common.Interfaces.Crypto;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Charts.Queries.GetPortfolioByCoins;
+using Fortifex4.Shared.Constants;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,8 @@ namespace Fortifex4.Application.Charts.Queries.GetPortfolioByCoins
 
         public async Task<GetPortfolioByCoinsResponse> Handle(GetPortfolioByCoinsRequest request, CancellationToken cancellationToken)
         {
+            var result = new GetPortfolioByCoinsResponse();
+
             // get member and all related stuff
             var member = await _context.Members
                 .Where(x => x.MemberUsername == request.MemberUsername)
@@ -37,15 +40,17 @@ namespace Fortifex4.Application.Charts.Queries.GetPortfolioByCoins
 
             // check if member is null
             if (member == null)
-                throw new NotFoundException(nameof(Member), request.MemberUsername);
-
-            // init result
-            var result = new GetPortfolioByCoinsResponse
             {
-                MemberUsername = request.MemberUsername,
-                PreferredFiatCurrencySymbol = member.PreferredFiatCurrency.Symbol,
-                PreferredCoinCurrencySymbol = member.PreferredCoinCurrency.Symbol
-            };
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.MemberUsernameNotFound;
+
+                return result;
+            }
+
+            result.IsSuccessful = true;
+            result.MemberUsername = request.MemberUsername;
+            result.PreferredFiatCurrencySymbol = member.PreferredFiatCurrency.Symbol;
+            result.PreferredCoinCurrencySymbol = member.PreferredCoinCurrency.Symbol;
 
             // TODO: Ini kayanya perlu diganti karena Luke minta Token dimasukkan juga ke Portfolio
 

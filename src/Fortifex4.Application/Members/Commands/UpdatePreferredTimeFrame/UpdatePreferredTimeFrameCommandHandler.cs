@@ -34,7 +34,7 @@ namespace Fortifex4.Application.Members.Commands.UpdatePreferredTimeFrame
 
             return new UpdatePreferredTimeFrameResponse 
             {
-                IsSucessful = true
+                IsSuccessful = true
             };
         }
     }

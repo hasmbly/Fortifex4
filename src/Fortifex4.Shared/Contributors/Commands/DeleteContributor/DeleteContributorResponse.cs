@@ -1,7 +1,8 @@
-﻿namespace Fortifex4.Shared.Contributors.Commands.DeleteContributor
+﻿using Fortifex4.Shared.Common;
+
+namespace Fortifex4.Shared.Contributors.Commands.DeleteContributor
 {
-    public class DeleteContributorResponse
+    public class DeleteContributorResponse : GeneralResponse
     {
-        public bool IsSuccessful { get; set; }
     }
 }

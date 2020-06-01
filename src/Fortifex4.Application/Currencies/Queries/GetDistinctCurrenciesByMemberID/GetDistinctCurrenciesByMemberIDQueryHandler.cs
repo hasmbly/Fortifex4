@@ -1,5 +1,6 @@
 ﻿using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Currencies.Queries.GetDistinctCurrenciesByMemberID;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,12 @@ namespace Fortifex4.Application.Currencies.Queries.GetDistinctCurrenciesByMember
                 .Select(x => x.Currency).Distinct()
                 .ToListAsync(cancellationToken);
 
+            if (currencies.Count == 0)
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.CurrencyNotFound;
+            }
+
             foreach (var currency in currencies)
             {
                 result.Currencies.Add(new CurrencyDTO
@@ -37,6 +44,8 @@ namespace Fortifex4.Application.Currencies.Queries.GetDistinctCurrenciesByMember
                     Name = currency.Name
                 });
             }
+
+            result.IsSuccessful = true;
 
             return result;
         }

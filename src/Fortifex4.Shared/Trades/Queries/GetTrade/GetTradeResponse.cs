@@ -1,9 +1,10 @@
 ﻿using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Common;
 using System;
 
 namespace Fortifex4.Shared.Trades.Queries.GetTrade
 {
-    public class GetTradeResponse
+    public class GetTradeResponse : GeneralResponse
     {
         public int TradeID { get; set; }
         public int OwnerID { get; set; }

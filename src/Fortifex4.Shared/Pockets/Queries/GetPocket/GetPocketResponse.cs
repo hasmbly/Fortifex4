@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Fortifex4.Shared.Common;
 
 namespace Fortifex4.Shared.Pockets.Queries.GetPocket
 {
-    public class GetPocketResponse
+    public class GetPocketResponse : GeneralResponse
     {
         public int PocketID { get; set; }
         public int WalletID { get; set; }

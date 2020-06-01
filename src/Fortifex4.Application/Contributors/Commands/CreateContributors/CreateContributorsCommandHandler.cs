@@ -83,6 +83,8 @@ namespace Fortifex4.Application.Contributors.Commands.CreateContributors
                 await _emailService.SendEmailAsync(mailItem);
             }
 
+            result.IsSuccessful = true;
+
             return result;
         }
     }

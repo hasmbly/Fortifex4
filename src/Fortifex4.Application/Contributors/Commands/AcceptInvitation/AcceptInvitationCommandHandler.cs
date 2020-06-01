@@ -1,5 +1,6 @@
 ﻿using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Contributors.Commands.AcceptInvitation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,11 @@ namespace Fortifex4.Application.Contributors.Commands.AcceptInvitation
 
                     result.IsSuccessful = true;
                 }
+            }
+            else
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.ContributorNotFound;
             }
 
             return result;

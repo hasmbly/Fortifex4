@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Fortifex4.Shared.Common;
 
 namespace Fortifex4.Shared.Currencies.Commands.UpdateFiatCurrencyNames
 {
-    public class UpdateFiatCurrencyNamesResponse
+    public class UpdateFiatCurrencyNamesResponse : GeneralResponse
     {
         public IList<CurrencyDTO> Currencies { get; set; }
 

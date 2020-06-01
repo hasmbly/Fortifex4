@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Currencies.Queries.GetCurrency;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -21,19 +20,26 @@ namespace Fortifex4.Application.Currencies.Queries.GetCurrency
 
         public async Task<GetCurrencyResponse> Handle(GetCurrencyRequest query, CancellationToken cancellationToken)
         {
+            var result = new GetCurrencyResponse();
+
             var currency = await _context.Currencies
                 .Where(x => x.CurrencyID == query.CurrencyID)
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (currency == null)
-                throw new NotFoundException(nameof(Currency), query.CurrencyID);
-
-            return new GetCurrencyResponse
             {
-                CurrencyID = currency.CurrencyID,
-                Symbol = currency.Symbol,
-                Name = currency.Name
-            };
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.CurrencyNotFound;
+
+                return result;
+            }
+
+            result.IsSuccessful = true;
+            result.CurrencyID = currency.CurrencyID;
+            result.Symbol = currency.Symbol;
+            result.Name = currency.Name;
+
+            return result;
         }
     }
 }

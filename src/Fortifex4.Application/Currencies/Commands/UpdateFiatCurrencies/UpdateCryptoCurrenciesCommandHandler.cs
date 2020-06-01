@@ -102,7 +102,9 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateFiatCurrencies
                 }
 
                 await _context.SaveChangesAsync(cancellationToken);
-            }            
+            }
+
+            result.IsSuccessful = true;
 
             return result;
         }

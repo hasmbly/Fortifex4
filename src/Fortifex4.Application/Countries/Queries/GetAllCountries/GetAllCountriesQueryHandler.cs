@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Countries.Queries.GetAllCountries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,14 @@ namespace Fortifex4.Application.Countries.Queries.GetAllCountries
 
             var countries = await _context.Countries.ToListAsync(cancellationToken);
 
+            if (countries.Count != 0)
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.CountriesNotFound;
+
+                return result;
+            }
+
             foreach (var country in countries)
             {
                 result.Countries.Add(new CountryDTO
@@ -30,6 +39,8 @@ namespace Fortifex4.Application.Countries.Queries.GetAllCountries
                     Name = country.Name
                 });
             }
+
+            result.IsSuccessful = true;
 
             return result;
         }

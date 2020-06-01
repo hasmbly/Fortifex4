@@ -52,7 +52,7 @@ namespace Fortifex4.Application.System.Commands.RemoveAllTransactions
 
             return new RemoveAllTransactionsResponse 
             {
-                IsSucessful = true,
+                IsSuccessful = true,
                 TransactionsRemoved = transactionsRemoved
             };
         }

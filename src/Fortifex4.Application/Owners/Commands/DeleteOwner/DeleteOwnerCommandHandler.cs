@@ -47,8 +47,8 @@ namespace Fortifex4.Application.Owners.Commands.DeleteOwner
                 .SingleOrDefaultAsync();
 
             if (owner == null)
-                result.IsSucessful = false;
-                result.ErrorMeesage = ErrorMessage.OwnerNotFound;
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.OwnerNotFound;
 
             foreach (var wallet in owner.Wallets)
             {
@@ -74,7 +74,7 @@ namespace Fortifex4.Application.Owners.Commands.DeleteOwner
             _context.Owners.Remove(owner);
             await _context.SaveChangesAsync(cancellationToken);
 
-            result.IsSucessful = true;
+            result.IsSuccessful = true;
 
             return result;
         }

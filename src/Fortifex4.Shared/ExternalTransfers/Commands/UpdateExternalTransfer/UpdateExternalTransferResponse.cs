@@ -1,8 +1,9 @@
-﻿namespace Fortifex4.Shared.ExternalTransfers.Commands.UpdateExternalTransfer
+﻿using Fortifex4.Shared.Common;
+
+namespace Fortifex4.Shared.ExternalTransfers.Commands.UpdateExternalTransfer
 {
-    public class UpdateExternalTransferResponse
+    public class UpdateExternalTransferResponse : GeneralResponse
     {
-        public bool IsSuccessful { get; set; }
         public int WalletID { get; set; }
     }
 }

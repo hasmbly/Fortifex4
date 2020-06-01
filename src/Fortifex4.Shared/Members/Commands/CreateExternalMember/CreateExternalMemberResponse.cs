@@ -1,8 +1,8 @@
-﻿namespace Fortifex4.Shared.Members.Commands.CreateExternalMember
+﻿using Fortifex4.Shared.Common;
+
+namespace Fortifex4.Shared.Members.Commands.CreateExternalMember
 {
-    public class CreateExternalMemberResponse
+    public class CreateExternalMemberResponse : GeneralResponse
     {
-        public bool IsSuccessful { get; set; }
-        public string ErrorMessage { get; set; }
     }
 }

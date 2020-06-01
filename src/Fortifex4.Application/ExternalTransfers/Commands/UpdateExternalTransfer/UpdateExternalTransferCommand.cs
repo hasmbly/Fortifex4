@@ -6,6 +6,7 @@ using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.ExternalTransfers.Commands.UpdateExternalTransfer;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,12 @@ namespace Fortifex4.Application.ExternalTransfers.Commands.UpdateExternalTransfe
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (transaction == null)
-                throw new NotFoundException(nameof(Transaction), request.TransactionID);
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.TransactionNotFound;
+
+                return result;
+            }
 
             TransactionType transactionType = TransactionType.ExternalTransferIN;
             decimal amount = request.Amount;

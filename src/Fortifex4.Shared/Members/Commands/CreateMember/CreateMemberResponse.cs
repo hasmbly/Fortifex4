@@ -1,11 +1,10 @@
 ﻿using System;
+using Fortifex4.Shared.Common;
 
 namespace Fortifex4.Shared.Members.Commands.CreateMember
 {
-    public class CreateMemberResponse
+    public class CreateMemberResponse : GeneralResponse
     {
-        public bool IsSuccessful { get; set; }
         public Guid ActivationCode { get; set; }
-        public string ErrorMessage { get; set; }
     }
 }

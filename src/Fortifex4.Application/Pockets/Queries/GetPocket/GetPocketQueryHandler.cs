@@ -33,6 +33,8 @@ namespace Fortifex4.Application.Pockets.Queries.GetPocket
 
             var result = new GetPocketResponse
             {
+                IsSuccessful = true,
+
                 PocketID = pocket.PocketID,
                 WalletID = pocket.WalletID,
                 Address = pocket.Address,

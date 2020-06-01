@@ -1,12 +1,11 @@
-﻿using Fortifex4.Application.Common.Exceptions;
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Deposits.Commands.UpdateDeposit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Fortifex4.Application.Deposits.Commands.UpdateDeposit
 {
@@ -30,8 +29,13 @@ namespace Fortifex4.Application.Deposits.Commands.UpdateDeposit
                 .Include(a => a.Pocket)
                 .SingleOrDefaultAsync(cancellationToken);
 
-            if(transaction == null)
-                throw new NotFoundException(nameof(Transaction), request.TransactionID);
+            if (transaction == null)
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.TransactionNotFound;
+
+                return result;
+            }
 
             transaction.Amount = request.Amount;
             transaction.TransactionDateTime = request.TransactionDateTime;

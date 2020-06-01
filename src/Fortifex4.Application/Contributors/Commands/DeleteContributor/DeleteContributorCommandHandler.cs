@@ -1,5 +1,6 @@
 ﻿using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Contributors.Commands.DeleteContributor;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -20,17 +21,19 @@ namespace Fortifex4.Application.Contributors.Commands.DeleteContributor
 
         public async Task<DeleteContributorResponse> Handle(DeleteContributorRequest request, CancellationToken cancellationToken)
         {
-            var result = new DeleteContributorResponse()
-            {
-                IsSuccessful = false
-            };
+            var result = new DeleteContributorResponse();
 
             var contributor = await _context.Contributors
                 .Where(x => x.ContributorID == request.ContributorID)
                 .SingleOrDefaultAsync();
 
             if (contributor == null)
-                throw new NotFoundException(nameof(contributor), request.ContributorID);
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.ContributorNotFound;
+
+                return result;
+            }
 
             _context.Contributors.Remove(contributor);
             await _context.SaveChangesAsync(cancellationToken);

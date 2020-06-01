@@ -40,12 +40,12 @@ namespace Fortifex4.Application.Charts.Queries.GetCoinByExchanges
 
             if (member == null)
             {
-                result.IsSucessful = false;
-                result.ErrorMeesage = ErrorMessage.UsernameNotFound;
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.MemberUsernameNotFound;
             }
             else
             {
-                result.IsSucessful = true;
+                result.IsSuccessful = true;
 
                 result.MemberUsername = request.MemberUsername;
                 result.FiatCode = member.PreferredFiatCurrency.Symbol;

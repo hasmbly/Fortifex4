@@ -1,7 +1,8 @@
-﻿namespace Fortifex4.Shared.Contributors.Commands.RejectInvitation
+﻿using Fortifex4.Shared.Common;
+
+namespace Fortifex4.Shared.Contributors.Commands.RejectInvitation
 {
-    public class RejectInvitationResponse
+    public class RejectInvitationResponse : GeneralResponse
     {
-        public bool IsSuccessful { get; set; }
     }
 }

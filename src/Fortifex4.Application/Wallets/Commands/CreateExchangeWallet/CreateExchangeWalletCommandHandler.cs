@@ -77,7 +77,7 @@ namespace Fortifex4.Application.Wallets.Commands.CreateExchangeWallet
 
             return new CreateExchangeWalletResponse 
             {
-                IsSucessful = true,
+                IsSuccessful = true,
                 WalletID = wallet.WalletID
             };
         }

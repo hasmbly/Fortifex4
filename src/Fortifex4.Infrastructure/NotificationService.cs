@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Application.Notifications.Models;
+using Fortifex4.Shared.Notifications.Models;
 
 namespace Fortifex4.Infrastructure
 {

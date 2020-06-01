@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Wallets.Commands.CreateExternalTransfer;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +32,12 @@ namespace Fortifex4.Application.Wallets.Commands.CreateExternalTransfer
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (wallet == null)
-                throw new NotFoundException(nameof(Wallet), request.WalletID);
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = ErrorMessage.WalletNotFound;
+
+                return result;
+            }
 
             Pocket mainPocket = wallet.Pockets.Single(x => x.IsMain);
 
@@ -64,6 +68,7 @@ namespace Fortifex4.Application.Wallets.Commands.CreateExternalTransfer
             await _context.SaveChangesAsync(cancellationToken);
 
             result.TransactionID = transactionForExternalTransfer.TransactionID;
+            result.IsSuccessful = true;
 
             return result;
         }

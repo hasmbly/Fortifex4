@@ -99,6 +99,8 @@ namespace Fortifex4.Application.InternalTransfers.Commands.CreateInternalTransfe
             result.InternalTransferID = internalTransfer.InternalTransferID;
             result.WalletID = fromPocket.WalletID;
 
+            result.IsSuccessful = true;
+
             return result;
         }
     }

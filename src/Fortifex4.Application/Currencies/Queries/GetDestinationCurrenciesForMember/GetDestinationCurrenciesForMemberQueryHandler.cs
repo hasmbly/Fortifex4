@@ -5,6 +5,7 @@ using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Currencies.Queries.GetDestinationCurrenciesForMember;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,12 @@ namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMe
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (member == null)
-                throw new NotFoundException(nameof(Member), query.MemberUsername);
+            {
+                result.IsSuccessful = true;
+                result.ErrorMessage = ErrorMessage.MemberUsernameNotFound;
+
+                return result;
+            }
 
             if (member.PreferredFiatCurrency.Symbol != CurrencySymbol.USD)
             {
@@ -76,6 +82,8 @@ namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMe
                 });
             }
 
+            result.IsSuccessful = true;
+            
             return result;
         }
     }

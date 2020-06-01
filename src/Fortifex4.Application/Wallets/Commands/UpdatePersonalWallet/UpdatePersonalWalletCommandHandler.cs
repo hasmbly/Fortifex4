@@ -68,7 +68,7 @@ namespace Fortifex4.Application.Wallets.Commands.UpdatePersonalWallet
 
             return new UpdatePersonalWalletResponse 
             {
-                IsSucessful = true
+                IsSuccessful = true
             };
         }
     }

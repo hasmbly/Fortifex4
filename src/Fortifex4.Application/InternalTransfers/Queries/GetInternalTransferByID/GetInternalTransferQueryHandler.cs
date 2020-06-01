@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Constants;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,10 +39,18 @@ namespace Fortifex4.Shared.InternalTransfers.Queries.GetInternalTransfer
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (internalTransfer == null)
-                throw new NotFoundException(nameof(internalTransfer), query.InternalTransferID);
+            {
+                return new GetInternalTransferResponse
+                {
+                    IsSuccessful = false,
+                    ErrorMessage = ErrorMessage.InternalTransferNotFound
+                };
+            }
 
             return new GetInternalTransferResponse
             {
+                IsSuccessful = true,
+
                 InternalTransferID = internalTransfer.InternalTransferID,
                 TransactionAmount = Math.Abs(internalTransfer.FromTransaction.Amount),
                 TransactionDateTime = internalTransfer.FromTransaction.TransactionDateTime,
