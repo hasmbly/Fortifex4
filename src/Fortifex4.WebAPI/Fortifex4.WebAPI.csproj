@@ -4,5 +4,16 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fortifex4.Application\Fortifex4.Application.csproj" />
+    <ProjectReference Include="..\Fortifex4.Infrastructure\Fortifex4.Infrastructure.csproj" />
+    <ProjectReference Include="..\Fortifex4.WebUI\Fortifex4.WebUI.csproj" />
+  </ItemGroup>
+
 
 </Project>
