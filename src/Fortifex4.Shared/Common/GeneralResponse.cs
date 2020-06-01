@@ -3,6 +3,6 @@
     public class GeneralResponse
     {
         public bool IsSuccessful { get; set; }
-        public string ErrorMessage { get; set; } = string.Empty;
+        public string ErrorMessage { get; set; }
     }
 }

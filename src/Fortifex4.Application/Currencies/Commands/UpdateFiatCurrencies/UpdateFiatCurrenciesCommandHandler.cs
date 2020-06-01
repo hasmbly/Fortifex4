@@ -12,12 +12,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Currencies.Commands.UpdateFiatCurrencies
 {
-    public class UpdateCryptoCurrenciesCommandHandler : IRequestHandler<UpdateFiatCurrenciesRequest, UpdateFiatCurrenciesResponse>
+    public class UpdateFiatCurrenciesCommandHandler : IRequestHandler<UpdateFiatCurrenciesRequest, UpdateFiatCurrenciesResponse>
     {
         private readonly IFortifex4DBContext _context;
         private readonly IFiatService _fiatService;
 
-        public UpdateCryptoCurrenciesCommandHandler(IFortifex4DBContext context, IFiatService fiatService)
+        public UpdateFiatCurrenciesCommandHandler(IFortifex4DBContext context, IFiatService fiatService)
         {
             _context = context;
             _fiatService = fiatService;
