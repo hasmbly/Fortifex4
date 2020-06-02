@@ -1,0 +1,911 @@
+﻿BlockchainID,Symbol,Name,IsShownInTradingPair,IsForPreferredOption
+1,BTC,Bitcoin,1,1
+2,ETH,Ethereum,1,1
+3,XRP,XRP,0,0
+4,BCH,Bitcoin Cash,0,0
+5,LTC,Litecoin,0,0
+6,BNB,Binance Coin,0,0
+7,EOS,EOS,0,0
+8,BSV,Bitcoin SV,0,0
+9,XLM,Stellar,0,0
+10,TRX,TRON,0,0
+11,ADA,Cardano,0,0
+12,XMR,Monero,0,0
+13,MIOTA,IOTA,0,0
+14,DASH,Dash,0,0
+15,XTZ,Tezos,0,0
+16,ATOM,Cosmos,0,0
+17,ETC,Ethereum Classic,0,0
+18,NEO,NEO,0,0
+19,XEM,NEM,0,0
+20,DOGE,Dogecoin,0,0
+21,ONT,Ontology,0,0
+22,ZEC,Zcash,0,0
+23,VET,VeChain,0,0
+24,QTUM,Qtum,0,0
+25,ABBC,ABBC Coin,0,0
+26,DCR,Decred,0,0
+27,LUNA,LUNA,0,0
+28,RVN,Ravencoin,0,0
+29,BTG,Bitcoin Gold,0,0
+30,VSYS,V Systems,0,0
+31,NANO,Nano,0,0
+32,ALGO,Algorand,0,0
+33,DGB,DigiByte,0,0
+34,LSK,Lisk,0,0
+35,SC,Siacoin,0,0
+36,BCD,Bitcoin Diamond,0,0
+37,WAVES,Waves,0,0
+38,ICX,ICON,0,0
+39,THETA,THETA,0,0
+40,MONA,MonaCoin,0,0
+41,BTS,BitShares,0,0
+42,KMD,Komodo,0,0
+43,BCN,Bytecoin,0,0
+44,HC,HyperCash,0,0
+45,BTM,Bytom,0,0
+46,XVG,Verge,0,0
+47,NRG,Energi,0,0
+48,AE,Aeternity,0,0
+49,IOST,IOST,0,0
+50,ARDR,Ardor,0,0
+51,STEEM,Steem,0,0
+52,ZIL,Zilliqa,0,0
+53,XZC,Zcoin,0,0
+54,NEW,Newton,0,0
+55,ETN,Electroneum,0,0
+56,STRAT,Stratis,0,0
+57,GXC,GXChain,0,0
+58,ZEN,Horizen,0,0
+59,ELA,Elastos,0,0
+60,RDD,ReddCoin,0,0
+61,FCT,Factom,0,0
+62,ETP,Metaverse ETP,0,0
+63,PAI,Project Pai,0,0
+64,BEAM,Beam,0,0
+65,GRIN,Grin,0,0
+66,NAS,Nebulas,0,0
+67,NULS,NULS,0,0
+68,WICC,WaykiChain,0,0
+69,AION,Aion,0,0
+70,WAXP,WAX,0,0
+71,ARK,Ark,0,0
+72,HBAR,Hedera Hashgraph,0,0
+73,WAN,Wanchain,0,0
+74,BHP,BHPCoin,0,0
+75,EDC,EDC Blockchain,0,0
+76,TOMO,TomoChain,0,0
+77,TT,Thunder Token,0,0
+78,TRUE,TrueChain,0,0
+79,NXS,Nexus,0,0
+80,SYS,Syscoin,0,0
+81,GRS,Groestlcoin,0,0
+82,LOKI,Loki,0,0
+83,PIVX,PIVX,0,0
+84,TTC,TTC,0,0
+85,NXT,Nxt,0,0
+86,CMT,CyberMiles,0,0
+87,NKN,NKN,0,0
+88,TFUEL,Theta Fuel,0,0
+89,DIVI,Divi,0,0
+90,WGR,Wagerr,0,0
+91,PZM,PRIZM,0,0
+92,BDX,Beldex,0,0
+93,PLC,PLATINCOIN,0,0
+94,SHND,StrongHands,0,0
+95,CVCC,CryptoVerificationCoin,0,0
+96,BTC2,Bitcoin 2,0,0
+97,MB8,MB8 Coin,0,0
+98,BHD,BitcoinHD,0,0
+99,MBC,MicroBitcoin,0,0
+100,GRN,GreenPower,0,0
+101,VITAE,Vitae,0,0
+102,CNX,Cryptonex,0,0
+103,GBYTE,Obyte,0,0
+104,UNO,Unobtanium,0,0
+105,MOAC,MOAC,0,0
+106,NYE,NewYork Exchange,0,0
+107,BAY,BitBay,0,0
+108,CSC,CasinoCoin,0,0
+109,MAN,Matrix AI Network,0,0
+110,SKY,Skycoin,0,0
+111,SAFE,Safe,0,0
+112,VTC,Vertcoin,0,0
+113,APL,Apollo Currency,0,0
+114,ILC,ILCoin,0,0
+115,EMC2,Einsteinium,0,0
+116,OTO,OTOCASH,0,0
+117,SLS,SaluS,0,0
+118,HYC,HYCON,0,0
+119,LCC,Litecoin Cash,0,0
+120,DDK,DDKoin,0,0
+121,QRL,Quantum Resistant Ledger,0,0
+122,PART,Particl,0,0
+123,ACT,Achain,0,0
+124,META,Metadium,0,0
+125,LBTC,Lightning Bitcoin,0,0
+126,INT,INT Chain,0,0
+127,KIN,Kin,0,0
+128,GO,GoChain,0,0
+129,BLOCK,Blocknet,0,0
+130,IRIS,IRISnet,0,0
+131,STREAM,Streamit Coin,0,0
+132,NMC,Namecoin,0,0
+133,BURST,Burst,0,0
+134,PPC,Peercoin,0,0
+135,HPB,High Performance Blockchain,0,0
+136,XMC,Monero Classic,0,0
+137,NEBL,Neblio,0,0
+138,XRC,Bitcoin Rhodium,0,0
+139,FLO,FLO,0,0
+140,VEO,Amoveo,0,0
+141,IPC,IPChain,0,0
+142,NAV,NavCoin,0,0
+143,POLIS,Polis,0,0
+144,SBD,Steem Dollars,0,0
+145,VIA,Viacoin,0,0
+146,ETZ,Ether Zero,0,0
+147,MHC,#MetaHash,0,0
+148,VBK,VeriBlock,0,0
+149,NLG,Gulden,0,0
+150,XAS,Asch,0,0
+151,XDN,DigitalNote,0,0
+152,FLASH,Flash,0,0
+153,SMART,SmartCash,0,0
+154,TERA,TERA,0,0
+155,XCP,Counterparty,0,0
+156,BLK,BlackCoin,0,0
+157,ZEL,ZelCash,0,0
+158,XSN,Stakenet,0,0
+159,DERO,Dero,0,0
+160,POA,POA Network,0,0
+161,NPC,NPCoin,0,0
+162,PCX,ChainX,0,0
+163,TOC,TouchCon,0,0
+164,CRON,Cryptocean,0,0
+165,BOS,BOScoin,0,0
+166,COLX,ColossusXT,0,0
+167,VEIL,Veil,0,0
+168,XST,Stealth,0,0
+169,UBQ,Ubiq,0,0
+170,EMC,Emercoin,0,0
+171,BTX,Bitcore,0,0
+172,VITE,VITE,0,0
+173,AXE,Axe,0,0
+174,CTC,Credit Tag Chain,0,0
+175,PIA,Futurepia,0,0
+176,BTO,Bottos,0,0
+177,RSTR,Ondori,0,0
+178,ECA,Electra,0,0
+179,NIX,NIX,0,0
+180,AEON,Aeon,0,0
+181,VITES,Vites,0,0
+182,LKK,Lykke,0,0
+183,ARRR,Pirate Chain,0,0
+184,GCC,Global Cryptocurrency,0,0
+185,GCR,Global Currency Reserve,0,0
+186,XPM,Primecoin,0,0
+187,CHX,Own,0,0
+188,PPY,Peerplays,0,0
+189,XBY,XTRABYTES,0,0
+190,OBSR,Observer,0,0
+191,XWC,WhiteCoin,0,0
+192,FTC,Feathercoin,0,0
+193,CLAM,Clams,0,0
+194,MIR,MIR COIN,0,0
+195,SFT,Safex Token,0,0
+196,NTY,Nexty,0,0
+197,VEX,Vexanium,0,0
+198,NIM,Nimiq,0,0
+199,BC,Bitcoin Confidential,0,0
+200,ZUM,ZumCoin,0,0
+201,ONION,DeepOnion,0,0
+202,MRX,Metrix Coin,0,0
+203,TTN,Titan Coin,0,0
+204,VIN,VINchain,0,0
+205,BST,BlockStamp,0,0
+206,TPAY,TokenPay,0,0
+207,BTN,BitNewChain,0,0
+208,PAC,PAC Global,0,0
+209,OK,OKCash,0,0
+210,GLC,GoldCoin,0,0
+211,IMG,ImageCoin,0,0
+212,ECC,ECC,0,0
+213,TUBE,BitTube,0,0
+214,XLQ,ALQO,0,0
+215,PGN,Pigeoncoin,0,0
+216,QRK,Quark,0,0
+217,BBR,Boolberry,0,0
+218,LBC,LBRY Credits,0,0
+219,MINT,MintCoin,0,0
+220,ZPT,Zeepin,0,0
+221,ZCL,ZClassic,0,0
+222,XSPEC,Spectrecoin,0,0
+223,SDA,SDChain,0,0
+224,XFC,Footballcoin,0,0
+225,CLO,Callisto Network,0,0
+226,ADS,Adshares,0,0
+227,DMD,Diamond,0,0
+228,RBY,Rubycoin,0,0
+229,HPC,Happycoin,0,0
+230,ENQ,Enecuum,0,0
+231,DCT,DECENT,0,0
+232,FAIR,FairCoin,0,0
+233,NSD,Nasdacoin,0,0
+234,HTML,HTMLCOIN,0,0
+235,PHR,Phore,0,0
+236,ZP,Zen Protocol,0,0
+237,DYN,Dynamic,0,0
+238,CHAT,ChatCoin,0,0
+239,RADS,Radium,0,0
+240,MCASH,Mcashchain,0,0
+241,SIN,SINOVATE,0,0
+242,GAME,GameCredits,0,0
+243,3DC,3DCoin,0,0
+244,XCASH,X-CASH,0,0
+245,BEET,Beetle Coin,0,0
+246,IOC,I/O Coin,0,0
+247,XMY,Myriad,0,0
+248,POT,PotCoin,0,0
+249,XPD,PetroDollar,0,0
+250,LUX,LUXCoin,0,0
+251,MOON,Mooncoin,0,0
+252,MGD,MassGrid,0,0
+253,BITB,Bean Cash,0,0
+254,TRTL,TurtleCoin,0,0
+255,FAB,Fast Access Blockchain,0,0
+256,GRC,GridCoin,0,0
+257,BITG,BitGreen,0,0
+258,N8V,NativeCoin,0,0
+259,VRC,VeriCoin,0,0
+260,QWC,Qwertycoin,0,0
+261,VIPS,Vipstar Coin,0,0
+262,UT,Ulord,0,0
+263,SINS,SafeInsure,0,0
+264,SAFE,SafeCoin,0,0
+265,CLOAK,CloakCoin,0,0
+266,EXP,Expanse,0,0
+267,XHV,Haven Protocol,0,0
+268,CRW,Crown,0,0
+269,BIS,Bismuth,0,0
+270,CURE,Curecoin,0,0
+271,COTI,COTI,0,0
+272,SEM,Semux,0,0
+273,BCO,BridgeCoin,0,0
+274,SHIFT,Shift,0,0
+275,CRYP,CrypticCoin,0,0
+276,SSC,SelfSell,0,0
+277,ERG,Ergo,0,0
+278,ORB,Orbitcoin,0,0
+279,SPHR,Sphere,0,0
+280,IFC,Infinitecoin,0,0
+281,PASC,Pascal,0,0
+282,EFL,e-Gulden,0,0
+283,SLR,SolarCoin,0,0
+284,CBC,Cashbery Coin,0,0
+285,42,42-coin,0,0
+286,QAC,Quasarcoin,0,0
+287,BCA,Bitcoin Atom,0,0
+288,XPC,eXPerience Chain,0,0
+289,MUE,MonetaryUnit,0,0
+290,ADM,ADAMANT Messenger,0,0
+291,RPD,Rapids,0,0
+292,SIB,SIBCoin,0,0
+293,MIC,Mindexcoin,0,0
+294,ACM,Actinium,0,0
+295,TRC,Terracoin,0,0
+296,THC,HempCoin,0,0
+297,VRA,Verasity,0,0
+298,NYC,NewYorkCoin,0,0
+299,NBOT,Naka Bodhi Token,0,0
+300,CCX,Conceal,0,0
+301,NBAI,Nebula AI,0,0
+302,LABH,Labh Coin,0,0
+303,RVR,RevolutionVR,0,0
+304,SEN,Sentient Coin,0,0
+305,WEBD,WebDollar,0,0
+306,SIC,Swisscoin,0,0
+307,XEL,XEL,0,0
+308,OMNI,Omni,0,0
+309,XHI,HiCoin,0,0
+310,ZER,Zero,0,0
+311,SMLY,SmileyCoin,0,0
+312,BCI,Bitcoin Interest,0,0
+313,BTCZ,BitcoinZ,0,0
+314,BTCP,Bitcoin Private,0,0
+315,XBC,Bitcoin Plus,0,0
+316,AUR,Auroracoin,0,0
+317,LUNES,Lunes,0,0
+318,NVC,Novacoin,0,0
+319,USNBT,NuBits,0,0
+320,DIME,Dimecoin,0,0
+321,NLC2,NoLimitCoin,0,0
+322,TRTT,Trittium,0,0
+323,BBP,BiblePay,0,0
+324,HEAT,HEAT,0,0
+325,ESBC,ESBC,0,0
+326,TELOS,Teloscoin,0,0
+327,DBIX,DubaiCoin,0,0
+328,DEEX,DEEX,0,0
+329,PIRL,Pirl,0,0
+330,MNTP,GoldMint,0,0
+331,RISE,Rise,0,0
+332,PINK,Pinkcoin,0,0
+333,XP,Experience Points,0,0
+334,KST,StarCoin,0,0
+335,TWINS,win.win,0,0
+336,EXCL,ExclusiveCoin,0,0
+337,BITC,BitCash,0,0
+338,GOLOS,Golos,0,0
+339,HLM,Helium,0,0
+340,D,Denarius,0,0
+341,SHARD,Shard,0,0
+342,RBTC,RSK Smart Bitcoin,0,0
+343,KRB,Karbo,0,0
+344,ION,ION,0,0
+345,OOT,Utrum,0,0
+346,NOTE,DNotes,0,0
+347,XSG,SnowGem,0,0
+348,MNX,MinexCoin,0,0
+349,XWP,Swap,0,0
+350,LOBS,Lobstex,0,0
+351,OWC,ODUWA,0,0
+352,IXC,Ixcoin,0,0
+353,SCC,StakeCubeCoin,0,0
+354,MAO,Mao Zedong,0,0
+355,TOA,ToaCoin,0,0
+356,XQR,Qredit,0,0
+357,MSR,Masari,0,0
+358,PAL,PAL Network,0,0
+359,FRC,Freicoin,0,0
+360,BIR,Birake,0,0
+361,MIB,MIB Coin,0,0
+362,HALO,Halo Platform,0,0
+363,GRFT,Graft,0,0
+364,MEME,Memetic / PepeCoin,0,0
+365,UPX,uPlexa,0,0
+366,SOVE,Soverain,0,0
+367,UFO,Uniform Fiscal Object,0,0
+368,1337,Elite,0,0
+369,XLR,Solaris,0,0
+370,SPD,Stipend,0,0
+371,MOTO,Motocoin,0,0
+372,KB3,B3Coin,0,0
+373,ETHO,Ether-1,0,0
+374,SPHTX,SophiaTX,0,0
+375,MLM,MktCoin,0,0
+376,CANN,CannabisCoin,0,0
+377,SPRTS,Sprouts,0,0
+378,GIO,Graviocoin,0,0
+379,XSH,SHIELD,0,0
+380,NOR,Noir,0,0
+381,XNV,Nerva,0,0
+382,611,SixEleven,0,0
+383,EBST,eBoost,0,0
+384,HUSH,Hush,0,0
+385,EDRC,EDRCoin,0,0
+386,TIPS,FedoraCoin,0,0
+387,KEK,KekCoin,0,0
+388,UNI,Universe,0,0
+389,CSPN,Crypto Sports,0,0
+390,RYO,Ryo Currency,0,0
+391,TCC,The ChampCoin,0,0
+392,ZCR,ZCore,0,0
+393,XLA,Scala,0,0
+394,START,Startcoin,0,0
+395,VIT,Vision Industry Token,0,0
+396,FIII,Fiii,0,0
+397,MAX,Maxcoin,0,0
+398,ESN,Ethersocial,0,0
+399,LTHN,Lethean,0,0
+400,SUMO,Sumokoin,0,0
+401,NTRN,Neutron,0,0
+402,CREDIT,CREDIT,0,0
+403,XMG,Magi,0,0
+404,DUO,ParallelCoin,0,0
+405,RPM,Repme,0,0
+406,CARBON,Carboncoin,0,0
+407,VULC,VULCANO,0,0
+408,BZE,BZEdge,0,0
+409,EUNO,EUNO,0,0
+410,GTM,Gentarium,0,0
+411,XBI,Bitcoin Incognito,0,0
+412,BCZ,Bitcoin CZ,0,0
+413,ESP,Espers,0,0
+414,ENRG,Energycoin,0,0
+415,YOC,Yocoin,0,0
+416,TROLL,Trollcoin,0,0
+417,MONK,Monkey Project,0,0
+418,FJC,FujiCoin,0,0
+419,FRST,FirstCoin,0,0
+420,LHT,LHT,0,0
+421,BTCS,Bitcoin Scrypt,0,0
+422,MANNA,Manna,0,0
+423,DOPE,DopeCoin,0,0
+424,CCRB,CryptoCarbon,0,0
+425,VOT,VoteCoin,0,0
+426,VRM,VeriumReserve,0,0
+427,ARO,Arionum,0,0
+428,AUX,Auxilium,0,0
+429,EVT,EveriToken,0,0
+430,BITS,Bitstar,0,0
+431,BUZZ,BUZZCoin,0,0
+432,NTR,Netrum,0,0
+433,DCY,Dinastycoin,0,0
+434,EGC,EverGreenCoin,0,0
+435,AYA,Aryacoin,0,0
+436,ADC,AudioCoin,0,0
+437,ZENI,Zennies,0,0
+438,BWK,Bulwark,0,0
+439,MEC,Megacoin,0,0
+440,CPC,Capricoin,0,0
+441,AIB,Advanced Internet Blocks,0,0
+442,PXC,Phoenixcoin,0,0
+443,GIC,Giant,0,0
+444,BSD,BitSend,0,0
+445,PENG,PENG,0,0
+446,LDOGE,LiteDoge,0,0
+447,PTC,Pesetacoin,0,0
+448,BOLI,Bolivarcoin,0,0
+449,SCR,Scorum Coins,0,0
+450,BLU,BlueCoin,0,0
+451,GZRO,Gravity,0,0
+452,PUT,PutinCoin,0,0
+453,NETKO,Netko,0,0
+454,DGC,Digitalcoin,0,0
+455,BIO,BioCoin,0,0
+456,BSTY,GlobalBoost-Y,0,0
+457,MNC,Mincoin,0,0
+458,IOP,Internet of People,0,0
+459,MFC,MFCoin,0,0
+460,CTX,Centauri,0,0
+461,GLT,GlobalToken,0,0
+462,CROAT,CROAT,0,0
+463,POSW,PoSW Coin,0,0
+464,X42,x42 Protocol,0,0
+465,ZNZ,ZENZO,0,0
+466,ZNY,Bitzeny,0,0
+467,NBX,Netbox Coin,0,0
+468,HNC,Helleniccoin,0,0
+469,CMM,Commercium,0,0
+470,CXP,CaixaPay,0,0
+471,TZC,TrezarCoin,0,0
+472,FGC,FantasyGold,0,0
+473,PHO,Photon,0,0
+474,ZET,Zetacoin,0,0
+475,RAIN,Condensate,0,0
+476,HYP,HyperStake,0,0
+477,XCN,Cryptonite,0,0
+478,DEAL,iDealCash,0,0
+479,GEX,Gexan,0,0
+480,BTB,BitBar,0,0
+481,UNIFY,Unify,0,0
+482,LMC,LoMoCoin,0,0
+483,CATO,CatoCoin,0,0
+484,UNIT,Universal Currency,0,0
+485,USC,Ultimate Secure Cash,0,0
+486,PCN,PeepCoin,0,0
+487,SNRG,Synergy,0,0
+488,EMD,Emerald Crypto,0,0
+489,XGOX,XGOX,0,0
+490,SND,SnodeCoin,0,0
+491,BECN,Beacon,0,0
+492,DFT,DraftCoin,0,0
+493,GBX,GoByte,0,0
+494,ZEIT,Zeitcoin,0,0
+495,EGEM,EtherGem,0,0
+496,GXX,GravityCoin,0,0
+497,POP,PopularCoin,0,0
+498,NCP,Newton Coin Project,0,0
+499,PURA,Pura,0,0
+500,LABX,Stakinglab,0,0
+501,ANON,ANON,0,0
+502,V,Version,0,0
+503,WBL,WIZBL,0,0
+504,DOGEC,DogeCash,0,0
+505,GCN,GCN Coin,0,0
+506,MMO,MMOCoin,0,0
+507,ATB,ATBCoin,0,0
+508,LANA,LanaCoin,0,0
+509,NBR,Niobio Cash,0,0
+510,VIVID,Vivid Coin,0,0
+511,PRX,ProxyNode,0,0
+512,HELP,Helpico,0,0
+513,GALI,Galilel,0,0
+514,XSD,SounDAC,0,0
+515,BTCN,BitcoiNote,0,0
+516,PWR,PWR Coin,0,0
+517,EL,Elcoin,0,0
+518,GIN,GINcoin,0,0
+519,ASAFE,AllSafe,0,0
+520,BLOC,BLOC.MONEY,0,0
+521,ARCO,AquariusCoin,0,0
+522,SEND,Social Send,0,0
+523,SHMN,StrongHands Masternode,0,0
+524,BRO,Bitradio,0,0
+525,PND,Pandacoin,0,0
+526,WXC,WXCOINS,0,0
+527,INSN,InsaneCoin,0,0
+528,QUAN,Quantis Network,0,0
+529,KOBO,Kobocoin,0,0
+530,WEB,Webchain,0,0
+531,DEV,DeviantCoin,0,0
+532,CRAVE,Crave,0,0
+533,XDNA,XDNA,0,0
+534,KLKS,Kalkulus,0,0
+535,TRUMP,TrumpCoin,0,0
+536,BZX,Bitcoin Zero,0,0
+537,EQT,EquiTrader,0,0
+538,BBS,BBSCoin,0,0
+539,SWING,Swing,0,0
+540,RPI,RPICoin,0,0
+541,TAG,TagCoin,0,0
+542,OPCX,OPCoinX,0,0
+543,ACED,AceD,0,0
+544,OPAL,Opal,0,0
+545,RBIES,Rubies,0,0
+546,RBT,Rimbit,0,0
+547,TOKC,TOKYO,0,0
+548,ADZ,Adzcoin,0,0
+549,ARC,Advanced Technology Coin,0,0
+550,WIRE,AirWire,0,0
+551,TALK,BTCtalkcoin,0,0
+552,FOR,FORCE,0,0
+553,BLTG,Block-Logic,0,0
+554,CHESS,ChessCoin,0,0
+555,EVIL,Evil Coin,0,0
+556,JEW,Shekel,0,0
+557,BRIT,BritCoin,0,0
+558,IRD,Iridium,0,0
+559,CIV,Civitas,0,0
+560,ANC,Anoncoin,0,0
+561,EXO,Exosis,0,0
+562,SIGT,Signatum,0,0
+563,B2G,Bitcoiin,0,0
+564,YTN,YENTEN,0,0
+565,IC,Ignition,0,0
+566,BLAST,BLAST,0,0
+567,SWIFT,SwiftCash,0,0
+568,AREPA,Arepacoin,0,0
+569,PRIV,PRiVCY,0,0
+570,BBK,Bitblocks,0,0
+571,XGS,GenesisX,0,0
+572,XAP,Apollon,0,0
+573,STAK,STRAKS,0,0
+574,HELP,GoHelpFund,0,0
+575,MOIN,Moin,0,0
+576,GBG,Golos Gold,0,0
+577,2GIVE,2GIVE,0,0
+578,BTW,BitWhite,0,0
+579,ITI,iTicoin,0,0
+580,VIDZ,PureVidz,0,0
+581,ODN,Obsidian,0,0
+582,BTK,Bitcoin Turbo Koin,0,0
+583,LCP,Litecoin Plus,0,0
+584,DEM,Deutsche eMark,0,0
+585,XRA,Ratecoin,0,0
+586,PSC,PrimeStone,0,0
+587,GCC,GuccioneCoin,0,0
+588,ORE,Galactrum,0,0
+589,VSX,Vsync,0,0
+590,RUP,Rupee,0,0
+591,BTDX,Bitcloud,0,0
+592,IFLT,InflationCoin,0,0
+593,PAWS,PAWS Fund,0,0
+594,GRLC,Garlicoin,0,0
+595,PLURA,PluraCoin,0,0
+596,SUPER,SuperCoin,0,0
+597,BRIA,BriaCoin,0,0
+598,STEEP,SteepCoin,0,0
+599,ARQ,Arqma,0,0
+600,DTC,Datacoin,0,0
+601,XPY,PayCoin,0,0
+602,XPTX,PlatinumBAR,0,0
+603,ICR,InterCrone,0,0
+604,ONX,Onix,0,0
+605,DACHX,Dach Coin,0,0
+606,CGEN,CommunityGeneration,0,0
+607,AEG,Aegeus,0,0
+608,XCO,X-Coin,0,0
+609,CJ,Cryptojacks,0,0
+610,SMC,SmartCoin,0,0
+611,DP,DigitalPrice,0,0
+612,MAY,Theresa May Coin,0,0
+613,LNO,Livenodes,0,0
+614,XUEZ,Xuez,0,0
+615,GB,GoldBlocks,0,0
+616,ELLA,Ellaism,0,0
+617,C2,Coin2.1,0,0
+618,DVT,DeVault,0,0
+619,DRM,Dreamcoin,0,0
+620,BERN,BERNcash,0,0
+621,XTA,Italo,0,0
+622,WDC,WorldCoin,0,0
+623,KZC,KZ Cash,0,0
+624,RUPX,Rupaya,0,0
+625,GPKR,Gold Poker,0,0
+626,BEN,BitCoen,0,0
+627,CSTL,Castle,0,0
+628,TTT,TrustNote,0,0
+629,CASH,Cashcoin,0,0
+630,ABS,Absolute,0,0
+631,APR,APR Coin,0,0
+632,BTA,Bata,0,0
+633,ETI,EtherInc,0,0
+634,REC,Regalcoin,0,0
+635,SHB,SkyHub Coin,0,0
+636,TX,TransferCoin,0,0
+637,PNY,Peony,0,0
+638,MEDIC,MedicCoin,0,0
+639,BSM,Bitsum,0,0
+640,ROCO,ROIyal Coin,0,0
+641,DASHG,Dash Green,0,0
+642,ZBA,Zoomba,0,0
+643,IMPL,Impleum,0,0
+644,SPR,SpreadCoin,0,0
+645,XMCC,Monoeci,0,0
+646,FUZZ,FuzzBalls,0,0
+647,PKB,ParkByte,0,0
+648,ACC,AdCoin,0,0
+649,TIT,Titcoin,0,0
+650,PROC,ProCurrency,0,0
+651,GOSS,Gossipcoin,0,0
+652,AMS,AmsterdamCoin,0,0
+653,FBN,Fivebalance,0,0
+654,CRM,Cream,0,0
+655,MCPC,Mobile Crypto Pay Coin,0,0
+656,POST,PostCoin,0,0
+657,SPK,SparksPay,0,0
+658,MXT,MarteXcoin,0,0
+659,MNP,MNPCoin,0,0
+660,XBTC21,Bitcoin 21,0,0
+661,INN,Innova,0,0
+662,WAGE,Digiwage,0,0
+663,HODL,HOdlcoin,0,0
+664,CPU,CPUchain,0,0
+665,ACOIN,Acoin,0,0
+666,CDM,CDMCOIN,0,0
+667,ARION,Arion,0,0
+668,NEVA,NevaCoin,0,0
+669,BOST,BoostCoin,0,0
+670,CHEESE,Cheesecoin,0,0
+671,PAK,Pakcoin,0,0
+672,PNX,Phantomx,0,0
+673,DMB,Digital Money Bits,0,0
+674,BND,Blocknode,0,0
+675,EVOS,EVOS,0,0
+676,XIND,INDINODE,0,0
+677,CF,Californium,0,0
+678,ELE,Elementrem,0,0
+679,LINX,Linx,0,0
+680,IQ,IQ.cash,0,0
+681,EUC,Eurocoin,0,0
+682,MOJO,MojoCoin,0,0
+683,BLC,Blakecoin,0,0
+684,J,Joincoin,0,0
+685,EGX,EagleX,0,0
+686,XUN,UltraNote Coin,0,0
+687,DSR,Desire,0,0
+688,LPC,Lightpaycoin,0,0
+689,SCRIV,SCRIV NETWORK,0,0
+690,NZL,Zealium,0,0
+691,IRL,IrishCoin,0,0
+692,XXX,AdultChain,0,0
+693,CNT,Centurion,0,0
+694,ZYD,Zayedcoin,0,0
+695,SCRT,SecretCoin,0,0
+696,MAG,Magnet,0,0
+697,MOX,MoX,0,0
+698,XG,GIGA,0,0
+699,BSX,Bitspace,0,0
+700,CTL,Citadel,0,0
+701,LTCR,Litecred,0,0
+702,BTAD,Bitcoin Adult,0,0
+703,CARE,Carebit,0,0
+704,HVCO,High Voltage,0,0
+705,PHON,Phonecoin,0,0
+706,SPDR,SPIDER VPS,0,0
+707,DLC,Dollarcoin,0,0
+708,VTA,Virtacoin,0,0
+709,GSR,GeyserCoin,0,0
+710,ICOB,ICOBID,0,0
+711,IMX,Impact,0,0
+712,IMS,Independent Money System,0,0
+713,NUKO,Nekonium,0,0
+714,TAJ,TajCoin,0,0
+715,ARB,ARbit,0,0
+716,BSC,BowsCoin,0,0
+717,MST,MustangCoin,0,0
+718,KTS,Klimatas,0,0
+719,AMMO,Ammo Reloaded,0,0
+720,QBC,Quebecoin,0,0
+721,GRIM,Grimcoin,0,0
+722,BZL,BZLCOIN,0,0
+723,SKC,Skeincoin,0,0
+724,SCS,SpeedCash,0,0
+725,BUMBA,BumbaCoin,0,0
+726,WOMEN,WomenCoin,0,0
+727,CFL,CryptoFlow,0,0
+728,ZUR,Zurcoin,0,0
+729,ATH,Atheios,0,0
+730,MILO,MiloCoin,0,0
+731,CAZ,Cazcoin,0,0
+732,RAGNA,Ragnarok,0,0
+733,NYEX,Nyerium,0,0
+734,BOAT,BOAT,0,0
+735,OPC,OP Coin,0,0
+736,DTEM,Dystem,0,0
+737,CAB,Cabbage,0,0
+738,ENT,Eternity,0,0
+739,CMT,Comet,0,0
+740,LUNA,Luna Coin,0,0
+741,AKA,Akroma,0,0
+742,PEX,PosEx,0,0
+743,BWS,Bitcoin W Spectrum,0,0
+744,PXI,Prime-XI,0,0
+745,ICON,Iconic,0,0
+746,VIVO,VIVO,0,0
+747,VLT,Veltor,0,0
+748,OCC,Octoin Coin,0,0
+749,BENJI,BenjiRolls,0,0
+750,KURT,Kurrent,0,0
+751,CNNC,Cannation,0,0
+752,VEC2,VectorAI,0,0
+753,PAXEX,PAXEX,0,0
+754,URALS,UralsCoin,0,0
+755,WBB,Wild Beast Block,0,0
+756,ELLI,Elliot Coin,0,0
+757,LBTC,LiteBitcoin,0,0
+758,PRJ,Project Coin,0,0
+759,HONEY,Honey,0,0
+760,HWC,HollyWoodCoin,0,0
+761,CREVA,CrevaCoin,0,0
+762,MRI,Mirai,0,0
+763,BCARD,CARDbuyers,0,0
+764,LTCU,LiteCoin Ultra,0,0
+765,XRH,Rhenium,0,0
+766,QBIC,Qbic,0,0
+767,MERO,Mero,0,0
+768,PLNC,PLNcoin,0,0
+769,PRTX,Printex,0,0
+770,VOLT,Bitvolt,0,0
+771,SRC,SecureCoin,0,0
+772,SONO,SONO,0,0
+773,BIT,BitMoney,0,0
+774,TRAID,Traid,0,0
+775,ATOM,Atomic Coin,0,0
+776,IBANK,iBank,0,0
+777,WSP,Wispr,0,0
+778,FLM,FolmCoin,0,0
+779,LEVO,Levocoin,0,0
+780,CXT,Coinonat,0,0
+781,ARG,Argentum,0,0
+782,OLMP,Olympic,0,0
+783,XCXT,CoinonatX,0,0
+784,COAL,BitCoal,0,0
+785,DIN,Dinero,0,0
+786,NANOX,Project-X,0,0
+787,SOCC,SocialCoin,0,0
+788,PUREX,Pure,0,0
+789,PONZI,PonziCoin,0,0
+790,LRM,LRM Coin,0,0
+791,QNO,QYNO,0,0
+792,SANDG,Save and Gain,0,0
+793,ELS,Elysium,0,0
+794,ERY,Eryllium,0,0
+795,X12,X12 Coin,0,0
+796,GMCN,GambleCoin,0,0
+797,JIN,Jin Coin,0,0
+798,XCG,Xchange,0,0
+799,CONX,Concoin,0,0
+800,GRPH,Graphcoin,0,0
+801,BENZ,Benz,0,0
+802,BTPL,Bitcoin Planet,0,0
+803,ABY,ArtByte,0,0
+804,LGS,LogisCoin,0,0
+805,BIGUP,BigUp,0,0
+806,ARGUS,Argus,0,0
+807,MGM,Magnum,0,0
+808,ACP,AnarchistsPrime,0,0
+809,AZART,Azart,0,0
+810,ZZC,ZoZoCoin,0,0
+811,DDX,dietbitcoin,0,0
+812,ITZ,Interzone,0,0
+813,JIYO,Jiyo [OLD],0,0
+814,HMC,HarmonyCoin,0,0
+815,PLACO,PlayerCoin,0,0
+816,SONG,SongCoin,0,0
+817,BLCR,Blacer Coin,0,0
+818,OF,OFCOIN,0,0
+819,CKUSD,CK USD,0,0
+820,SERO,Super Zero,0,0
+821,FOIN,FOIN,0,0
+822,ADK,Aidos Kuneen,0,0
+823,FIL,Filecoin [Futures],0,0
+824,VOLLAR,V-Dimension,0,0
+825,VD,VinDax Coin,0,0
+826,BU,BUMO,0,0
+827,MCC,Magic Cube Coin,0,0
+828,DOT,Polkadot [IOU],0,0
+829,E2C,Electronic Energy Coin,0,0
+830,VLX,Velas,0,0
+831,ZVC,ZVCHAIN,0,0
+832,LTK,LinkToken,0,0
+833,CENT,CENTERCOIN,0,0
+834,FO,FIBOS,0,0
+835,EOSC,EOS Force,0,0
+836,VERS,Versess Coin,0,0
+837,HDAC,Hdac,0,0
+838,UBTC,United Bitcoin,0,0
+839,SBTC,Super Bitcoin,0,0
+840,AUNIT,Aunite,0,0
+841,TOSC,T.OS,0,0
+842,IOEX,IOEX,0,0
+843,FTO,FuturoCoin,0,0
+844,MSD,MSD,0,0
+845,BCX,BitcoinX,0,0
+846,BIFI,Bitcoin File,0,0
+847,XIN,Infinity Economics,0,0
+848,TV,Ti-Value,0,0
+849,TCN,TCOIN,0,0
+850,1X2,1X2 COIN,0,0
+851,ZNN,Zenon,0,0
+852,DTEP,DECOIN,0,0
+853,TER,TerraNova,0,0
+854,BIT,First Bitcoin,0,0
+855,MERI,Merebel,0,0
+856,CLUB,ClubCoin,0,0
+857,SWTC,Jingtum Tech,0,0
+858,PLUS1,PlusOneCoin,0,0
+859,GOD,Bitcoin God,0,0
+860,PROUD,PROUD Money,0,0
+861,XMV,MoneroV,0,0
+862,HNDC,HondaisCoin,0,0
+863,OC,OceanChain,0,0
+864,MCC,Moving Cloud Coin,0,0
+865,BLAZR,BlazerCoin,0,0
+866,SXC,Sexcoin,0,0
+867,HLX,Hilux,0,0
+868,TRO,TRUNK COIN,0,0
+869,SNO,SaveNode,0,0
+870,COTN,CottonCoin,0,0
+871,VLU,Valuto,0,0
+872,IFP,Infinipay,0,0
+873,RBBT,RabbitCoin,0,0
+874,XQN,Quotient,0,0
+875,BUB,Bubble,0,0
+876,AXIOM,Axiom,0,0
+877,AV,AvatarCoin,0,0
+878,FRN,Francs,0,0
+879,ACES,Aces,0,0
+880,TELL,Tellurion,0,0
+881,EMB,EmberCoin,0,0
+882,WINK,Wink,0,0
+883,SIGMA,SIGMAcoin,0,0
+884,WC,WINCOIN,0,0
+885,SUP,Superior Coin,0,0
+886,CNET,ContractNet,0,0
+887,CCC,Concierge Coin,0,0
+888,COBRA,Cobrabytes,0,0
+889,AEC,EmaratCoin,0,0
+890,SZC,ShopZcoin,0,0
+891,XSM,SpectrumCash,0,0
+892,HN,Hellenic Node,0,0
+893,OCUL,Oculor,0,0
+894,BET,BetaCoin,0,0
+895,DMC,DynamicCoin,0,0
+896,PCS,Pabyosi Coin (Special),0,0
+897,HALLO,Halloween Coin,0,0
+898,BIRDS,Birds,0,0
+899,ERA,ERA,0,0
+900,BSN,Bastonet,0,0
+901,DUTCH,Dutch Coin,0,0
+902,RUNNERS,Runners,0,0
+903,ACC,ACChain,0,0
+904,CROP,Cropcoin,0,0
+905,HRC,Haracoin,0,0
+906,PDX,PayDay Coin,0,0
+907,CIF,Crypto Improvement Fund,0,0
+908,C2P,Coin2Play,0,0
+909,CTT,Cryptoinvest,0,0
+910,GFR,GoldenFever,0,0
