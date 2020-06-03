@@ -1,20 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>1f8f51f2-0e05-4c22-b6eb-dd73a5f9ed0f</UserSecretsId>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Fortifex4.Application\Fortifex4.Application.csproj" />
     <ProjectReference Include="..\Fortifex4.Infrastructure\Fortifex4.Infrastructure.csproj" />
     <ProjectReference Include="..\Fortifex4.WebUI\Fortifex4.WebUI.csproj" />
   </ItemGroup>
-
-
 </Project>

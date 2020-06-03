@@ -28,6 +28,8 @@ using Fortifex4.Infrastructure.File.Default;
 using Fortifex4.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Fortifex4.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Infrastructure
 {
@@ -40,6 +42,11 @@ namespace Fortifex4.Infrastructure
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IDateTimeOffsetService, DateTimeOffsetService>();
             services.AddTransient<IFileService, DefaultFileService>();
+
+            services.AddDbContext<Fortifex4DBContext>(options =>
+                        options.UseSqlServer(configuration.GetConnectionString("FortifexDatabase")));
+
+            services.AddScoped<IFortifex4DBContext>(provider => provider.GetService<Fortifex4DBContext>());
 
             AddEmailService(services, fortifexOptions);
             AddFiatService(services, fortifexOptions);

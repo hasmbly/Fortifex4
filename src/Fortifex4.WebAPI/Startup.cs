@@ -2,7 +2,7 @@ using System.Text;
 using Fortifex4.Application;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Infrastructure;
-using Fortifex4.Infrastructure.Persistence;
+using Fortifex4.WebAPI.Common;
 using Fortifex4.WebAPI.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -32,6 +32,7 @@ namespace Fortifex4.WebAPI
             services.AddHttpContextAccessor();
             services.AddApplication();
             services.AddControllers();
+            services.AddSingleton<ICurrentWeb, CurrentWeb>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie("TempCookie", options =>
