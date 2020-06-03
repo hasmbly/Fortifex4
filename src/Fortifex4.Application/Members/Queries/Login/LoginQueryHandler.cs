@@ -54,11 +54,11 @@ namespace Fortifex4.Application.Members.Queries.Login
                             result.AccountIsActive = true;
                         }
 
-                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:TokenSecurityKey").Value));
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Fortifex:TokenSecurityKey").Value));
                         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
                         var claims = new[]
-{
+                        {
                             new Claim(ClaimTypes.Name, request.MemberUsername)
                         };
 

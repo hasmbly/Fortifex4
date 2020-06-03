@@ -105,7 +105,7 @@ namespace Fortifex4.Application.Members.Commands.CreateMember
 
                 await _emailService.SendEmailAsync(mailItem);
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:TokenSecurityKey").Value));
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Fortifex:TokenSecurityKey").Value));
                 var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
                 var claims = new[]
