@@ -33,6 +33,7 @@ namespace Fortifex4.WebAPI
             services.AddApplication();
             services.AddControllers();
             services.AddSingleton<ICurrentWeb, CurrentWeb>();
+            services.AddScoped<ICurrentUser, CurrentUser>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie("TempCookie", options =>
@@ -46,7 +47,7 @@ namespace Fortifex4.WebAPI
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:TokenSecurityKey").Value)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("Fortifex:TokenSecurityKey").Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };

@@ -18,5 +18,6 @@
         public const string FiatCurrenciesNotFound = "Sorry, Fiat Currencies Not Found";
 
         public const string InvalidPassword = "Sorry, Invalid Password";
+        public const string MemberCreated = "Member Created successfully";
     }
 }

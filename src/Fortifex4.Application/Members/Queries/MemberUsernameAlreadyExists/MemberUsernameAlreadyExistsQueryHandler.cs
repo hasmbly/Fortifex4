@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Members.Queries.MemberUsernameAlreadyExists;
 using MediatR;
 
@@ -24,7 +25,8 @@ namespace Fortifex4.Application.Members.Queries.MemberUsernameAlreadyExists
             return new MemberUsernameAlreadyExistsResponse 
             {
                 IsSuccessful = await Task.FromResult(doesMemberExist),
-                DoesMemberExist = await Task.FromResult(doesMemberExist)
+                DoesMemberExist = await Task.FromResult(doesMemberExist),
+                ErrorMessage = !doesMemberExist ? ErrorMessage.MemberUsernameNotFound : null
             };
         }
     }
