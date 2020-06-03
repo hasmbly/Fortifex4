@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +14,8 @@ using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Members.Commands.CreateMember;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Fortifex4.Application.Members.Commands.CreateMember
 {
@@ -20,12 +24,14 @@ namespace Fortifex4.Application.Members.Commands.CreateMember
         private readonly IFortifex4DBContext _context;
         private readonly IEmailService _emailService;
         private readonly ICurrentWeb _currentWeb;
+        private readonly IConfiguration _config;
 
-        public CreateMemberCommandHandler(IFortifex4DBContext context, IEmailService emailService, ICurrentWeb currentWeb)
+        public CreateMemberCommandHandler(IFortifex4DBContext context, IEmailService emailService, ICurrentWeb currentWeb, IConfiguration config)
         {
             _context = context;
             _emailService = emailService;
             _currentWeb = currentWeb;
+            _config = config;
         }
 
         public async Task<CreateMemberResponse> Handle(CreateMemberRequest request, CancellationToken cancellationToken)
@@ -82,7 +88,6 @@ namespace Fortifex4.Application.Members.Commands.CreateMember
                 await _context.Members.AddAsync(member);
                 await _context.SaveChangesAsync(cancellationToken);
 
-                result.IsSuccessful = true;
                 result.ActivationCode = member.ActivationCode;
 
                 StringBuilder emailBodyStringBuilder = new StringBuilder();
@@ -99,6 +104,27 @@ namespace Fortifex4.Application.Members.Commands.CreateMember
                 };
 
                 await _emailService.SendEmailAsync(mailItem);
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:TokenSecurityKey").Value));
+                var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+                var claims = new[]
+{
+                            new Claim(ClaimTypes.Name, request.MemberUsername)
+                        };
+
+                var token = new JwtSecurityToken(
+                    null,
+                    null,
+                    claims,
+                    expires: DateTime.Now.AddDays(1),
+                    signingCredentials: credentials
+                );
+
+                JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+
+                result.Token = tokenHandler.WriteToken(token);
+                result.IsSuccessful = true;
             }
 
             return result;

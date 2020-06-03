@@ -1,22 +1,31 @@
-﻿using System.Linq;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Members.Queries.Login;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Fortifex4.Application.Members.Queries.Login
 {
     public class LoginQueryHandler : IRequestHandler<LoginRequest, LoginResponse>
     {
         private readonly IFortifex4DBContext _context;
+        private readonly IConfiguration _config;
 
-        public LoginQueryHandler(IFortifex4DBContext context)
+        public LoginQueryHandler(IFortifex4DBContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
 
         public async Task<LoginResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
@@ -38,11 +47,36 @@ namespace Fortifex4.Application.Members.Queries.Login
                     if (FortifexUtility.VerifyPasswordHash(request.Password, member.PasswordSalt, member.PasswordHash))
                     {
                         result.PasswordIsCorrect = true;
+                        result.IsSuccessful = true;
 
                         if (member.ActivationStatus == ActivationStatus.Active)
                         {
                             result.AccountIsActive = true;
                         }
+
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:TokenSecurityKey").Value));
+                        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+                        var claims = new[]
+{
+                            new Claim(ClaimTypes.Name, request.MemberUsername)
+                        };
+
+                        var token = new JwtSecurityToken(
+                            null,
+                            null,
+                            claims,
+                            expires: DateTime.Now.AddDays(1),
+                            signingCredentials: credentials
+                        );
+
+                        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+
+                        result.Token = tokenHandler.WriteToken(token);
+                    }
+                    else
+                    {
+                        result.ErrorMessage = ErrorMessage.InvalidPassword;
                     }
                 }
 
@@ -54,6 +88,10 @@ namespace Fortifex4.Application.Members.Queries.Login
                 {
                     result.ProjectID = project.ProjectID;
                 }
+            }
+            else
+            {
+                result.ErrorMessage = ErrorMessage.MemberUsernameNotFound;
             }
 
             return result;
