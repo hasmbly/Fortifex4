@@ -47,32 +47,32 @@ namespace Fortifex4.Application.Members.Queries.Login
                     if (FortifexUtility.VerifyPasswordHash(request.Password, member.PasswordSalt, member.PasswordHash))
                     {
                         result.PasswordIsCorrect = true;
-                        result.IsSuccessful = true;
 
                         if (member.ActivationStatus == ActivationStatus.Active)
                         {
                             result.AccountIsActive = true;
+                            result.IsSuccessful = true;
+
+                            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Fortifex:TokenSecurityKey").Value));
+                            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+                            var claims = new[]
+                            {
+                                new Claim(ClaimTypes.Name, request.MemberUsername)
+                            };
+
+                            var token = new JwtSecurityToken(
+                                null,
+                                null,
+                                claims,
+                                expires: DateTime.Now.AddDays(1),
+                                signingCredentials: credentials
+                            );
+
+                            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+
+                            result.Token = tokenHandler.WriteToken(token);
                         }
-
-                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Fortifex:TokenSecurityKey").Value));
-                        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-                        var claims = new[]
-                        {
-                            new Claim(ClaimTypes.Name, request.MemberUsername)
-                        };
-
-                        var token = new JwtSecurityToken(
-                            null,
-                            null,
-                            claims,
-                            expires: DateTime.Now.AddDays(1),
-                            signingCredentials: credentials
-                        );
-
-                        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-
-                        result.Token = tokenHandler.WriteToken(token);
                     }
                     else
                     {

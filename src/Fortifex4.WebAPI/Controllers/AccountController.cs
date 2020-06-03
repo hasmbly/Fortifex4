@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
+using Fortifex4.Shared.Members.Commands.ActivateMember;
 using Fortifex4.Shared.Members.Queries.GetMember;
 using Fortifex4.Shared.Members.Queries.Login;
 using Fortifex4.Shared.Members.Queries.MemberUsernameAlreadyExists;
@@ -34,6 +35,32 @@ namespace Fortifex4.WebAPI.Controllers
             try
             {
                 return Ok(new Success(await Mediator.Send(request)));
+            }
+            catch (NotFoundException notFoundException)
+            {
+                return Ok(new NotFoundError(notFoundException));
+            }
+            catch (Exception exception)
+            {
+                return Ok(new InternalServerError(exception));
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("activate")]
+        public async Task<IActionResult> Activate(string code)
+        {
+            if (string.IsNullOrEmpty(code))
+                return Ok($"You did't provide any Activation Code.");
+
+            try
+            {
+                Guid activationCode = new Guid(code);
+
+                return Ok(new Success(await Mediator.Send(new ActivateMemberRequest
+                {
+                    ActivationCode = activationCode
+                })));
             }
             catch (NotFoundException notFoundException)
             {
