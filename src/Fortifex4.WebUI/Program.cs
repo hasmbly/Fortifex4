@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using Fortifex4.WebUI.Common;
-using Microsoft.AspNetCore.Authentication;
+using Fortifex4.WebUI.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;

@@ -8,14 +8,14 @@
         {
             public static class Account
             {
-                public static readonly string CheckUsername = $"account/checkUsername";
-                public static readonly string Login = $"account/login";
-                public static readonly string GetMember = $"account/getMember";
+                public static readonly string CheckUsername = $"api/account/checkUsername";
+                public static readonly string Login = $"api/account/login";
+                public static readonly string GetMember = $"api/account/getMember";
             }
 
             public static class Members
             {
-                public static readonly string CreateMember = $"members/createMember";
+                public static readonly string CreateMember = $"api/members/createMember";
             }
         }
 

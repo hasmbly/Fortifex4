@@ -1,8 +1,23 @@
-﻿@page "/"
-@layout MainLayout
+﻿@layout AnonymousLayout
+@page "/"
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<PageTitle Title="Index" />
+<div class="index-outer">
+    <img class="index-logo-image" src="images/fortifexlogo.png" />
+    <div>
+        <h1>
+            Centralised insights and control.
+        </h1>
+        <p>
+            Mission control for all your crypto, a place for all exchanges.
+        </p>
+        <h2>
+            Test our MVP today!
+        </h2>
+    </div>
+    <div>
+        <a class="index-button" href="account/login">Sign In</a>
+        <a class="index-button" href="account/register">Register</a>
+    </div>
+    <img class="index-dashboard-image" src="images/dashboard.png" />
+</div>

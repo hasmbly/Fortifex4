@@ -1,0 +1,384 @@
+﻿html, body
+{
+    height: 100%;
+}
+
+/* #region loading-bar */
+.loading-bar
+{
+    position: absolute;
+    top: calc(50% - 3px);
+    left: calc(50% - 250px);
+    width: 500px;
+    height: 6px;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2)
+}
+
+    .loading-bar::after
+    {
+        content: '';
+        display: block;
+        width: 200px;
+        height: 100%;
+        background-color: #dc105a;
+        animation: progressbar-slide 1s infinite;
+        animation-timing-function: ease-in-out;
+    }
+/* #endregion */
+
+/* #region Index.razor */
+.index-outer
+{
+    height: 100%;
+    text-align: center;
+    background-color: #292d31;
+    color: #fff;
+}
+
+.index-logo-image
+{
+    margin: 3rem;
+}
+
+.index-button
+{
+    display: inline-block;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    padding: 0.5rem 3rem;
+    color: #fff;
+    margin: 1rem;
+}
+
+    .index-button:hover
+    {
+        background-color: #4baed0;
+        color: #fff;
+        text-decoration: none;
+    }
+
+.index-dashboard-image
+{
+    height: 500px;
+}
+/* #endregion */
+
+/* #region Login.razor & Register.razor */
+.login-area
+{
+    padding-top: 45%;
+    transform: translate(0, -20%);
+    text-align: center;
+}
+
+.register-area
+{
+    padding-top: 35%;
+    transform: translate(0, -20%);
+    text-align: center;
+}
+
+.dark-side
+{
+    height: 100%;
+    background-color: #000;
+}
+
+    .dark-side img
+    {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+.form-control-login
+{
+    font-size: 15px !important;
+    font-weight: 100 !important;
+    line-height: 2.67 !important;
+    border-style: solid !important;
+    border-width: 0 0 1px !important;
+    border-color: #3f3f3f !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    background-color: #ffffff !important;
+    width: 335px !important;
+    height: 46px !important;
+    margin: 10px 0 10px 0;
+    text-indent: 10px;
+    text-align: center;
+    outline: 0 !important;
+}
+
+.btn-login
+{
+    width: 254px !important;
+    height: 40px !important;
+    border-radius: 5px !important;
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    font-size: 16px !important;
+    letter-spacing: 1.2pt !important;
+    border-width: 0;
+    margin-bottom: 14px;
+    outline: 0 !important;
+    cursor: pointer;
+}
+
+.btn-icon
+{
+    border: 1px solid;
+    border-color: black;
+    margin: 0 5px;
+}
+
+    .btn-icon:hover
+    {
+        background-color: black;
+    }
+
+        .btn-icon:hover .icon-text
+        {
+            color: white;
+        }
+
+.icon
+{
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.icon-google
+{
+    vertical-align: middle;
+    margin-right: 10px;
+    background-image: url('../../images/google.png');
+    height: 30px;
+    width: 30px;
+}
+
+.icon-facebook
+{
+    vertical-align: middle;
+    margin-right: 10px;
+    background-image: url('../../images/fac-icon.png');
+    height: 30px;
+    width: 30px;
+}
+
+.icon-text
+{
+    color: black;
+    font-size: small;
+}
+/* #endregion */
+
+.outer
+{
+    min-height: 100%;
+    display: flex;
+    background-color: #f6f8fa;
+}
+
+/* #region aside */
+aside
+{
+    width: 15rem;
+    height: 100vh;
+    border-right: 1px solid #ddd;
+    background-color: #fff;
+    /*z-index: 99;
+    top: 0;
+    position: sticky;*/
+}
+
+.logo-sidebar
+{
+    text-align: center;
+    margin-bottom: 3rem;
+    margin-top: 1rem;
+}
+
+    .logo-sidebar .navbar-brand
+    {
+        margin: 0;
+    }
+
+.logo-sidebar-img
+{
+    width: 50%;
+}
+
+.photo-profile
+{
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.user-photo-img
+{
+    width: 3rem;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+}
+
+.menu-item li
+{
+    border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+    .menu-item li:first-child
+    {
+        border-top: 1px solid #ddd;
+    }
+
+.menu-item .nav-link
+{
+    padding: 0.7rem 3rem;
+}
+
+.menu-item .nav-item
+{
+    border-left: 5px solid #fff;
+}
+
+    .menu-item .nav-item .active
+    {
+        border-left: 5px solid #068b76;
+    }
+
+.icon-menu
+{
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(0, -50%);
+    z-index: 1;
+}
+/* #endregion */
+
+.main-container
+{
+    /*flex: 1;*/
+    flex: 1 1 auto;
+}
+
+/* #region header */
+header
+{
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #24292e;
+    color: white;
+    padding: 0px 2rem;
+}
+
+    header select
+    {
+        width: 175px;
+        height: 30px;
+        border-color: #808080;
+        border-width: 1px;
+        border-radius: 0.3rem;
+        margin: 0 10px;
+        padding-left: 2px;
+        padding-top: 1px;
+        outline: 0;
+    }
+/*#endregion */
+
+main
+{
+    padding: 2rem;
+}
+
+/*#region Main content */
+.container-body
+{
+    background-color: white;
+    border-top: 4px solid #ff8c00;
+    padding: 1rem;
+}
+
+.table-custom.table
+{
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.table-custom th
+{
+    border-top: none;
+}
+
+.table-custom td
+{
+    border-top: 2px solid #fff;
+}
+
+.td-index
+{
+    width: 3rem;
+}
+
+.td-exchange-name
+{
+    width: 20rem;
+}
+
+.td-url
+{
+    width: 20rem;
+}
+
+.td-qty
+{
+    width: 5rem;
+    text-align: right;
+}
+
+.td-balance
+{
+    width: 15rem;
+    text-align: right;
+}
+
+.td-action
+{
+    width: 5rem;
+}
+
+.tr-footer td
+{
+    border-top: solid 1px #777777;
+    padding-top: 10px;
+}
+/*#endregion */
+
+/* #region Developer */
+.developer
+{
+    background-color: black;
+    color: yellow;
+    padding: 10px 20px;
+    display: none;
+}
+
+.spongebob
+{
+    background-color: yellow;
+    padding: 10px 20px;
+}
+/* #endregion */
+
+@media (min-width: 768px)
+{
+}

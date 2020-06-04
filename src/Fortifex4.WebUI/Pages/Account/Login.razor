@@ -1,0 +1,50 @@
+﻿@layout AnonymousLayout
+@page "/account/login"
+
+@inject IAuthenticationService _authenticationService
+@inject NavigationManager _navigationManager
+@inject HttpClient _httpClient
+
+<PageTitle Title="Login" />
+<div class="row no-gutters h-100">
+    <div class="col">
+        <div class="login-area">
+            <EditForm Model="Input" OnValidSubmit="LoginAsync">
+                <DataAnnotationsValidator />
+                <h1 class="mb-5">Log In</h1>
+                <div class="form-group">
+                    <InputText @bind-Value="Input.MemberUsername" class="form-control-login" placeholder="Email address" />
+                    <ValidationMessage For="@(() => Input.MemberUsername)" />
+                </div>
+                <div class="form-group">
+                    <InputText @bind-Value="Input.Password" type="password" class="form-control-login" placeholder="Password" />
+                    <ValidationMessage For="@(() => Input.Password)" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-login">LOGIN</button>
+                    <div class="text-danger">
+                        @Message
+                    </div>
+                </div>
+            </EditForm>
+            <div class="external-providers">
+                <a class="btn btn-icon" href="">
+                    <span class="icon icon-google"></span>
+                    <span class="icon icon-text">Sign in with Google</span>
+                </a>
+                <a class="btn btn-icon" href="">
+                    <span class="icon icon-facebook"></span>
+                    <span class="icon icon-text">Sign in with Facebook</span>
+                </a>
+            </div>
+            <div class="mt-5 pt-5 border-top">
+                <a href="/account/register">Register as a new user</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="dark-side">
+            <img src="images/fortifex-logo-link-black.jpg" />
+        </div>
+    </div>
+</div>

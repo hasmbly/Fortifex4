@@ -1,0 +1,35 @@
+﻿@namespace Fortifex4.WebUI.Shared.Common
+
+@inject IAuthenticationService _authenticationService
+@inject NavigationManager _navigationManager
+
+<header>
+    <div></div>
+    <div>
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="timeframe-options">Time Frame:</label>
+                <select id="timeframe-options" class="form-control-sm">
+                    <option>Sample Time Frame</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fiat-options">Pref. Fiat:</label>
+                <select id="fiat-options" class="form-control-sm">
+                    <option>Sample Fiat</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="coin-options">Pref. Crypto:</label>
+                <select id="coin-options" class="form-control-sm">
+                    <option>Sample Crypto</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div>
+        <form class="form-inline">
+            <button type="submit" class="btn btn-outline-light">Logout</button>
+        </form>
+    </div>
+</header>

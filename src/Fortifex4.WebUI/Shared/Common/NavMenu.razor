@@ -1,39 +1,60 @@
 ﻿@namespace Fortifex4.WebUI.Shared.Common
 
-<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Fortifex4.WebUI</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+<aside>
+    <div class="logo-sidebar">
+        <a class="navbar-brand" href="portfolio">
+            <img class="logo-sidebar-img" src="images/fortifex-logo-black.png" />
+        </a>
+    </div>
+    <AuthorizeView>
+        <Authorized>
+            <div class="photo-profile">
+                <img class="user-photo-img" src="images/user.png" />
+                <div class="profile-name">
+                    <p class="text-dark">
+                        <a href="#">
+                            @context.User.Identity.Name
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+    <ul class="nav flex-column menu-item">
+        <li class="nav-item">
+            <NavLink class="nav-link text-dark" href="wallets">
+                <img class="icon-menu" src="images/fortifex-wallet.png" />
+                Wallets
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+        <li class="nav-item">
+            <NavLink class="nav-link text-dark" href="exchanges">
+                <img class="icon-menu" src="images/fortifex-exchanges.png" />
+                Exchanges
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+        <li class="nav-item">
+            <NavLink class="nav-link text-dark" href="portfolio" Match="NavLinkMatch.All">
+                <img class="icon-menu" src="images/fortifex-portfolio.png" />
+                Portfolio Summary
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link text-dark" href="transactions">
+                <img class="icon-menu" src="images/fortifex-transactions.png" />
+                Transactions
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link text-dark" href="piecharts">
+                <img class="icon-menu" src="images/fortifex-piechart.png" />
+                Pie Charts
             </NavLink>
         </li>
     </ul>
-</div>
+</aside>
 
-@code {
-    private bool collapseNavMenu = true;
+@code 
+{
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
 }

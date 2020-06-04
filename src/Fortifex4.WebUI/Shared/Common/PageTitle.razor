@@ -1,0 +1,10 @@
+﻿@inject IJSRuntime _jsRuntime;
+
+@code {
+    [Parameter] public string Title { get; set; }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        await _jsRuntime.InvokeAsync<string>("setTitle", new object[] { this.Title });
+    }
+}
