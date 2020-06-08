@@ -11,6 +11,18 @@ namespace Fortifex4.WebUI.Shared.Common
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
+        protected override void OnInitialized()
+        {
+        }
+
+        private void PrefCoinSelected(ChangeEventArgs e)
+        {
+            if (int.TryParse((string)e.Value, out var index) && index >= 0)
+            {
+                //AddTopping(toppings[index]);
+            }
+        }
+
         private async Task LogUsername()
         {
             var authenticationState = await AuthenticationStateTask;

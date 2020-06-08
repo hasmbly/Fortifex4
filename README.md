@@ -1,3 +1,11 @@
+# Seeder
+1. (GET) https://localhost:5001/api/dev/seedMasterData
+2. (GET) https://localhost:5001/api/dev/seedFiatCurrencies
+3. (GET) https://localhost:5001/api/dev/seedCryptoCurrencies
+4. (GET) https://localhost:5001/api/dev/removeAllTransactions
+5. (GET) https://localhost:5001/api/dev/updateFiatCurrencyNames
+6. (GET) https://localhost:5001/api/dev/updateFiatCurrencyCoinMarketCapIDs
+
 # Introduction 
 TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
 
