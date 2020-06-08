@@ -4,6 +4,7 @@
 @inject IAuthenticationService _authenticationService
 @inject NavigationManager _navigationManager
 @inject HttpClient _httpClient
+@inject ActivateMemberState appState
 
 <PageTitle Title="Login" />
 <div class="row no-gutters h-100">
@@ -12,6 +13,8 @@
             <EditForm Model="Input" OnValidSubmit="LoginAsync">
                 <DataAnnotationsValidator />
                 <h1 class="mb-5">Log In</h1>
+                <ActivationSucceed MemberUsername="@appState.Member.MemberUsername" />
+                
                 <div class="form-group">
                     <InputText @bind-Value="Input.MemberUsername" class="form-control-login" placeholder="Email address" />
                     <ValidationMessage For="@(() => Input.MemberUsername)" />

@@ -13,6 +13,10 @@ namespace Fortifex4.WebUI.Pages.Account
         public string ConfirmPassword { get; set; }
         public CreateMemberRequest Input { get; set; } = new CreateMemberRequest();
 
+        protected override void OnInitialized()
+        {
+        }
+
         private async Task RegisterAsync()
         {
             if (ConfirmPassword != this.Input.Password)
@@ -33,8 +37,11 @@ namespace Fortifex4.WebUI.Pages.Account
                 {
                     if (createMemberResponse.Result.IsSuccessful)
                     {
-                        await _authenticationService.Login(createMemberResponse.Result.Token);
-                        _navigationManager.NavigateTo("/portfolio");
+                        appState.SetActivateMemberState(createMemberResponse.Result);
+                        
+                        appState.OnChange += StateHasChanged;
+
+                        Console.WriteLine($"Activate Member OnInitialized GetActivationCode(): " + appState.Member.ActivationCode);
                     }
                     else
                     {

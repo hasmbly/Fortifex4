@@ -73,6 +73,11 @@ namespace Fortifex4.Application.Members.Queries.Login
 
                             result.Token = tokenHandler.WriteToken(token);
                         }
+                        else
+                        {
+                            result.IsSuccessful = false;
+                            result.ErrorMessage = ErrorMessage.InactiveAccount;
+                        }
                     }
                     else
                     {

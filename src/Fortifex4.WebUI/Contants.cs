@@ -11,6 +11,7 @@
                 public static readonly string CheckUsername = $"api/account/checkUsername";
                 public static readonly string Login = $"api/account/login";
                 public static readonly string GetMember = $"api/account/getMember";
+                public static readonly string ActivateMember = $"api/account/activate?code=";
             }
 
             public static class Members

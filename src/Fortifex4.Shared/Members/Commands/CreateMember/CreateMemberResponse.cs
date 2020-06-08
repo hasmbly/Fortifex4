@@ -6,6 +6,6 @@ namespace Fortifex4.Shared.Members.Commands.CreateMember
     public class CreateMemberResponse : GeneralResponse
     {
         public Guid ActivationCode { get; set; }
-        public string Token { get; set; }
+        public string MemberUsername { get; set; }
     }
 }

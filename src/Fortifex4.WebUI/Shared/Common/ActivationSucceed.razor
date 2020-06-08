@@ -1,0 +1,18 @@
+﻿@namespace Fortifex4.WebUI.Shared.Common
+
+@if (!string.IsNullOrEmpty(MemberUsername))
+{
+    <div class="alert alert-success">
+        <p>
+            Welcome, <strong>@MemberUsername</strong>!
+        </p>
+        <p>
+            Your account is now active. Please login below to start using Fortifex.
+        </p>
+    </div>
+}
+
+@code
+{
+    [Parameter] public string MemberUsername { get; set; }
+}

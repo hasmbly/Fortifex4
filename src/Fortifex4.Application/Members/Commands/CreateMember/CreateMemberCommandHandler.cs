@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +13,6 @@ using Fortifex4.Shared.Members.Commands.CreateMember;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Fortifex4.Application.Members.Commands.CreateMember
 {
@@ -89,6 +86,7 @@ namespace Fortifex4.Application.Members.Commands.CreateMember
                 await _context.SaveChangesAsync(cancellationToken);
 
                 result.ActivationCode = member.ActivationCode;
+                result.MemberUsername = member.MemberUsername;
 
                 StringBuilder emailBodyStringBuilder = new StringBuilder();
                 emailBodyStringBuilder.AppendLine("Please click below link to activate your Fortifex account.");
@@ -105,25 +103,6 @@ namespace Fortifex4.Application.Members.Commands.CreateMember
 
                 await _emailService.SendEmailAsync(mailItem);
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Fortifex:TokenSecurityKey").Value));
-                var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-                var claims = new[]
-{
-                            new Claim(ClaimTypes.Name, request.MemberUsername)
-                        };
-
-                var token = new JwtSecurityToken(
-                    null,
-                    null,
-                    claims,
-                    expires: DateTime.Now.AddDays(1),
-                    signingCredentials: credentials
-                );
-
-                JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-
-                result.Token = tokenHandler.WriteToken(token);
                 result.IsSuccessful = true;
             }
 

@@ -3,6 +3,7 @@
     public static class ErrorMessage
     {
         public const string MemberUsernameNotFound = "Sorry, Username Not Found";
+        public const string InactiveAccount = "Sorry, Your Account is inactive";
         public const string OwnerNotFound = "Sorry, Owner Not Found";
         public const string WalletNotFound = "Sorry, Wallet Not Found";
         public const string PocketNotFound = "Sorry, Pocket Not Found";

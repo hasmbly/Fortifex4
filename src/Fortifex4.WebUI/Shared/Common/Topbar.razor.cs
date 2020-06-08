@@ -33,7 +33,10 @@ namespace Fortifex4.WebUI.Shared.Common
 
         private async Task LogoutAsync()
         {
+            Console.WriteLine("You pressed logout.");
+
             await _authenticationService.Logout();
+
             _navigationManager.NavigateTo("/");
         }
     }

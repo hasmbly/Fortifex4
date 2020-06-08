@@ -25,7 +25,7 @@ namespace Fortifex4.WebUI
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-            builder.Services.AddScoped<AppState>();
+            builder.Services.AddScoped<ActivateMemberState>();
 
             var host = builder.Build();
 

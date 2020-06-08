@@ -34,6 +34,9 @@ namespace Fortifex4.WebUI.Pages.Account
                 if (loginResponse.Result.IsSuccessful)
                 {
                     await _authenticationService.Login(loginResponse.Result.Token);
+
+                    appState.ResetActivateMemberState();
+
                     _navigationManager.NavigateTo("/portfolio");
                 }
                 else
