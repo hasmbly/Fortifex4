@@ -4,14 +4,14 @@
 @inject IAuthenticationService _authenticationService
 @inject NavigationManager _navigationManager
 @inject HttpClient _httpClient
-@inject ActivateMemberState appState
+@inject ActivateMemberState activateMemberState
 
 <link href="css/account/register.css" rel="stylesheet" />
 <PageTitle Title="Register" />
 <div class="row no-gutters h-100">
     <div class="col">
         <div class="register-area">
-            @if (appState.ShowActivationMessage)
+            @if (activateMemberState.ShowActivationMessage)
             {
                 <RegistrationSucceed />
             }

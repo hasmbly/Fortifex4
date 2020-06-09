@@ -13,11 +13,9 @@ namespace Fortifex4.WebUI.Shared.Common
 
         private async Task Activate()
         {
-            ActivationURL = Constants.URI.Account.ActivateMember + appState.Member.ActivationCode;
+            ActivationURL = Constants.URI.Account.ActivateMember + activateMemberState.Member.ActivationCode;
 
             var MemberActivation = await _httpClient.GetJsonAsync<ApiResponse<ActivateMemberResponse>>(ActivationURL);
-
-            Console.WriteLine(JsonSerializer.Serialize(MemberActivation));
 
             if (MemberActivation.Status.IsError)
             {
@@ -27,13 +25,9 @@ namespace Fortifex4.WebUI.Shared.Common
             {
                 if (MemberActivation.Result.IsSuccessful)
                 {
-                    appState.DoneActivateMemberState();
+                    activateMemberState.DoneActivateMemberState();
 
-                    appState.OnChange += StateHasChanged;
-
-                    Console.WriteLine($"Activation OnInitialized GetIsNeedActivation: " + appState.Member.ActivationCode);
-
-                    //_navigationManager.NavigateTo("/account/login");
+                    activateMemberState.OnChange += StateHasChanged;
                 }
             }
         }

@@ -3,9 +3,14 @@
 @inherits LayoutComponentBase
 
 <div class="outer">
-    <NavMenu />
+    <AuthorizeView>
+        <NavMenu />
+    </AuthorizeView>
     <div class="main-container">
-        <TopBar />
+        <AuthorizeView>
+            <TopBar />
+        </AuthorizeView>
+
         <main role="main">
             @Body
         </main>

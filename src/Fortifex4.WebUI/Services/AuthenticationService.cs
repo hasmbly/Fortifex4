@@ -8,6 +8,7 @@ namespace Fortifex4.WebUI.Services
     {
         public Task Login(string token);
         public Task Logout();
+        public Task GetClaimsAndSetDefaultHeader();
     }
 
     public class AuthenticationService : IAuthenticationService
@@ -27,6 +28,11 @@ namespace Fortifex4.WebUI.Services
         public async Task Logout()
         {
             await ((ServerAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOutAsync();
+        }
+
+        public async Task GetClaimsAndSetDefaultHeader()
+        {
+            await ((ServerAuthenticationStateProvider)_authenticationStateProvider).GetAuthenticationStateAsync();
         }
     }
 }

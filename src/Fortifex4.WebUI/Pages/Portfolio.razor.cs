@@ -2,5 +2,8 @@
 {
     public partial class Portfolio
     {
+        protected override void OnInitialized()
+        {
+        }
     }
 }

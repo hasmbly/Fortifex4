@@ -22,26 +22,28 @@ namespace Fortifex4.WebUI.Common
             _localStorage = localStorage;
         }
 
+        public HttpClient Client()
+        {
+            return _httpClient;
+        }
+
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             // Ambil Cookie dari Local Storage
-            var savedToken = await _localStorage.GetItemAsync<string>(Constants.StorageKey.Token);
+            var savedToken = await GetTokenAsync();
 
             Console.WriteLine($"savedToken: {savedToken}");
 
             if (!string.IsNullOrEmpty(savedToken))
             {
                 // Jangan dihapus dulu, kayanya bakalan kepake
-                //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Constants.Bearer, savedToken);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Constants.Bearer, savedToken);
+
+                var defaultHeader = _httpClient.DefaultRequestHeaders.ToString();
 
                 IEnumerable<Claim> claims = ParseClaimsFromJwt(savedToken);
 
                 var name = claims.Select(x => x.Value).ToList();
-
-                foreach (string item in name)
-                {
-                    Console.WriteLine($"ParseClaimsFromJwt Items: {item}");
-                }
 
                 var claimsIdentity = new ClaimsIdentity(claims, Constants.AuthenticationType.ServerAuthentication);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -52,7 +54,7 @@ namespace Fortifex4.WebUI.Common
             else
             {
                 // Jangan dihapus dulu, kayanya bakalan kepake
-                //_httpClient.DefaultRequestHeaders.Authorization = null;
+                _httpClient.DefaultRequestHeaders.Authorization = null;
 
                 var claimsIdentity = new ClaimsIdentity();
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -138,6 +140,11 @@ namespace Fortifex4.WebUI.Common
                 case 3: base64 += "="; break;
             }
             return Convert.FromBase64String(base64);
+        }
+
+        public async Task<string> GetTokenAsync()
+        {
+            return await _localStorage.GetItemAsync<string>(Constants.StorageKey.Token);
         }
     }
 }

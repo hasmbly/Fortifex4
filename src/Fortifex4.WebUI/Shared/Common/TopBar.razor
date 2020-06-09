@@ -1,7 +1,11 @@
 ﻿@namespace Fortifex4.WebUI.Shared.Common
 
+@attribute [Authorize]
+
 @inject IAuthenticationService _authenticationService
 @inject NavigationManager _navigationManager
+@inject HttpClient _httpClient
+@inject AuthenticationStateProvider _authenticationStateProvider
 
 <header>
     <div></div>
@@ -9,20 +13,29 @@
         <div class="form-inline">
             <div class="form-group">
                 <label for="timeframe-options">Time Frame:</label>
-                <select id="timeframe-options" class="form-control-sm">
-                    <option>Sample Time Frame</option>
+                <select id="timeframe-options" class="form-control-sm" @bind="SelectedTimeFrame">
+                    @foreach (var timeFrame in Model.TimeFrames)
+                    {
+                        <option value="@timeFrame.TimeFrameID">@timeFrame.Name</option>
+                    }
                 </select>
             </div>
             <div class="form-group">
                 <label for="fiat-options">Pref. Fiat:</label>
-                <select id="fiat-options" class="form-control-sm">
-                    <option>Sample Fiat</option>
+                <select id="fiat-options" class="form-control-sm" @bind="SelectedFiatCurrency">
+                    @foreach (var fiatCurrency in Model.FiatCurrency)
+                    {
+                        <option value="@fiatCurrency.CurrencyID">@fiatCurrency.NameWithSymbol</option>
+                    }
                 </select>
             </div>
             <div class="form-group">
                 <label for="coin-options">Pref. Crypto:</label>
-                <select id="coin-options" class="form-control-sm">
-                    <option>Sample Crypto</option>
+                <select id="coin-options" class="form-control-sm" @bind="SelectedCoinCurrency">
+                    @foreach (var coinCurrency in Model.CoinCurrency)
+                    {
+                        <option value="@coinCurrency.CurrencyID">@coinCurrency.NameWithSymbol</option>
+                    }
                 </select>
             </div>
         </div>

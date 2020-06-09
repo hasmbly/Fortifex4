@@ -37,11 +37,11 @@ namespace Fortifex4.WebUI.Pages.Account
                 {
                     if (createMemberResponse.Result.IsSuccessful)
                     {
-                        appState.SetActivateMemberState(createMemberResponse.Result);
-                        
-                        appState.OnChange += StateHasChanged;
+                        activateMemberState.SetActivateMemberState(createMemberResponse.Result);
 
-                        Console.WriteLine($"Activate Member OnInitialized GetActivationCode(): " + appState.Member.ActivationCode);
+                        activateMemberState.OnChange += StateHasChanged;
+
+                        Console.WriteLine($"Activate Member OnInitialized GetActivationCode(): " + activateMemberState.Member.ActivationCode);
                     }
                     else
                     {
