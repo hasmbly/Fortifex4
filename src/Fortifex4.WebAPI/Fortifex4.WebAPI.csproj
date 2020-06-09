@@ -20,4 +20,15 @@
     <ProjectReference Include="..\Fortifex4.Infrastructure\Fortifex4.Infrastructure.csproj" />
     <ProjectReference Include="..\Fortifex4.WebUI\Fortifex4.WebUI.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Data\Countries.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Exchanges.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Regions.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
