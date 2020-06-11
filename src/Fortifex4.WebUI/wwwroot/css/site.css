@@ -379,6 +379,24 @@ main
 }
 /* #endregion */
 
+/* #region Chosen */
+.chosen-container
+{
+    width: 100% !important;
+}
+
+.chosen-single
+{
+    height: 38px !important;
+    padding: 6px 12px !important;
+}
+
+    .chosen-single span
+    {
+        font-size: 16px;
+    }
+/* #endregion */
+
 @media (min-width: 768px)
 {
 }

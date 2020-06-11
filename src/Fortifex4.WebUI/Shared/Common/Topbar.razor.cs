@@ -122,7 +122,7 @@ namespace Fortifex4.WebUI.Shared.Common
 
             await _httpClient.PutJsonAsync<ApiResponse<UpdatePreferredTimeFrameResponse>>(Constants.URI.Members.UpdatePreferredTimeFrame, UpdatePreferredTimeFrameRequest);
          
-            await OnInitializedAsync();
+            StateHasChanged();
         }
 
         private async void OnChangeCoinCurrency()
@@ -131,7 +131,7 @@ namespace Fortifex4.WebUI.Shared.Common
 
             await _httpClient.PutJsonAsync<ApiResponse<UpdatePreferredCoinCurrencyResponse>>(Constants.URI.Members.UpdatePreferredCoinCurrency, UpdatePreferredCoinCurrencyRequest);
 
-            await OnInitializedAsync();
+            StateHasChanged();
         }
 
         private async void OnChangeFiatCurrency()
@@ -140,7 +140,7 @@ namespace Fortifex4.WebUI.Shared.Common
 
             await _httpClient.PutJsonAsync<ApiResponse<UpdatePreferredFiatCurrencyResponse>>(Constants.URI.Members.UpdatePreferredFiatCurrency, UpdatePreferredFiatCurrencyRequest);
 
-            await OnInitializedAsync();
+            StateHasChanged();
         }
         #endregion
 

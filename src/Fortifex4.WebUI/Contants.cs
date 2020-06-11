@@ -32,6 +32,21 @@
                 public static readonly string GetAllTimeFrames = $"{BaseAPI}/timeFrames/getAllTimeFrames";
             }
 
+            public static class Genders
+            {
+                public static readonly string GetAllGenders = $"{BaseAPI}/genders/getAllGenders";
+            }
+
+            public static class Regions
+            {
+                public static readonly string GetRegions = $"{BaseAPI}/regions/GetRegions";
+            }
+
+            public static class Countries
+            {
+                public static readonly string GetAllCountries = $"{BaseAPI}/countries/GetAllCountries";
+            }
+
             public static class Currencies
             {
                 public static readonly string GetAllFiatCurrencies = $"{BaseAPI}/currencies/getAllFiatCurrencies";

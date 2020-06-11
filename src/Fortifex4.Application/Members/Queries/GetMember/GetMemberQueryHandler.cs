@@ -47,7 +47,7 @@ namespace Fortifex4.Application.Members.Queries.GetMember
                 RegionID = member.Region.RegionID,
                 RegionName = member.Region.Name,
                 CountryCode = member.Region.CountryCode,
-                CountryName = member.Region.Name,
+                CountryName = member.Region.Country.Name,
                 
                 PreferredCoinCurrencyID = member.PreferredCoinCurrency.CurrencyID,
                 PreferredCoinCurrencySymbol = member.PreferredCoinCurrency.Symbol,

@@ -23,7 +23,7 @@ namespace Fortifex4.Application.Countries.Queries.GetAllCountries
 
             var countries = await _context.Countries.ToListAsync(cancellationToken);
 
-            if (countries.Count != 0)
+            if (countries.Count == 0)
             {
                 result.IsSuccessful = false;
                 result.ErrorMessage = ErrorMessage.CountriesNotFound;

@@ -21,8 +21,4 @@
     <ProjectReference Include="..\Fortifex4.Shared\Fortifex4.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\MyProfile\" />
-  </ItemGroup>
-
 </Project>

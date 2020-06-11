@@ -22,6 +22,9 @@ namespace Fortifex4.Shared.Members.Commands.UpdateMember
         public int GenderID { get; set; }
 
         [Required]
+        public string CountryCode { get; set; }
+
+        [Required]
         public int RegionID { get; set; }
     }
 }
