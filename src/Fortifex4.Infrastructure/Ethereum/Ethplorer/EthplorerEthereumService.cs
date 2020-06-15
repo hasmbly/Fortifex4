@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Ethereum;
 using Fortifex4.Domain.Constants;
 using Fortifex4.Domain.Entities;
@@ -25,9 +26,9 @@ namespace Fortifex4.Infrastructure.Ethereum.Ethplorer
             APIKey = _configuration[ConfigurationKey.Ethereum.Ethplorer.APIKey];
         }
 
-        public async Task<EthereumWallet> GetEthereumWalletAsync(string address)
+        public async Task<CryptoWallet> GetEthereumWalletAsync(string address)
         {
-            var result = new EthereumWallet();
+            var result = new CryptoWallet();
 
             //https://api.ethplorer.io/getAddressInfo/0xb297cacf0f91c86dd9d2fb47c6d12783121ab780?apiKey=freekey
             string uri = $"{EthereumServiceProviders.Ethplorer.GetAddressInfoEndpointURL}/{address}?apiKey={APIKey}";
@@ -43,7 +44,7 @@ namespace Fortifex4.Infrastructure.Ethereum.Ethplorer
 
                 foreach (var tokenJSON in walletJSON.tokens)
                 {
-                    result.Tokens.Add(new Token
+                    result.Pockets.Add(new CryptoPocket
                     {
                         Name = tokenJSON.tokenInfo.name,
                         Symbol = tokenJSON.tokenInfo.symbol,

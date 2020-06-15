@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
+using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Projects.Commands.CreateProjects;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +45,8 @@ namespace Fortifex4.Application.Projects.Commands.CreateProjects
                 MemberUsername = request.MemberUsername,
                 Name = request.Name,
                 Description = request.Description,
-                WalletAddress = request.WalletAddress
+                WalletAddress = request.WalletAddress,
+                ProjectStatus = ProjectStatus.Created
             };
 
             await _context.Projects.AddAsync(project);

@@ -12,8 +12,8 @@ namespace Fortifex4.Infrastructure.Persistence.Configurations
             builder.HasKey(e => e.BlockchainID);
 
             builder.Property(e => e.BlockchainID).ValueGeneratedNever();
-            builder.Property(e => e.Symbol).HasColumnType(SQLServerDataType.Varchar25).IsRequired();
-            builder.Property(e => e.Name).HasColumnType(SQLServerDataType.Varchar100).IsRequired();
+            builder.Property(e => e.Symbol).HasColumnType(SQLServerDataType.NVarchar200).IsRequired();
+            builder.Property(e => e.Name).HasColumnType(SQLServerDataType.NVarchar200).IsRequired();
         }
     }
 }

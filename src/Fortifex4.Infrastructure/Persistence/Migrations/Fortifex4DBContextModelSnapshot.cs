@@ -32,14 +32,14 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Rank")
                         .HasColumnType("int");
 
                     b.Property<string>("Symbol")
                         .IsRequired()
-                        .HasColumnType("varchar(25)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("BlockchainID");
 
@@ -126,7 +126,7 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<float>("PercentChange1h")
                         .HasColumnType("real");
@@ -142,7 +142,7 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Symbol")
                         .IsRequired()
-                        .HasColumnType("varchar(25)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<decimal>("UnitPriceInUSD")
                         .HasColumnType("decimal(29,20)");
@@ -230,10 +230,10 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(MAX)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("PasswordSalt")
-                        .HasColumnType("nvarchar(MAX)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("PictureURL")
                         .HasColumnType("varchar(2000)");
@@ -362,6 +362,9 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(200)");
 
+                    b.Property<int>("ProjectStatus")
+                        .HasColumnType("int");
+
                     b.Property<string>("WalletAddress")
                         .IsRequired()
                         .HasColumnType("varchar(200)");
@@ -373,6 +376,69 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                     b.HasIndex("MemberUsername");
 
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("Fortifex4.Domain.Entities.ProjectDocument", b =>
+                {
+                    b.Property<int>("ProjectDocumentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("DocumentID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("OriginalFileName")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("ProjectID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("ProjectDocumentID");
+
+                    b.HasIndex("ProjectID");
+
+                    b.ToTable("ProjectDocument");
+                });
+
+            modelBuilder.Entity("Fortifex4.Domain.Entities.ProjectStatusLog", b =>
+                {
+                    b.Property<int>("ProjectStatusLogID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("ProjectID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProjectStatusLogID");
+
+                    b.HasIndex("ProjectID");
+
+                    b.ToTable("ProjectStatusLog");
                 });
 
             modelBuilder.Entity("Fortifex4.Domain.Entities.Provider", b =>
@@ -530,7 +596,7 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(25)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int>("OwnerID")
                         .HasColumnType("int");
@@ -654,6 +720,24 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                     b.HasOne("Fortifex4.Domain.Entities.Member", "Member")
                         .WithMany("Projects")
                         .HasForeignKey("MemberUsername")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Fortifex4.Domain.Entities.ProjectDocument", b =>
+                {
+                    b.HasOne("Fortifex4.Domain.Entities.Project", "Project")
+                        .WithMany("ProjectDocuments")
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Fortifex4.Domain.Entities.ProjectStatusLog", b =>
+                {
+                    b.HasOne("Fortifex4.Domain.Entities.Project", "Project")
+                        .WithMany("ProjectStatusLogs")
+                        .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

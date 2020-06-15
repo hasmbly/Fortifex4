@@ -16,8 +16,8 @@ namespace Fortifex4.Infrastructure.Persistence.Configurations
             builder.Property(e => e.AuthenticationScheme).HasColumnType(SQLServerDataType.Varchar10).IsRequired();
             builder.Property(e => e.FirstName).HasColumnType(SQLServerDataType.Varchar50);
             builder.Property(e => e.LastName).HasColumnType(SQLServerDataType.Varchar50);
-            builder.Property(e => e.PasswordHash).HasColumnType(SQLServerDataType.NVarcharMax);
-            builder.Property(e => e.PasswordSalt).HasColumnType(SQLServerDataType.NVarcharMax);
+            builder.Property(e => e.PasswordHash).HasColumnType(SQLServerDataType.NVarchar200);
+            builder.Property(e => e.PasswordSalt).HasColumnType(SQLServerDataType.NVarchar200);
             builder.Property(e => e.BirthDate).HasColumnType(SQLServerDataType.Date);
             builder.Property(e => e.PictureURL).HasColumnType(SQLServerDataType.Varchar2000);
             builder.Property(e => e.ActivationCode).HasColumnType(SQLServerDataType.UniqueIdentifier);

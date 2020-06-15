@@ -2,11 +2,12 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Bitcoin;
-using Fortifex4.Infrastructure.Constants;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Exceptions;
 using Fortifex4.Infrastructure.Common;
+using Fortifex4.Infrastructure.Constants;
 using Microsoft.Extensions.Logging;
 
 namespace Fortifex4.Infrastructure.Bitcoin.BitcoinChain
@@ -20,9 +21,9 @@ namespace Fortifex4.Infrastructure.Bitcoin.BitcoinChain
             _logger = logger;
         }
 
-        public async Task<BitcoinWallet> GetBitcoinWalletAsync(string address)
+        public async Task<CryptoWallet> GetBitcoinWalletAsync(string address)
         {
-            var result = new BitcoinWallet();
+            var result = new CryptoWallet();
 
             //https://api-r.bitcoinchain.com/v1/address/1Chain4asCYNnLVbvG6pgCLGBrtzh4Lx4b
             string uri = $"{BitcoinServiceProviders.BitcoinChain.AddressEndpointURL}/{address}";

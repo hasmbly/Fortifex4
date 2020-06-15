@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Ethereum;
 using Fortifex4.Infrastructure.Common;
 using Fortifex4.Infrastructure.Constants;
@@ -7,9 +8,9 @@ namespace Fortifex4.Infrastructure.Ethereum.FakeChain
 {
     public class FakeChainEthereumService : IEthereumService
     {
-        public async Task<EthereumWallet> GetEthereumWalletAsync(string address)
+        public async Task<CryptoWallet> GetEthereumWalletAsync(string address)
         {
-            var result = new EthereumWallet();
+            var result = new CryptoWallet();
 
             //https://fakechain.vioren.com/api/eth/getAddressInfo/0xb297cacf0f91c86dd9d2fb47c6d12783121ab780
             string uri = $"{EthereumServiceProviders.FakeChain.GetAddressInfoEndpointURL}/{address}";
@@ -20,7 +21,7 @@ namespace Fortifex4.Infrastructure.Ethereum.FakeChain
 
             foreach (var tokenJSON in walletJSON.tokens)
             {
-                result.Tokens.Add(new Token
+                result.Pockets.Add(new CryptoPocket
                 {
                     Name = tokenJSON.name,
                     Symbol = tokenJSON.symbol,

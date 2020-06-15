@@ -2,8 +2,11 @@
 dotnet ef migrations remove --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI
 dotnet ef migrations add Fortifex4DB_001 --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI --output-dir Persistence/Migrations
 dotnet ef database update --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI
+====================================================================================================
+User Secrets
 ----------------------------------------------------------------------------------------------------
 dotnet user-secrets init --project "src/Fortifex4.WebAPI"
+----------------------------------------------------------------------------------------------------
 dotnet user-secrets set "Authentication:Google:ClientID" "234516294165-6knd1u19776eubgrobdc9oj8ku61dmd8.apps.googleusercontent.com" --project "src/Fortifex4.WebAPI"
 dotnet user-secrets set "Authentication:Google:ClientSecret" "FoPWyz2IdbmdfAw7Ks8fAxbD" --project "src/Fortifex4.WebAPI"
 dotnet user-secrets set "Authentication:Facebook:AppID" "2260839397335026" --project "src/Fortifex4.WebAPI"
@@ -12,17 +15,37 @@ dotnet user-secrets set "Email:SendGrid:APIKey" "SG.uiF943J3Rh-8x1fuR-dttA.JvPoK
 dotnet user-secrets set "Fiat:Fixer:APIKey" "5beb9a289688683e21a744e43c7fb496" --project "src/Fortifex4.WebAPI"
 dotnet user-secrets set "Crypto:CoinMarketCap:APIKey" "be91b0e2-4f43-4fac-88de-1a1a5f098cec" --project "src/Fortifex4.WebAPI"
 dotnet user-secrets set "Ethereum:Ethplorer:APIKey" "freekey" --project "src/Fortifex4.WebAPI"
+dotnet user-secrets set "Ethereum:Etherscan:APIKey" "CVMMDNQRGURVWCGMBUTEF14V4VM1K147VP" --project "src/Fortifex4.WebAPI"
 ----------------------------------------------------------------------------------------------------
+Hasilnya
+{
+  "Authentication:Google:ClientId": "669509010925-c3anu9kipuna9ogv96gt5g07ov9g65tm.apps.googleusercontent.com",
+  "Authentication:Google:ClientSecret": "__vZTi6TZ2u9XqJq-A6bvZmz",
+  "Authentication:Facebook:AppId": "2260839397335026",
+  "Authentication:Facebook:AppSecret": "05d71a72036d69dfb9163ed93921ec69",
+  "Email:SendGrid:APIKey": "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",
+  "Fiat:Fixer:APIKey": "5beb9a289688683e21a744e43c7fb496",
+  "Crypto:CoinMarketCap:APIKey": "be91b0e2-4f43-4fac-88de-1a1a5f098cec",
+  "Ethereum:Ethplorer:APIKey": "freekey"
+}
+====================================================================================================
 Sample Wallet Addresss
+----------------------------------------------------------------------------------------------------
+ETH
+Wallet Fu: 0xf05c02ef1ad22d4587a5b6d25940ecc93c761559
+Wallet Luke Sample: 0x51B0a9d661c4a616586887A1cd265940290EEc80
+Wallet Luke Exchange: 0x00d1522eb6dc8c8f13349337b57e55495255e24b
+Ethplorer.io Sample: 0xb297cacf0f91c86dd9d2fb47c6d12783121ab780
+Etherscan.io Sample: 0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a
+Another Sample: 0x0b81747f504dfc906a215e301d8b8ad82e44cbd2
 
-Wallet Fu
-0xf05c02ef1ad22d4587a5b6d25940ecc93c761559
+BTC
 
-Wallet Luke Sample
-0x51B0a9d661c4a616586887A1cd265940290EEc80
+DOGE
 
-Wallet Luke Real
-0x00d1522eb6dc8c8f13349337b57e55495255e24b
+STEEM
+steemit1
 
-Sample
-0xb297cacf0f91c86dd9d2fb47c6d12783121ab780
+HIVE
+steemit1
+====================================================================================================

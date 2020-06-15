@@ -15,5 +15,11 @@
             public const string GetAddressInfoEndpointURL = "https://fakechain.vioren.com/api/eth/getAddressInfo";
             public const string GetAddressTransactionsEndpointURL = "https://fakechain.vioren.com/api/eth/getAddressTransactions";
         }
+
+        public static class Etherscan
+        {
+            public const string Name = "Etherscan";
+            public const string AccountBalanceEndpointURL = "https://api.etherscan.io/api?module=account&action=balance";
+        }
     }
 }

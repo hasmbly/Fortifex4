@@ -1,15 +1,16 @@
 ﻿using System.Threading.Tasks;
+using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Bitcoin;
-using Fortifex4.Infrastructure.Constants;
 using Fortifex4.Infrastructure.Common;
+using Fortifex4.Infrastructure.Constants;
 
 namespace Fortifex4.Infrastructure.Bitcoin.FakeChain
 {
     public class FakeChainBitcoinService : IBitcoinService
     {
-        public async Task<BitcoinWallet> GetBitcoinWalletAsync(string address)
+        public async Task<CryptoWallet> GetBitcoinWalletAsync(string address)
         {
-            var result = new BitcoinWallet();
+            var result = new CryptoWallet();
 
             //https://fakechain.vioren.com/api/btc/getAddressInfo/0xb297cacf0f91c86dd9d2fb47c6d12783121ab780
             string uri = $"{BitcoinServiceProviders.FakeChain.GetAddressInfoEndpointURL}/{address}";

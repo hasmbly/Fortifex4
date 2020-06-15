@@ -30,6 +30,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Fortifex4.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Fortifex4.Application.Common.Interfaces.Steem;
+using Fortifex4.Infrastructure.Steem.Steemit;
+using Fortifex4.Infrastructure.Steem.Fake;
+using Fortifex4.Application.Common.Interfaces.Hive;
+using Fortifex4.Infrastructure.Hive.OpenHive;
+using Fortifex4.Infrastructure.Hive.Fake;
 
 namespace Fortifex4.Infrastructure
 {
@@ -54,6 +60,8 @@ namespace Fortifex4.Infrastructure
             AddEthereumService(services, fortifexOptions);
             AddBitcoinService(services, fortifexOptions);
             AddDogecoinService(services, fortifexOptions);
+            AddSteemService(services, fortifexOptions);
+            AddHiveService(services, fortifexOptions);
 
             return services;
         }
@@ -144,6 +152,32 @@ namespace Fortifex4.Infrastructure
                     break;
                 default:
                     services.AddTransient<IDogecoinService, FakeDogecoinService>();
+                    break;
+            }
+        }
+
+        private static void AddSteemService(IServiceCollection services, FortifexOptions options)
+        {
+            switch (options.SteemServiceProvider)
+            {
+                case SteemServiceProviders.Steemit.Name:
+                    services.AddTransient<ISteemService, SteemitSteemService>();
+                    break;
+                default:
+                    services.AddTransient<ISteemService, FakeSteemService>();
+                    break;
+            }
+        }
+
+        private static void AddHiveService(IServiceCollection services, FortifexOptions options)
+        {
+            switch (options.HiveServiceProvider)
+            {
+                case HiveServiceProviders.OpenHive.Name:
+                    services.AddTransient<IHiveService, OpenHiveHiveService>();
+                    break;
+                default:
+                    services.AddTransient<IHiveService, FakeHiveService>();
                     break;
             }
         }

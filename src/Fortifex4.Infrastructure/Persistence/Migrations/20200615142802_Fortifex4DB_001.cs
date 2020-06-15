@@ -14,8 +14,8 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                     BlockchainID = table.Column<int>(nullable: false),
                     Created = table.Column<DateTimeOffset>(nullable: false),
                     LastModified = table.Column<DateTimeOffset>(nullable: false),
-                    Symbol = table.Column<string>(type: "varchar(25)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Symbol = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", nullable: false),
                     Rank = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -83,8 +83,8 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                     LastModified = table.Column<DateTimeOffset>(nullable: false),
                     BlockchainID = table.Column<int>(nullable: false),
                     CoinMarketCapID = table.Column<int>(nullable: false),
-                    Symbol = table.Column<string>(type: "varchar(25)", nullable: false),
-                    Name = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Symbol = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", nullable: false),
                     CurrencyType = table.Column<int>(nullable: false),
                     IsShownInTradePair = table.Column<bool>(nullable: false),
                     IsForPreferredOption = table.Column<bool>(nullable: false),
@@ -145,8 +145,8 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                     PreferredFiatCurrencyID = table.Column<int>(nullable: false),
                     PreferredCoinCurrencyID = table.Column<int>(nullable: false),
                     PreferredTimeFrameID = table.Column<int>(nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
-                    PasswordSalt = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    PasswordHash = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    PasswordSalt = table.Column<string>(type: "nvarchar(200)", nullable: true),
                     ActivationCode = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ActivationStatus = table.Column<int>(nullable: false)
                 },
@@ -226,7 +226,8 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                     BlockchainID = table.Column<int>(nullable: false),
                     Name = table.Column<string>(type: "varchar(200)", nullable: false),
                     Description = table.Column<string>(type: "varchar(500)", nullable: true),
-                    WalletAddress = table.Column<string>(type: "varchar(200)", nullable: false)
+                    WalletAddress = table.Column<string>(type: "varchar(200)", nullable: false),
+                    ProjectStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -255,7 +256,7 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                     LastModified = table.Column<DateTimeOffset>(nullable: false),
                     OwnerID = table.Column<int>(nullable: false),
                     BlockchainID = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(type: "varchar(25)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(100)", nullable: false),
                     Address = table.Column<string>(type: "varchar(200)", nullable: true),
                     IsSynchronized = table.Column<bool>(nullable: false),
                     ProviderType = table.Column<int>(nullable: false)
@@ -295,6 +296,53 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                     table.PrimaryKey("PK_Contributors", x => x.ContributorID);
                     table.ForeignKey(
                         name: "FK_Contributors_Projects_ProjectID",
+                        column: x => x.ProjectID,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectDocument",
+                columns: table => new
+                {
+                    ProjectDocumentID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Created = table.Column<DateTimeOffset>(nullable: false),
+                    LastModified = table.Column<DateTimeOffset>(nullable: false),
+                    ProjectID = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(type: "varchar(100)", nullable: false),
+                    DocumentID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OriginalFileName = table.Column<string>(type: "varchar(100)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectDocument", x => x.ProjectDocumentID);
+                    table.ForeignKey(
+                        name: "FK_ProjectDocument_Projects_ProjectID",
+                        column: x => x.ProjectID,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectStatusLog",
+                columns: table => new
+                {
+                    ProjectStatusLogID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Created = table.Column<DateTimeOffset>(nullable: false),
+                    LastModified = table.Column<DateTimeOffset>(nullable: false),
+                    ProjectID = table.Column<int>(nullable: false),
+                    ProjectStatus = table.Column<int>(nullable: false),
+                    Comment = table.Column<string>(type: "varchar(200)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectStatusLog", x => x.ProjectStatusLogID);
+                    table.ForeignKey(
+                        name: "FK_ProjectStatusLog_Projects_ProjectID",
                         column: x => x.ProjectID,
                         principalTable: "Projects",
                         principalColumn: "ProjectID",
@@ -481,6 +529,11 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                 column: "WalletID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProjectDocument_ProjectID",
+                table: "ProjectDocument",
+                column: "ProjectID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Projects_BlockchainID",
                 table: "Projects",
                 column: "BlockchainID");
@@ -489,6 +542,11 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                 name: "IX_Projects_MemberUsername",
                 table: "Projects",
                 column: "MemberUsername");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectStatusLog_ProjectID",
+                table: "ProjectStatusLog",
+                column: "ProjectID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Regions_CountryCode",
@@ -528,6 +586,12 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "InternalTransfers");
+
+            migrationBuilder.DropTable(
+                name: "ProjectDocument");
+
+            migrationBuilder.DropTable(
+                name: "ProjectStatusLog");
 
             migrationBuilder.DropTable(
                 name: "Trades");

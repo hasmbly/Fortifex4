@@ -54,24 +54,22 @@ namespace Fortifex4.Application.Wallets.Commands.CreateExchangeWallet
 
             wallet.Pockets.Add(pocket);
 
-            if (request.StartingBalance.HasValue)
-            {
-                if (request.StartingBalance.Value > 0)
-                {
-                    Transaction transactionForStartingBalance = new Transaction
-                    {
-                        Amount = request.StartingBalance.Value,
-                        UnitPriceInUSD = currency.UnitPriceInUSD,
-                        TransactionHash = string.Empty,
-                        PairWalletName = currency.Name,
-                        PairWalletAddress = string.Empty,
-                        TransactionType = TransactionType.StartingBalance,
-                        TransactionDateTime = _dateTimeOffset.Now
-                    };
+            decimal startingBalanceAmount = request.StartingBalance ?? 0m;
 
-                    pocket.Transactions.Add(transactionForStartingBalance);
-                }
-            }
+            var provider = await _context.Providers.FindAsync(owner.ProviderID);
+
+            Transaction transactionForStartingBalance = new Transaction
+            {
+                Amount = startingBalanceAmount,
+                UnitPriceInUSD = currency.UnitPriceInUSD,
+                TransactionHash = string.Empty,
+                PairWalletName = $"{provider.Name} - {currency.Name}",
+                PairWalletAddress = string.Empty,
+                TransactionType = TransactionType.StartingBalance,
+                TransactionDateTime = _dateTimeOffset.Now
+            };
+
+            pocket.Transactions.Add(transactionForStartingBalance);
 
             await _context.SaveChangesAsync(cancellationToken);
 

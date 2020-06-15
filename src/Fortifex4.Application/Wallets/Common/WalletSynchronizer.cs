@@ -6,14 +6,26 @@ using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Ethereum;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Wallets.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fortifex4.Application.Wallets.Common
 {
-    public static class EthereumSynchronizer
+    public static class WalletSynchronizer
     {
-        public static async Task ImportBalance(IFortifex4DBContext _context, DateTimeOffset now, Wallet wallet, decimal importedBalance, CancellationToken cancellationToken)
+        public static async Task<WalletDTO> ImportBalance(IFortifex4DBContext _context, DateTimeOffset now, Wallet wallet, CryptoWallet cryptoWallet, CancellationToken cancellationToken)
         {
+            WalletDTO walletDTO = new WalletDTO
+            {
+                WalletID = wallet.WalletID,
+                BlockchainID = wallet.BlockchainID,
+                Name = wallet.Name,
+                Address = wallet.Address,
+                Balance = cryptoWallet.Balance,
+                BlockchainSymbol = wallet.Blockchain.Symbol,
+                BlockchainName = wallet.Blockchain.Name,
+            };
+
             var existingPockets = await _context.Pockets
                 .Where(x => x.WalletID == wallet.WalletID)
                     .Include(a => a.Currency)
@@ -49,7 +61,7 @@ namespace Fortifex4.Application.Wallets.Common
             mainPocket.Transactions.Add(new Transaction
             {
                 TransactionHash = string.Empty,
-                Amount = importedBalance,
+                Amount = cryptoWallet.Balance,
                 UnitPriceInUSD = mainPocket.Currency.UnitPriceInUSD,
                 TransactionType = TransactionType.SyncBalanceImport,
                 PairWalletName = wallet.Name,
@@ -62,6 +74,69 @@ namespace Fortifex4.Application.Wallets.Common
             await _context.SaveChangesAsync(cancellationToken);
 
             //=====================================
+
+            /// 5) Repopulate the Token Pockets (if any), including their own Balance Import Transaction
+            var validCryptoPockets = cryptoWallet.Pockets.Where(x => !string.IsNullOrEmpty(x.Name));
+
+            foreach (var cryptoPocket in validCryptoPockets)
+            {
+                /// Check if this is new Token Currency, based on its Symbol and Name property
+                var tokenCurrency = await _context.Currencies
+                    .Where(x =>
+                        x.Symbol == cryptoPocket.Symbol &&
+                        x.Name == cryptoPocket.Name &&
+                        x.CurrencyType == CurrencyType.Token)
+                    .FirstOrDefaultAsync(cancellationToken);
+
+                /// If this is new Token Currency, add it to the Currencies table
+                if (tokenCurrency == null)
+                {
+                    tokenCurrency = new Currency
+                    {
+                        BlockchainID = wallet.BlockchainID,
+                        Symbol = cryptoPocket.Symbol,
+                        Name = cryptoPocket.Name,
+                        CurrencyType = CurrencyType.Token
+                    };
+
+                    _context.Currencies.Add(tokenCurrency);
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
+
+                Pocket tokenPocket = new Pocket
+                {
+                    CurrencyID = tokenCurrency.CurrencyID,
+                    CurrencyType = CurrencyType.Token,
+                    Address = cryptoPocket.Address
+                };
+
+                wallet.Pockets.Add(tokenPocket);
+
+                tokenPocket.Transactions.Add(new Transaction
+                {
+                    Amount = cryptoPocket.Balance,
+                    UnitPriceInUSD = tokenCurrency.UnitPriceInUSD,
+                    TransactionHash = string.Empty,
+                    PairWalletName = wallet.Name,
+                    PairWalletAddress = cryptoPocket.Address,
+                    TransactionType = TransactionType.SyncBalanceImport,
+                    TransactionDateTime = now
+                });
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+                walletDTO.Pockets.Add(new PocketDTO
+                {
+                    PocketID = tokenPocket.PocketID,
+                    CurrencyID = tokenPocket.CurrencyID,
+                    Address = tokenPocket.Address,
+                    Balance = cryptoPocket.Balance,
+                    CurrencySymbol = tokenCurrency.Symbol,
+                    CurrencyName = tokenCurrency.Name
+                });
+            }
+
+            return walletDTO;
         }
 
         public static async Task ImportTransactions(IFortifex4DBContext _context, IEthereumService _ethereumService, Pocket pocket, CancellationToken cancellationToken)
@@ -113,5 +188,6 @@ namespace Fortifex4.Application.Wallets.Common
 
             await _context.SaveChangesAsync(cancellationToken);
         }
+
     }
 }

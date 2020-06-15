@@ -63,6 +63,11 @@
             {
                 public const string APIKey = "Ethereum:Ethplorer:APIKey";
             }
+
+            public static class Etherscan
+            {
+                public const string APIKey = "Ethereum:Etherscan:APIKey";
+            }
         }
     }
 }

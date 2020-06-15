@@ -2,6 +2,7 @@
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
+using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Dogecoin;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Exceptions;
@@ -20,9 +21,9 @@ namespace Fortifex4.Infrastructure.Dogecoin.DogeChain
             _logger = logger;
         }
 
-        public async Task<DogecoinWallet> GetDogecoinWalletAsync(string address)
+        public async Task<CryptoWallet> GetDogecoinWalletAsync(string address)
         {
-            var response = new DogecoinWallet();
+            var response = new CryptoWallet();
 
             //https://dogechain.info/api/v1/address/balance/DBXu2kgc3xtvCUWFcxFE3r9hEYgmuaaCyD
             string uri = $"{DogecoinServiceProviders.DogeChain.BalanceEndpointURL}/{address}";

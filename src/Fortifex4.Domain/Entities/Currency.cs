@@ -40,10 +40,12 @@ namespace Fortifex4.Domain.Entities
         public const string BTC = "BTC";
         public const string ETH = "ETH";
         public const string DOGE = "DOGE";
+        public const string STEEM = "STEEM";
+        public const string HIVE = "HIVE";
 
         public static readonly IList<string> TradePairs = new List<string> { BTC, ETH, USD };
         public static readonly IList<string> PreferredOptions = new List<string> { BTC, ETH };
-        public static readonly IList<string> SynchronizationOptions = new List<string> { BTC, ETH, DOGE };
+        public static readonly IList<string> SynchronizationOptions = new List<string> { BTC, ETH, DOGE, STEEM, HIVE };
 
         public static bool IsSynchronizable(string currencySymbol) => SynchronizationOptions.Any(x => x == currencySymbol);
     }

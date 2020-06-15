@@ -11,7 +11,7 @@ namespace Fortifex4.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(e => e.WalletID);
 
-            builder.Property(e => e.Name).HasColumnType(SQLServerDataType.Varchar25).IsRequired();
+            builder.Property(e => e.Name).HasColumnType(SQLServerDataType.Varchar100).IsRequired();
             builder.Property(e => e.Address).HasColumnType(SQLServerDataType.Varchar200);
 
             builder.HasOne(e => e.Owner).WithMany(p => p.Wallets).HasForeignKey(e => e.OwnerID).OnDelete(DeleteBehavior.Restrict);

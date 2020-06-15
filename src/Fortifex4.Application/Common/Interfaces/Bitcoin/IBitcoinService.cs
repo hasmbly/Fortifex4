@@ -4,7 +4,7 @@ namespace Fortifex4.Application.Common.Interfaces.Bitcoin
 {
     public interface IBitcoinService
     {
-        Task<BitcoinWallet> GetBitcoinWalletAsync(string address);
+        Task<CryptoWallet> GetBitcoinWalletAsync(string address);
         Task<BitcoinTransactionCollection> GetBitcoinTransactionCollectionAsync(string address);
     }
 }

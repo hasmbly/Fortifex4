@@ -27,5 +27,11 @@
             public const string GetAddressInfoEndpointURL = "https://fakechain.vioren.com/api/btc/getAddressInfo";
             public const string GetAddressTransactionsEndpointURL = "https://fakechain.vioren.com/api/btc/getAddressTransactions";
         }
+
+        public static class Blockchain
+        {
+            public const string Name = "Blockchain";
+            public const string AddressBalanceEndpointURL = "https://blockchain.info/q/addressbalance";
+        }
     }
 }

@@ -8,16 +8,19 @@ using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Fortifex4.Application.Wallets.Commands.CreatePersonalWallet
 {
     public class CreatePersonalWalletCommandHandler : IRequestHandler<CreatePersonalWalletRequest, CreatePersonalWalletResponse>
     {
+        private readonly ILogger<CreatePersonalWalletCommandHandler> _logger;
         private readonly IFortifex4DBContext _context;
         private readonly IDateTimeOffsetService _dateTimeOffset;
 
-        public CreatePersonalWalletCommandHandler(IFortifex4DBContext context, IDateTimeOffsetService dateTimeOffset)
+        public CreatePersonalWalletCommandHandler(ILogger<CreatePersonalWalletCommandHandler> logger, IFortifex4DBContext context, IDateTimeOffsetService dateTimeOffset)
         {
+            _logger = logger;
             _context = context;
             _dateTimeOffset = dateTimeOffset;
         }
@@ -28,6 +31,8 @@ namespace Fortifex4.Application.Wallets.Commands.CreatePersonalWallet
 
             if (blockchain == null)
                 throw new NotFoundException(nameof(Blockchain), request.BlockchainID);
+
+            _logger.LogDebug($"request.BlockchainID: {request.BlockchainID}");
 
             var coinCurrency = await _context.Currencies
                 .Where(x =>
@@ -73,24 +78,20 @@ namespace Fortifex4.Application.Wallets.Commands.CreatePersonalWallet
 
             wallet.Pockets.Add(pocket);
 
-            if (request.StartingBalance.HasValue)
-            {
-                if (request.StartingBalance.Value > 0)
-                {
-                    Transaction transactionForStartingBalance = new Transaction
-                    {
-                        Amount = request.StartingBalance.Value,
-                        UnitPriceInUSD = coinCurrency.UnitPriceInUSD,
-                        TransactionHash = string.Empty,
-                        PairWalletName = request.Name,
-                        PairWalletAddress = request.Address,
-                        TransactionType = TransactionType.StartingBalance,
-                        TransactionDateTime = _dateTimeOffset.Now
-                    };
+            decimal startingBalanceAmount = request.StartingBalance ?? 0m;
 
-                    pocket.Transactions.Add(transactionForStartingBalance);
-                }
-            }
+            Transaction transactionForStartingBalance = new Transaction
+            {
+                Amount = startingBalanceAmount,
+                UnitPriceInUSD = coinCurrency.UnitPriceInUSD,
+                TransactionHash = string.Empty,
+                PairWalletName = request.Name,
+                PairWalletAddress = request.Address,
+                TransactionType = TransactionType.StartingBalance,
+                TransactionDateTime = _dateTimeOffset.Now
+            };
+
+            pocket.Transactions.Add(transactionForStartingBalance);
 
             await _context.SaveChangesAsync(cancellationToken);
 
