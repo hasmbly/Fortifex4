@@ -1,15 +1,14 @@
-﻿using System;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Fortifex4.Shared.Common;
+﻿using System.Threading.Tasks;
 using Fortifex4.Shared.Members.Queries.Login;
-using Microsoft.AspNetCore.Components;
 
 namespace Fortifex4.WebUI.Pages.Account
 {
     public partial class Login
     {
         public string Message { get; set; }
+
+        public bool IsLoading { get; set; }
+        
         public LoginRequest Input { get; set; } = new LoginRequest();
 
         protected async override Task OnInitializedAsync()
@@ -21,20 +20,20 @@ namespace Fortifex4.WebUI.Pages.Account
         {
             this.Message = string.Empty;
 
-            var loginResponse = await _httpClient.PostJsonAsync<ApiResponse<LoginResponse>>(Constants.URI.Account.Login, this.Input);
+            this.IsLoading = true;
 
-            Console.WriteLine(JsonSerializer.Serialize(loginResponse));
+            var loginResponse = await _authenticationService.Login(this.Input);
 
             if (loginResponse.Status.IsError)
             {
                 this.Message = loginResponse.Status.Message;
+
+                this.IsLoading = false;
             }
             else
             {
                 if (loginResponse.Result.IsSuccessful)
                 {
-                    await _authenticationService.Login(loginResponse.Result.Token);
-
                     activateMemberState.ResetActivateMemberState();
 
                     _navigationManager.NavigateTo("/portfolio");
@@ -42,6 +41,8 @@ namespace Fortifex4.WebUI.Pages.Account
                 else
                 {
                     this.Message = loginResponse.Result.ErrorMessage;
+
+                    this.IsLoading = false;
                 }
             }
         }

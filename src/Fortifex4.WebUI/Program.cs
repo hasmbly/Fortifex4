@@ -19,16 +19,25 @@ namespace Fortifex4.WebUI
 
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
+            builder.Services.AddBlazoredLocalStorage();
 
-            builder.Services.AddTransient(sp => new HttpClient 
+            builder.Services.AddTransient(sp => new HttpClient
             {
-                BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) 
+                BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
             });
 
-            builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
-            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
             builder.Services.AddScoped<ActivateMemberState>();
+
+            builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<IMembersService, MembersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<IRegionsService, RegionsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<IGendersService, GendersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<ICountriesService, CountriesService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<ITimeFramesService, TimeFramesService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<ICurrenciesService, CurrenciesService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<IWalletsService, WalletsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<IBlockchainsService, BlockchainsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
 
             var host = builder.Build();
 

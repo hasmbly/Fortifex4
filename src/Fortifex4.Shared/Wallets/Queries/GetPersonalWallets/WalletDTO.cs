@@ -17,7 +17,7 @@ namespace Fortifex4.Shared.Wallets.Queries.GetPersonalWallets
         public decimal MainPocketCurrencyUnitPriceInUSD { get; set; }
         public decimal MainPocketBalance { get; set; }
 
-        public GetPersonalWalletsResponse Container { get; set; }
+        //public GetPersonalWalletsResponse Container { get; set; }
 
         public string IsSynchronizedDisplayText
         {
@@ -35,16 +35,22 @@ namespace Fortifex4.Shared.Wallets.Queries.GetPersonalWallets
             }
         }
 
-        public decimal MainPocketBalanceInPreferredFiatCurrency
-        {
-            get
-            {
-                if (this.Container.MemberPreferredFiatCurrencyUnitPriceInUSD > 0)
-                    return this.MainPocketBalance * (this.MainPocketCurrencyUnitPriceInUSD / this.Container.MemberPreferredFiatCurrencyUnitPriceInUSD);
-                else
-                    return 0m;
-            }
-        }
+        public decimal MainPocketBalanceInPreferredFiatCurrency { get; set; }
+
+        /**
+         * Move to GetPersonalWalletsQueryHandler
+         * karena ada cycle object yang menyebabkan error saat proses return di bungkus / serialize dgn JSON
+        **/
+        //public decimal MainPocketBalanceInPreferredFiatCurrency
+        //{
+        //    get
+        //    {
+        //        if (this.Container.MemberPreferredFiatCurrencyUnitPriceInUSD > 0)
+        //            return this.MainPocketBalance * (this.MainPocketCurrencyUnitPriceInUSD / this.Container.MemberPreferredFiatCurrencyUnitPriceInUSD);
+        //        else
+        //            return 0m;
+        //    }
+        //}
 
         public string MainPocketBalanceInPreferredFiatCurrencyDisplayText
         {
@@ -54,16 +60,22 @@ namespace Fortifex4.Shared.Wallets.Queries.GetPersonalWallets
             }
         }
 
-        public decimal MainPocketBalanceInPreferredCoinCurrency
-        {
-            get
-            {
-                if (this.Container.MemberPreferredCoinCurrencyUnitPriceInUSD > 0)
-                    return this.MainPocketBalance * (this.MainPocketCurrencyUnitPriceInUSD / this.Container.MemberPreferredCoinCurrencyUnitPriceInUSD);
-                else
-                    return 0m;
-            }
-        }
+        public decimal MainPocketBalanceInPreferredCoinCurrency { get; set; }
+
+        /**
+         * Move to GetPersonalWalletsQueryHandler
+         * karena ada cycle object yang menyebabkan error saat proses return di bungkus / serialize dgn JSON
+        **/
+        //public decimal MainPocketBalanceInPreferredCoinCurrency
+        //{
+        //    get
+        //    {
+        //        if (this.Container.MemberPreferredCoinCurrencyUnitPriceInUSD > 0)
+        //            return this.MainPocketBalance * (this.MainPocketCurrencyUnitPriceInUSD / this.Container.MemberPreferredCoinCurrencyUnitPriceInUSD);
+        //        else
+        //            return 0m;
+        //    }
+        //}
 
         public string MainPocketBalanceInPreferredCoinCurrencyDisplayText
         {

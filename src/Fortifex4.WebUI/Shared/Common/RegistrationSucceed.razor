@@ -1,14 +1,20 @@
 ﻿@namespace Fortifex4.WebUI.Shared.Common
-@inject NavigationManager _navigationManager
-@inject HttpClient _httpClient
 
+@inject NavigationManager _navigationManager
 @inject ActivateMemberState activateMemberState
+@inject IAuthenticationService _authenticationService
 
 <h1>Registration Succeed</h1>
 <div class="row">
     <div class="col-md-12">
         <p>
             Your account is successfully created. Click <a href="account/login" @onclick="Activate">HERE</a> to activate your account and start using Fortifex.
+        </p>
+        <p>
+            @if (IsLoading)
+            {
+                <i class="fas fa-circle-notch fa-spin"></i>
+            }
         </p>
     </div>
 </div>

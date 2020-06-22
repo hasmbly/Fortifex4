@@ -3,12 +3,7 @@
         <Found>
             <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)">
                 <NotAuthorized>
-                    @*<RedirectToLogin />*@
-                    <div class="main">
-                        <h2>You're signed out</h2>
-                        <p>To continue, please sign in.</p>
-                        <a class="btn btn-danger" href="account/login">Sign in</a>
-                    </div>
+                    <RedirectToLogin />
                 </NotAuthorized>
                 <Authorizing>
                     <div class="main">Please wait...</div>

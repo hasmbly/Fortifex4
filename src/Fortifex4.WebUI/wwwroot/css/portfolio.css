@@ -1,0 +1,45 @@
+﻿@media only screen and (min-width: 1366px)
+{
+    .up-portfolio
+    {
+    }
+
+    .data-portfolio
+    {
+        font-size: 0.8rem;
+    }
+}
+
+.positive-value
+{
+    color: #1b8b06;
+}
+
+.minus-value
+{
+    color: #d02722;
+}
+
+.arrow-value
+{
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.total-value
+{
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.crypto-highlight
+{
+    font-size: 1rem;
+}
+
+
+.number-highlight
+{
+    margin: 0;
+    font-size: 1rem;
+}

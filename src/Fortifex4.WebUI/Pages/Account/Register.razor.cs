@@ -1,16 +1,17 @@
-﻿using System;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Fortifex4.Shared.Common;
+﻿using System.Threading.Tasks;
+using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Members.Commands.CreateMember;
-using Microsoft.AspNetCore.Components;
 
 namespace Fortifex4.WebUI.Pages.Account
 {
     public partial class Register
     {
         public string Message { get; set; }
+
+        public bool IsLoading { get; set; }
+        
         public string ConfirmPassword { get; set; }
+        
         public CreateMemberRequest Input { get; set; } = new CreateMemberRequest();
 
         protected override void OnInitialized()
@@ -19,33 +20,39 @@ namespace Fortifex4.WebUI.Pages.Account
 
         private async Task RegisterAsync()
         {
+            IsLoading = true;
+
             if (ConfirmPassword != this.Input.Password)
             {
-                Message = "The password and confirmation password do not match.";
+                Message = ErrorMessage.PasswordDoNotMatch;
+
+                IsLoading = false;
             }
             else
             {
-                var createMemberResponse = await _httpClient.PostJsonAsync<ApiResponse<CreateMemberResponse>>(Constants.URI.Members.CreateMember, this.Input);
-
-                Console.WriteLine(JsonSerializer.Serialize(createMemberResponse));
+                var createMemberResponse = await _authenticationService.Register(this.Input);
 
                 if (createMemberResponse.Status.IsError)
                 {
                     Message = createMemberResponse.Status.Message;
+
+                    IsLoading = false;
                 }
                 else
                 {
                     if (createMemberResponse.Result.IsSuccessful)
                     {
+                        IsLoading = false;
+
                         activateMemberState.SetActivateMemberState(createMemberResponse.Result);
 
                         activateMemberState.OnChange += StateHasChanged;
-
-                        Console.WriteLine($"Activate Member OnInitialized GetActivationCode(): " + activateMemberState.Member.ActivationCode);
                     }
                     else
                     {
                         Message = createMemberResponse.Result.ErrorMessage;
+
+                        IsLoading = false;
                     }
                 }
             }

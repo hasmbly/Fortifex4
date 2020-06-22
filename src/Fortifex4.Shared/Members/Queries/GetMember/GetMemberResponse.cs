@@ -1,8 +1,9 @@
 ﻿using System;
+using Fortifex4.Shared.Common;
 
 namespace Fortifex4.Shared.Members.Queries.GetMember
 {
-    public class GetMemberResponse
+    public class GetMemberResponse : GeneralResponse
     {
         public string MemberUsername { get; set; }
         public string ExternalID { get; set; }

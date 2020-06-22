@@ -1,0 +1,16 @@
+﻿.tr-exchange
+{
+    cursor: pointer;
+}
+
+    .tr-exchange:hover
+    {
+        background-color: #007bff;
+        background-color: #40C4FF;
+        color: white;
+    }
+
+.tr-exchange-wallet:hover
+{
+    background-color: #eaeaea;
+}

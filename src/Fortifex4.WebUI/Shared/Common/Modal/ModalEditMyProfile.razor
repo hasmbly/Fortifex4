@@ -1,0 +1,82 @@
+﻿@namespace Fortifex4.WebUI.Shared.Common.Modal
+@attribute [Authorize]
+
+@inject IMembersService _membersService
+@inject IRegionsService _regionsService
+@inject IGendersService _gendersService
+@inject ICountriesService _countriesService
+
+@inject NavigationManager _navigationManager
+
+<BaseModal 
+    @ref="BaseModal" 
+    ModalTitle="@Title"
+    IsLoading="IsLoading" 
+    OnSubmit="OnSubmitEditMyProfileAsync">
+    <ChildContent>
+        <EditForm Model="Input" OnValidSubmit="OnSubmitEditMyProfileAsync">
+            <DataAnnotationsValidator />
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>Username</label>
+                    <InputText @bind-Value="Input.MemberUsername" class="form-control" disabled />
+                    <ValidationMessage For="@(() => Input.MemberUsername)" />
+                </div>
+                <div class="form-group col-3">
+                    <label>Gender</label>
+                    <InputSelect @bind-Value="SelectedGender" class="form-control chosen-select">
+                        @foreach (var gender in Genders)
+                        {
+                            <option value="@gender.GenderID.ToString()">@gender.Name</option>
+                        }
+                    </InputSelect>
+                </div>
+                <div class="form-group col-3">
+                    <label>Birth Date</label>
+                    <InputDate @bind-Value="Input.BirthDate" class="form-control" />
+                    <ValidationMessage For="@(() => Input.BirthDate)" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>First Name</label>
+                    <InputText @bind-Value="Input.FirstName" class="form-control" placeholder="First Name" />
+                    <ValidationMessage For="@(() => Input.FirstName)" />
+                </div>
+                <div class="form-group col-6">
+                    <label>Last Name</label>
+                    <InputText @bind-Value="Input.LastName" class="form-control" placeholder="Last Name" />
+                    <ValidationMessage For="@(() => Input.LastName)" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="select-countries">Country</label>
+                    <div>
+                        <InputSelect @bind-Value="SelectedCountryCode" class="form-control chosen-select" id="select-countries">
+                            @foreach (var countries in Countries)
+                            {
+                                <option value="@countries.CountryCode">@countries.Name</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => Input.CountryCode)" />
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label for="select-regions">Region</label>
+                    <div>
+                        <InputSelect @bind-Value="SelectedRegion" class="form-control chosen-select" id="select-regions">
+                            @foreach (var regions in Regions)
+                            {
+                                <option value="@regions.RegionID.ToString()">@regions.Name</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => Input.RegionID)" />
+                    </div>
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </EditForm>
+    </ChildContent>
+</BaseModal>

@@ -1,8 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using Fortifex4.Shared.Common;
 using Fortifex4.Shared.Members.Queries.GetMember;
-using Fortifex4.WebUI.Common;
+using Fortifex4.WebUI.Shared.Common.Modal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -17,15 +16,31 @@ namespace Fortifex4.WebUI.Pages.MyProfile
 
         public ClaimsPrincipal User { get; set; }
 
-        protected async override Task OnInitializedAsync()
+        public bool IsLoading { get; set; }
+
+        private ModalEditMyProfile ModalEditMyProfile { get; set; }
+
+        protected async override Task OnInitializedAsync() => await InitAsync();
+
+        private async void UpdateStateHasChanged(bool IsSuccessful)
         {
-            _httpClient = ((ServerAuthenticationStateProvider)_authenticationStateProvider).Client();
+            if (IsSuccessful)
+                await InitAsync();
+        }
+
+        private async Task InitAsync()
+        {
+            IsLoading = true;
 
             User = Task.FromResult(await AuthenticationStateTask).Result.User;
 
-            var result = await _httpClient.GetJsonAsync<ApiResponse<GetMemberResponse>>($"{Constants.URI.Account.GetMember}/{User.Identity.Name}");
+            var result = await _membersService.GetMember(User.Identity.Name);
 
-            Member = result.Result;
+            if (result.Result.IsSuccessful)
+                IsLoading = false;
+                Member = result.Result;
+
+            StateHasChanged();
         }
     }
 }

@@ -1,0 +1,46 @@
+﻿/* #region Utility */
+.ws-pre-line
+{
+    white-space: pre-line;
+}
+/* #endregion */
+
+/* #region Chosen */
+.chosen-container
+{
+    width: 100% !important;
+}
+
+.chosen-single
+{
+    height: 38px !important;
+    padding: 6px 12px !important;
+}
+
+    .chosen-single span
+    {
+        font-size: 16px;
+    }
+/* #endregion */
+
+/* #region Validation Summary */
+.validation-summary-errors ul
+{
+    margin: 0;
+}
+
+    .validation-summary-errors ul li
+    {
+        list-style-type: none;
+    }
+/* #endregion */
+
+/* #region Developer */
+.developer
+{
+    background-color: black;
+    color: yellow;
+    padding: 10px 20px;
+    display: none;
+}
+/* #endregion */

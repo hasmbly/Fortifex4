@@ -212,6 +212,8 @@ namespace Fortifex4.Application.Wallets.Queries.GetWallet
 
             #endregion
 
+            result.IsSuccessful = true;
+
             return result;
         }
     }

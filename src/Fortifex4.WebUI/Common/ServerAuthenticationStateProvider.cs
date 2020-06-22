@@ -15,6 +15,7 @@ namespace Fortifex4.WebUI.Common
     {
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;
+        public IEnumerable<Claim> _claims { get; private set; }
 
         public ServerAuthenticationStateProvider(HttpClient httpClient, ILocalStorageService localStorage)
         {
@@ -22,10 +23,9 @@ namespace Fortifex4.WebUI.Common
             _localStorage = localStorage;
         }
 
-        public HttpClient Client()
-        {
-            return _httpClient;
-        }
+        public HttpClient Client() => _httpClient;
+
+        public string GetParsedMemberUsername() => _claims.Select(x => x.Value).ToList()[0];
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
@@ -37,15 +37,11 @@ namespace Fortifex4.WebUI.Common
             if (!string.IsNullOrEmpty(savedToken))
             {
                 // Jangan dihapus dulu, kayanya bakalan kepake
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Constants.Bearer, savedToken);
+                //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Constants.Bearer, savedToken);
 
-                var defaultHeader = _httpClient.DefaultRequestHeaders.ToString();
+                _claims = ParseClaimsFromJwt(savedToken);
 
-                IEnumerable<Claim> claims = ParseClaimsFromJwt(savedToken);
-
-                var name = claims.Select(x => x.Value).ToList();
-
-                var claimsIdentity = new ClaimsIdentity(claims, Constants.AuthenticationType.ServerAuthentication);
+                var claimsIdentity = new ClaimsIdentity(_claims, Constants.AuthenticationType.ServerAuthentication);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                 var authenticationState = new AuthenticationState(claimsPrincipal);
 
@@ -54,7 +50,7 @@ namespace Fortifex4.WebUI.Common
             else
             {
                 // Jangan dihapus dulu, kayanya bakalan kepake
-                _httpClient.DefaultRequestHeaders.Authorization = null;
+                //_httpClient.DefaultRequestHeaders.Authorization = null;
 
                 var claimsIdentity = new ClaimsIdentity();
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -70,10 +66,10 @@ namespace Fortifex4.WebUI.Common
             await _localStorage.SetItemAsync(Constants.StorageKey.Token, token);
 
             // Extract isi token ke dalam IEnumerable of Claims
-            IEnumerable<Claim> claims = ParseClaimsFromJwt(token);
+            _claims = ParseClaimsFromJwt(token);
 
             //Simpan IEnumerable of Claims ke Memory
-            var claimsIdentity = new ClaimsIdentity(claims, Constants.AuthenticationType.ServerAuthentication);
+            var claimsIdentity = new ClaimsIdentity(_claims, Constants.AuthenticationType.ServerAuthentication);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             var authenticationState = new AuthenticationState(claimsPrincipal);
             var authenticationStateTask = Task.FromResult(authenticationState);

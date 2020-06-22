@@ -1,0 +1,150 @@
+﻿html,
+body
+{
+    height: 100%;
+    width: 100%;
+}
+
+.btn
+{
+    border: 1px solid;
+    border-color: black;
+    margin: 0 5px;
+}
+
+/*#region Index.cshtml */
+.index-container
+{
+    text-align: center;
+}
+
+.logo-container
+{
+    padding: 3rem;
+}
+
+.btn-link-index
+{
+    display: inline-block;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    padding: 0.5rem 3rem;
+    color: #fff;
+    margin: 1rem;
+}
+
+    .btn-link-index:hover
+    {
+        background-color: #4baed0;
+        color: #fff;
+        text-decoration: none;
+    }
+/*#endregion */
+
+/*#region Login.cshtml */
+.logo-image
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dark-side
+{
+    height: 100%;
+    background-color: #000;
+}
+
+.centered-position
+{
+    padding-top: 50%;
+    transform: translate(0, -25%);
+    text-align: center;
+}
+
+.form-control-login
+{
+    font-size: 15px !important;
+    font-weight: 100 !important;
+    line-height: 2.67 !important;
+    border-style: solid !important;
+    border-width: 0 0 1px !important;
+    border-color: #3f3f3f !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    background-color: #FFFFFF !important;
+    width: 335px !important;
+    height: 46px !important;
+    margin: 10px 0 10px 0;
+    text-indent: 10px;
+    text-align: center;
+    outline: 0 !important;
+}
+
+.btn-login
+{
+    width: 254px !important;
+    height: 40px !important;
+    border-radius: 5px !important;
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    font-size: 16px !important;
+    letter-spacing: 1.2pt !important;
+    border-width: 0;
+    margin-bottom: 14px;
+    outline: 0 !important;
+    cursor: pointer;
+}
+
+.btn:hover
+{
+    background-color: black;
+    color: white;
+}
+
+    .btn:hover .icon-text
+    {
+        color: white;
+    }
+
+.icon
+{
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.icon-google
+{
+    vertical-align: middle;
+    margin-right: 10px;
+    background-image: url('../images/google.png');
+    height: 30px;
+    width: 30px;
+}
+
+.icon-facebook
+{
+    vertical-align: middle;
+    margin-right: 10px;
+    background-image: url('../images/fac-icon.png');
+    height: 30px;
+    width: 30px;
+}
+
+.icon-text
+{
+    color: black;
+    font-size: small;
+    font-weight: 400;
+}
+/*#endregion */
+
+/*#region RegisterProject.cshtml */
+.chosen-container
+{
+    width: 335px !important;
+}
+/*#endregion */

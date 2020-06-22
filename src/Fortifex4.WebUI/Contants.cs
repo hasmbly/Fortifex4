@@ -39,18 +39,31 @@
 
             public static class Regions
             {
-                public static readonly string GetRegions = $"{BaseAPI}/regions/GetRegions";
+                public static readonly string GetRegions = $"{BaseAPI}/regions/getRegions";
+            }
+
+            public static class Blockchains
+            {
+                public static readonly string GetAllBlockchains = $"{BaseAPI}/blockchains/getAllBlockchains";
             }
 
             public static class Countries
             {
-                public static readonly string GetAllCountries = $"{BaseAPI}/countries/GetAllCountries";
+                public static readonly string GetAllCountries = $"{BaseAPI}/countries/getAllCountries";
             }
 
             public static class Currencies
             {
                 public static readonly string GetAllFiatCurrencies = $"{BaseAPI}/currencies/getAllFiatCurrencies";
                 public static readonly string GetPreferableCoinCurrencies = $"{BaseAPI}/currencies/getPreferableCoinCurrencies";
+            }
+
+            public static class Wallets
+            {
+                public static readonly string CreatePersonalWallet = $"{BaseAPI}/wallets/createPersonalWallet";
+                public static readonly string GetPersonalWallets = $"{BaseAPI}/wallets/getPersonalWallets";
+                public static readonly string GetWallet = $"{BaseAPI}/wallets/getWallet";
+                public static readonly string SyncPersonalWallet = $"{BaseAPI}/wallets/syncPersonalWallet";
             }
         }
 

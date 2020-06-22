@@ -17,8 +17,8 @@
         public const string CurrencyNotFound = "Sorry, Currency Not Found";
         public const string CoinCurrenciesNotFound = "Sorry, Coin Currencies Not Found";
         public const string FiatCurrenciesNotFound = "Sorry, Fiat Currencies Not Found";
-
         public const string InvalidPassword = "Sorry, Invalid Password";
+        public const string PasswordDoNotMatch = "The password and confirmation password do not match.";
         public const string MemberCreated = "Member Created successfully";
     }
 }

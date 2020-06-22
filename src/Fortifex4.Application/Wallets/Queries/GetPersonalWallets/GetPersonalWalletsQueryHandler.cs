@@ -72,12 +72,31 @@ namespace Fortifex4.Application.Wallets.Queries.GetPersonalWallets
                         BlockchainName = wallet.Blockchain.Name,
                         MainPocketCurrencyUnitPriceInUSD = mainPocket.Currency.UnitPriceInUSD,
                         MainPocketBalance = mainPocket.Transactions.Sum(x => x.Amount),
-                        Container = result
+                        //Container = result
                     };
+
+                    #region MainPocketBalanceInPreferredFiatCurrency
+                    if (result.MemberPreferredFiatCurrencyUnitPriceInUSD > 0)
+                        walletDTO.MainPocketBalanceInPreferredFiatCurrency = walletDTO.MainPocketBalance * (walletDTO.MainPocketCurrencyUnitPriceInUSD / result.MemberPreferredFiatCurrencyUnitPriceInUSD);
+                    else
+                        walletDTO.MainPocketBalanceInPreferredFiatCurrency = 0m;
+                    #endregion
+
+                    #region MainPocketBalanceInPreferredCoinCurrency
+                    if (result.MemberPreferredCoinCurrencyUnitPriceInUSD > 0)
+                        walletDTO.MainPocketBalanceInPreferredCoinCurrency = walletDTO.MainPocketBalance * (walletDTO.MainPocketCurrencyUnitPriceInUSD / result.MemberPreferredCoinCurrencyUnitPriceInUSD);
+                    else
+                        walletDTO.MainPocketBalanceInPreferredCoinCurrency = 0m;
+                    #endregion
 
                     result.PersonalWallets.Add(walletDTO);
                 }
             }
+
+
+            result.IsSuccessful = true;
+
+            global::System.Console.WriteLine("Get Personal Wallet Succesfully");
 
             return result;
         }

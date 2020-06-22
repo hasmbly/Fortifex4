@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Fortifex4.Shared.Common;
 using Fortifex4.Shared.Currencies.Queries.GetAllFiatCurrencies;
 using Fortifex4.Shared.Currencies.Queries.GetPreferrableCoinCurrencies;
 using Fortifex4.Shared.Members.Commands.UpdatePreferredCoinCurrency;
 using Fortifex4.Shared.Members.Commands.UpdatePreferredFiatCurrency;
 using Fortifex4.Shared.Members.Commands.UpdatePreferredTimeFrame;
-using Fortifex4.Shared.Members.Queries.GetPreferences;
 using Fortifex4.Shared.TimeFrames.Queries.GetAllTimeFrames;
-using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -21,6 +18,8 @@ namespace Fortifex4.WebUI.Shared.Common
     {
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+        public bool IsLoading { get; set; }
 
         public ClaimsPrincipal User { get; set; }
 
@@ -74,7 +73,7 @@ namespace Fortifex4.WebUI.Shared.Common
 
         protected async override Task OnInitializedAsync()
         {
-            _httpClient = ((ServerAuthenticationStateProvider)_authenticationStateProvider).Client();
+            IsLoading = true;
 
             User = Task.FromResult(await AuthenticationStateTask).Result.User;
 
@@ -87,66 +86,84 @@ namespace Fortifex4.WebUI.Shared.Common
             await InitializeDefaultValuesAsync();
         }
 
-        #region LoadDataAsync
         private async Task LoadDataAsync()
         {
-            var getAllTimeFramesResult = await _httpClient.GetJsonAsync<ApiResponse<GetAllTimeFramesResponse>>(Constants.URI.TimeFrames.GetAllTimeFrames);
+            var getAllTimeFramesResult = await _timeFramesService.GetAllTimeFrames();
             Model.TimeFrames = getAllTimeFramesResult.Result.TimeFrames.ToList();
 
-            var getAllFiatCurrenciesResult = await _httpClient.GetJsonAsync<ApiResponse<GetAllFiatCurrenciesResponse>>(Constants.URI.Currencies.GetAllFiatCurrencies);
+            var getAllFiatCurrenciesResult = await _currenciesService.GetAllFiatCurrencies();
             Model.FiatCurrency = getAllFiatCurrenciesResult.Result.FiatCurrencies.ToList();
 
-            var getPreferableCoinCurrenciesResult = await _httpClient.GetJsonAsync<ApiResponse<GetPreferableCoinCurrenciesResponse>>(Constants.URI.Currencies.GetPreferableCoinCurrencies);
+            var getPreferableCoinCurrenciesResult = await _currenciesService.GetPreferableCoinCurrencies();
             Model.CoinCurrency = getPreferableCoinCurrenciesResult.Result.CoinCurrencies.ToList();
         }
-        #endregion
 
-        #region InitializeDefaultValuesAsync
         private async Task InitializeDefaultValuesAsync()
         {
             if (User.Identity.IsAuthenticated)
             {
-                var preferences = await _httpClient.GetJsonAsync<ApiResponse<GetPreferencesResponse>>($"{Constants.URI.Members.GetPreferences}/{User.Identity.Name}");
+                var preferences = await _membersService.GetPreferences(User.Identity.Name);
 
                 Model.SelectedTimeFrameValue = preferences.Result.PreferredTimeFrameID.ToString();
                 Model.SelectedCoinCurrencyValue = preferences.Result.PreferredCoinCurrencyID.ToString();
                 Model.SelectedFiatCurrencyValue = preferences.Result.PreferredFiatCurrencyID.ToString();
+
+                IsLoading = false;
             }
         }
-        #endregion
 
         #region Event OnChange
         private async void OnChangeTimeFrame()
         {
+            IsLoading = true;
+
             UpdatePreferredTimeFrameRequest.PreferredTimeFrameID = int.Parse(SelectedTimeFrame);
 
-            await _httpClient.PutJsonAsync<ApiResponse<UpdatePreferredTimeFrameResponse>>(Constants.URI.Members.UpdatePreferredTimeFrame, UpdatePreferredTimeFrameRequest);
-         
-            StateHasChanged();
+            var result = await _membersService.UpdatePreferredTimeFrame(UpdatePreferredTimeFrameRequest);
+
+            if (result.Result.IsSuccessful)
+            {
+                IsLoading = false;
+                StateHasChanged();
+            }
         }
 
         private async void OnChangeCoinCurrency()
         {
+            IsLoading = true;
+
             UpdatePreferredCoinCurrencyRequest.PreferredCoinCurrencyID = int.Parse(SelectedCoinCurrency);
 
-            await _httpClient.PutJsonAsync<ApiResponse<UpdatePreferredCoinCurrencyResponse>>(Constants.URI.Members.UpdatePreferredCoinCurrency, UpdatePreferredCoinCurrencyRequest);
+            var result = await _membersService.UpdatePreferredCoinCurrency(UpdatePreferredCoinCurrencyRequest);
 
-            StateHasChanged();
+            if (result.Result.IsSuccessful)
+            {
+                IsLoading = false;
+                StateHasChanged();
+            }
         }
 
         private async void OnChangeFiatCurrency()
         {
+            IsLoading = true;
+
             UpdatePreferredFiatCurrencyRequest.PreferredFiatCurrencyID = int.Parse(SelectedFiatCurrency);
 
-            await _httpClient.PutJsonAsync<ApiResponse<UpdatePreferredFiatCurrencyResponse>>(Constants.URI.Members.UpdatePreferredFiatCurrency, UpdatePreferredFiatCurrencyRequest);
+            var result = await _membersService.UpdatePreferredFiatCurrency(UpdatePreferredFiatCurrencyRequest);
 
-            StateHasChanged();
+            if (result.Result.IsSuccessful)
+            {
+                IsLoading = false;
+                StateHasChanged();
+            }
         }
         #endregion
 
         #region LogoutAsync
         private async Task LogoutAsync()
         {
+            IsLoading = true;
+
             await _authenticationService.Logout();
 
             _navigationManager.NavigateTo("/");

@@ -22,6 +22,8 @@ namespace Fortifex4.Shared.Wallets.Queries.GetWallet
 
         public GetWalletResponse()
         {
+            this.MainPocket = new PocketDTO();
+
             this.TokenPockets = new List<PocketDTO>();
         }
     }

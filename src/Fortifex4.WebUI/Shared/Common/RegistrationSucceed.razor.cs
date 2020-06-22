@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Fortifex4.Shared.Common;
-using Fortifex4.Shared.Members.Commands.ActivateMember;
-using Microsoft.AspNetCore.Components;
 
 namespace Fortifex4.WebUI.Shared.Common
 {
@@ -11,20 +8,26 @@ namespace Fortifex4.WebUI.Shared.Common
     {
         public string ActivationURL { get; set; }
 
+        public bool IsLoading { get; set; }
+
         private async Task Activate()
         {
-            ActivationURL = Constants.URI.Account.ActivateMember + activateMemberState.Member.ActivationCode;
+            IsLoading = true;
 
-            var MemberActivation = await _httpClient.GetJsonAsync<ApiResponse<ActivateMemberResponse>>(ActivationURL);
+            var MemberActivation = await _authenticationService.ActivateMember(activateMemberState.Member.ActivationCode);
 
             if (MemberActivation.Status.IsError)
             {
+                IsLoading = false;
+
                 Console.WriteLine(JsonSerializer.Serialize(MemberActivation.Status.IsError));
             }
             else
             {
                 if (MemberActivation.Result.IsSuccessful)
                 {
+                    IsLoading = false;
+
                     activateMemberState.DoneActivateMemberState();
 
                     activateMemberState.OnChange += StateHasChanged;

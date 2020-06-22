@@ -1,0 +1,253 @@
+﻿@page "/wallets/details/{walletID:int}"
+@attribute [Authorize]
+
+@inject IWalletsService _walletsService
+@inject NavigationManager _navigationManager
+
+@using Fortifex4.Domain.Enums
+@using Fortifex4.Domain.Entities
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        @if (Wallet.ProviderType == ProviderType.Personal)
+        {
+            <li class="breadcrumb-item"><a asp-page="/Wallets/Index">Wallets</a></li>
+        }
+        else
+        {
+            <li class="breadcrumb-item"><a href="exchanges">Exchanges</a></li>
+            <li class="breadcrumb-item"><a href="exchanges/details/@Wallet.OwnerID">@Wallet.OwnerProviderName</a></li>
+        }
+        <li class="breadcrumb-item active" aria-current="page">@Wallet.Name</li>
+    </ol>
+</nav>
+
+<h1>Wallets Details
+    @if (IsLoading)
+    {
+        <i class="fas fa-circle-notch fa-spin"></i>
+    }
+</h1>
+<div class="container-body shadow-sm mb-5">
+    <div class="row">
+        <div class="col-8">
+            <dl class="row mb-0">
+                @if (Wallet.ProviderType == ProviderType.Personal)
+                {
+                    <dt class="col-sm-4">Name</dt>
+                    <dd class="col-sm-8">@Wallet.Name</dd>
+                    <dt class="col-sm-4">Address</dt>
+                    <dd class="col-sm-8">@Wallet.Address</dd>
+                    <dt class="col-sm-4">Blockchain</dt>
+                    <dd class="col-sm-8">@Wallet.BlockchainName</dd>
+                }
+                else
+                {
+                    <dt class="col-sm-4">Exchange</dt>
+                    <dd class="col-sm-8">Wallet.OwnerProviderName</dd>
+                }
+                <dt class="col-sm-4">Currency</dt>
+                <dd class="col-sm-8">@Wallet.MainPocket.CurrencyName (@Wallet.MainPocket.CurrencySymbol)</dd>
+                <dt class="col-sm-4">Balance</dt>
+                <dd class="col-sm-8">@Wallet.MainPocket.Balance.ToString4Decimals()</dd>
+                <dt class="col-sm-4">Transactions Count</dt>
+                <dd class="col-sm-8">@Wallet.MainPocket.Transactions.Count</dd>
+                @if (Wallet.TokenPockets.Count > 0)
+                {
+                    <dt class="col-sm-4">Tokens Count</dt>
+                    <dd class="col-sm-8">@Wallet.TokenPockets.Count</dd>
+                }
+            </dl>
+            @if (!string.IsNullOrEmpty(SyncMessage))
+            {
+                <div class="alert alert-warning">
+                    SyncMessage
+                </div>
+            }
+        </div>
+        <div class="col-4 text-right">
+            <div class="mb-1">
+                <button class="btn btn-primary">Delete</button>
+            </div>
+            @if (Wallet.ProviderType == ProviderType.Personal)
+            {
+                <div class="mb-1">
+                    <button class="btn btn-primary">Edit</button>
+                </div>
+
+                if (CurrencySymbol.IsSynchronizable(Wallet.MainPocket.CurrencySymbol))
+                {
+                    <div class="mb-1">
+                        <form method="post">
+                            <button class="btn btn-primary">Sync</button>
+                        </form>
+                    </div>
+                }
+            }
+            else
+            {
+                @if (Wallet.MainPocket.CurrencyType == CurrencyType.Fiat)
+                {
+                    <div class="mb-1">
+                        <button class="btn btn-primary">Add Deposit</button>
+                    </div>
+                    <div class="mb-1">
+                        <button class="btn btn-primary">Add Withdrawal</button>
+                    </div>
+                }
+            }
+
+            @if (Wallet.MainPocket.CurrencyType != CurrencyType.Fiat && !Wallet.IsSynchronized)
+            {
+                <div class="mb-1">
+                    <button class="btn btn-primary">Add External Transfer</button>
+                </div>
+                <div class="mb-1">
+                    <button class="btn btn-primary">Add Internal Transfer</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<h2>Transactions</h2>
+<div class="container-body shadow-sm mb-5">
+    <table id="data-table-transactions" class="table table-hover data-table">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Date and Time</th>
+                <th>Transaction Type</th>
+                <th class="text-right">Amount</th>
+                <th>Pair Wallet</th>
+                <th class="text-right">Unit Price USD</th>
+                <th class="trans text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int indexTransaction = 1;}
+            @foreach (var transaction in Wallet.MainPocket.Transactions.OrderBy(x => x.TransactionDateTime))
+            {
+                <tr>
+                    <td>@indexTransaction</td>
+                    <td>@transaction.TransactionDateTime.ToLocalDisplayText()</td>
+                    <td>@transaction.TransactionTypeDisplayText</td>
+                    <td class="text-right">@transaction.Amount.ToString4Decimals()</td>
+                    <td>
+                        @if ((transaction.TransactionType == TransactionType.SyncTransactionIN || transaction.TransactionType == TransactionType.SyncTransactionOUT) && string.IsNullOrEmpty(transaction.PairWalletName))
+                        {
+                            <span class="text-danger">@WarningMessage.PleaseCompleteTransactionDetails</span>
+                        }
+                        else
+                        {
+                            @transaction.PairWalletName
+                        }
+                    </td>
+                    <td class="text-right">@transaction.UnitPriceInUSD.ToString4Decimals()</td>
+                    <td class="trans text-center">
+                        @if (transaction.TransactionType == TransactionType.Deposit)
+                        {
+                            <a href="#" title="Edit" class="deposit-edit-id" data-toggle="modal" data-target="#modal-edit-deposit" data-id="@transaction.TransactionID" data-amount="@transaction.Amount" data-transaction-datetime="@transaction.TransactionDateTime"><i class="fas fa-edit"></i></a>
+                            <a href="#" title="Delete" class="deposit-delete-id" data-toggle="modal" data-target="#modal-delete-deposit" data-id="@transaction.TransactionID"><i class="fas fa-trash-alt"></i></a>
+                        }
+                        else if (transaction.TransactionType == TransactionType.Withdrawal)
+                        {
+                            <a href="#" title="Edit" class="withdrawal-edit-id" data-toggle="modal" data-target="#modal-edit-withdrawal" data-id="@transaction.TransactionID"><i class="fas fa-edit"></i></a>
+                            <a href="#" title="Delete" class="withdrawal-delete-id" data-toggle="modal" data-target="#modal-delete-withdrawal" data-id="@transaction.TransactionID"><i class="fas fa-trash-alt"></i></a>
+                        }
+                        else if (transaction.TransactionType == TransactionType.StartingBalance)
+                        {
+                            <a href="#" title="Edit" class="starting-balance-edit-id" data-toggle="modal" data-target="#modal-edit-starting-balance-id" data-id="@transaction.TransactionID"><i class="fas fa-edit"></i></a>
+                        }
+                        else if (transaction.TransactionType == TransactionType.SyncBalanceImport)
+                        {
+                            <a href="#" title="Edit" class="import-balance-edit-id" data-toggle="modal" data-target="#modal-edit-import-balance-id" data-id="@transaction.TransactionID"><i class="fas fa-edit"></i></a>
+                        }
+                        else if (transaction.TransactionType == TransactionType.SyncTransactionIN || transaction.TransactionType == TransactionType.SyncTransactionOUT)
+                        {
+                            <a href="#" title="Edit" class="sync-edit-id" data-toggle="modal" data-target="#modal-edit-sync" data-id="@transaction.TransactionID"><i class="fas fa-edit"></i></a>
+                        }
+                        else if (transaction.TransactionType == TransactionType.ExternalTransferIN || transaction.TransactionType == TransactionType.ExternalTransferOUT)
+                        {
+                            <a href="#" title="Edit" class="external-transfer-edit-id" data-toggle="modal" data-target="#modal-edit-external-transfer" data-id="@transaction.TransactionID"><i class="fas fa-edit"></i></a>
+                            <a href="#" title="Delete" class="external-transfer-delete-id" data-toggle="modal" data-target="#modal-delete-external-transfer" data-id="@transaction.TransactionID"><i class="fas fa-trash-alt"></i></a>
+                        }
+                        else if (transaction.InternalTransferID.HasValue)
+                        {
+                            <a href="#" title="Edit" class="internal-transfer-edit-id" data-toggle="modal" data-target="#modal-edit-internal-transfer" data-id="@transaction.InternalTransferID"><i class="fas fa-edit"></i></a>
+                            <a href="#" title="Delete" class="internal-transfer-delete-id" data-toggle="modal" data-target="#modal-delete-internal-transfer" data-id="@transaction.InternalTransferID"><i class="fas fa-trash-alt"></i></a>
+                        }
+                        else if (transaction.TradeID.HasValue)
+                        {
+                            <a href="#" title="Edit" class="trade-edit-id" data-toggle="modal" data-target="#modal-edit-trade" data-id="@transaction.TradeID"><i class="fas fa-edit"></i></a>
+                            <a href="#" title="Delete" class="trade-delete-id" data-toggle="modal" data-target="#modal-delete-trade" data-id="@transaction.TradeID"><i class="fas fa-trash-alt"></i></a>
+                        }
+                    </td>
+                </tr>
+
+                indexTransaction++;
+            }
+        </tbody>
+
+    </table>
+</div>
+@if (Wallet.TokenPockets.Count > 0)
+{
+    <h2>Tokens</h2>
+    <div class="container-body shadow-sm">
+        <table class="table table-hover data-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Token Name</th>
+                    <th>Symbol</th>
+                    <th class="text-right">Balance</th>
+                    <th class="text-center px-3">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int indexPocket = 1;}
+                @foreach (var pocket in Wallet.TokenPockets.OrderBy(x => x.CurrencyName))
+                {
+                    <tr>
+                        <td>@indexPocket</td>
+                        <td>@pocket.CurrencyName</td>
+                        <td>@pocket.CurrencySymbol</td>
+                        <td class="text-right">@pocket.Balance.ToString4Decimals()</td>
+                        <td class="text-center">
+                            <a asp-page="/Tokens/Details" asp-route-PocketID="@pocket.PocketID" class="btn btn-primary btn-sm">Details</a>
+                        </td>
+                    </tr>
+
+                    indexPocket++;
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@*@if (Wallet.MainPocket.CurrencyType == CurrencyType.Fiat)
+    {
+        @await Component.InvokeAsync(nameof(ModalCreateDeposit), new { walletID = Wallet.WalletID })
+        @await Component.InvokeAsync(nameof(ModalEditDeposit), new { walletID = Wallet.WalletID })
+        @await Component.InvokeAsync(nameof(ModalDeleteDeposit))
+        @await Component.InvokeAsync(nameof(ModalCreateWithdrawal), new { walletID = Wallet.WalletID })
+        @await Component.InvokeAsync(nameof(ModalDeleteWithdrawal))
+        @await Component.InvokeAsync(nameof(ModalEditWithdrawal), new { walletID = Wallet.WalletID })
+    }
+
+    @await Component.InvokeAsync(nameof(ModalEditStartingBalance))
+
+    @await Component.InvokeAsync(nameof(ModalEditImportBalance))
+
+    @await Component.InvokeAsync(nameof(ModalEditSync))
+
+    @await Component.InvokeAsync(nameof(ModalCreateExternalTransfer), new { walletID = Wallet.WalletID })
+    @await Component.InvokeAsync(nameof(ModalEditExternalTransfer))
+    @await Component.InvokeAsync(nameof(ModalDeleteExternalTransfer))
+
+    @await Component.InvokeAsync(nameof(ModalCreateInternalTransfer), new { walletID = Wallet.WalletID })
+    @await Component.InvokeAsync(nameof(ModalEditInternalTransfer))
+    @await Component.InvokeAsync(nameof(ModalDeleteInternalTransfer))
+
+    @await Component.InvokeAsync(nameof(ModalEditTrade))
+    @await Component.InvokeAsync(nameof(ModalDeleteTrade))*@

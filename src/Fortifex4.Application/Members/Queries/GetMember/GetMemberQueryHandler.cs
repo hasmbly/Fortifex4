@@ -59,6 +59,8 @@ namespace Fortifex4.Application.Members.Queries.GetMember
                 
                 PreferredTimeFrameID = member.PreferredTimeFrame.TimeFrameID,
                 PreferredTimeFrameName = member.PreferredTimeFrame.Name,
+                
+                IsSuccessful = true
             };
 
             return result;
