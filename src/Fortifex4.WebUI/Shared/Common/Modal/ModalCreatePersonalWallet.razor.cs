@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Fortifex4.WebUI.Shared.Common.Modal
 {
-    public partial class ModalPersonalWallet
+    public partial class ModalCreatePersonalWallet
     {
-        public string Title { get; set; } = "New Wallet";
+        public string Title { get; set; } = "New Personal Wallet";
 
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -44,8 +44,6 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             await LoadDataAsync();
 
             IsLoading = false;
-
-            System.Console.WriteLine($"BlockchainID: {Input.BlockchainID}");
 
             StateHasChanged();
         }

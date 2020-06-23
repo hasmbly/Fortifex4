@@ -2,7 +2,9 @@
 using System.Net;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
+using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
 using Fortifex4.Shared.Wallets.Commands.SyncPersonalWallet;
+using Fortifex4.Shared.Wallets.Commands.UpdatePersonalWallet;
 using Fortifex4.Shared.Wallets.Queries.GetPersonalWallets;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Fortifex4.WebAPI.Common.ApiEnvelopes;
@@ -65,6 +67,34 @@ namespace Fortifex4.WebAPI.Controllers
             catch (Exception exception)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpPut("updatePersonalWallet")]
+        public async Task<IActionResult> UpdatePersonalWallet(UpdatePersonalWalletRequest request)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(request)));
+            }
+            catch (Exception exception)
+            {
+                return Ok(new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpPost("deleteWallet")]
+        public async Task<IActionResult> DeleteWallet(DeleteWalletRequest request)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(request)));
+            }
+            catch (Exception exception)
+            {
+                return Ok(new InternalServerError(exception));
             }
         }
     }

@@ -22,7 +22,8 @@
     </ol>
 </nav>
 
-<h1>Wallets Details
+<h1>
+    Wallets Details
     @if (IsLoading)
     {
         <i class="fas fa-circle-notch fa-spin"></i>
@@ -67,12 +68,12 @@
         </div>
         <div class="col-4 text-right">
             <div class="mb-1">
-                <button class="btn btn-primary">Delete</button>
+                <button class="btn btn-danger" @onclick="() => ModalDeletePersonalWallet.BaseModal.Open()">Delete</button>
             </div>
             @if (Wallet.ProviderType == ProviderType.Personal)
             {
                 <div class="mb-1">
-                    <button class="btn btn-primary">Edit</button>
+                    <button class="btn btn-primary" @onclick="() => ModalEditPersonalWallet.BaseModal.Open()">Edit</button>
                 </div>
 
                 if (CurrencySymbol.IsSynchronizable(Wallet.MainPocket.CurrencySymbol))
@@ -224,6 +225,9 @@
         </table>
     </div>
 }
+
+<ModalEditPersonalWallet @ref="ModalEditPersonalWallet" WalletID="@WalletID" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalDeletePersonalWallet @ref="ModalDeletePersonalWallet" WalletID="@WalletID" />
 
 @*@if (Wallet.MainPocket.CurrencyType == CurrencyType.Fiat)
     {

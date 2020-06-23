@@ -12,58 +12,58 @@
         <i class="fas fa-circle-notch fa-spin"></i>
     }
 </h1>
-    <div class="text-right mb-3">
-        <button class="btn btn-primary" @onclick="() => ModalPersonalWallet.BaseModal.Open()">New Wallet</button>
-    </div>
-    <div class="container-body shadow-sm">
-        <table class="table table-custom">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Blockchain</th>
-                    <th>Synchronized</th>
-                    <th class="text-right">Balance</th>
-                    <th class="text-right">Balance (@GetPersonalWalletsResponse.MemberPreferredFiatCurrencySymbol)</th>
-                    <th class="text-right">Balance (@GetPersonalWalletsResponse.MemberPreferredCoinCurrencySymbol)</th>
-                    <th class="text-center">Details</th>
-                </tr>
-            </thead>
-            @if (GetPersonalWalletsResponse.PersonalWallets.Count > 0)
-            {
-                <tbody>
-                    @{
-                        int index = 1;
+<div class="text-right mb-3">
+    <button class="btn btn-primary" @onclick="() => ModalCreatePersonalWallet.BaseModal.Open()">New Wallet</button>
+</div>
+<div class="container-body shadow-sm">
+    <table class="table table-custom">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Blockchain</th>
+                <th>Synchronized</th>
+                <th class="text-right">Balance</th>
+                <th class="text-right">Balance (@GetPersonalWalletsResponse.MemberPreferredFiatCurrencySymbol)</th>
+                <th class="text-right">Balance (@GetPersonalWalletsResponse.MemberPreferredCoinCurrencySymbol)</th>
+                <th class="text-center">Details</th>
+            </tr>
+        </thead>
+        @if (GetPersonalWalletsResponse.PersonalWallets.Count > 0)
+        {
+            <tbody>
+                @{
+                    int index = 1;
 
-                        foreach (var wallet in GetPersonalWalletsResponse.PersonalWallets)
-                        {
-                            <tr>
-                                <td>@index</td>
-                                <td>@wallet.Name</td>
-                                <td>@wallet.BlockchainName</td>
-                                <td>@wallet.IsSynchronizedDisplayText</td>
-                                <td class="text-right">@wallet.MainPocketBalanceDisplayText</td>
-                                <td class="text-right">@wallet.MainPocketBalanceInPreferredFiatCurrencyDisplayText</td>
-                                <td class="text-right">@wallet.MainPocketBalanceInPreferredCoinCurrencyDisplayText</td>
-                                <td class="text-center">
-                                    <a href="/wallets/details/@wallet.WalletID" class="btn btn-primary btn-sm">Details</a>
-                                </td>
-                            </tr>
+                    foreach (var wallet in GetPersonalWalletsResponse.PersonalWallets)
+                    {
+                        <tr>
+                            <td>@index</td>
+                            <td>@wallet.Name</td>
+                            <td>@wallet.BlockchainName</td>
+                            <td>@wallet.IsSynchronizedDisplayText</td>
+                            <td class="text-right">@wallet.MainPocketBalanceDisplayText</td>
+                            <td class="text-right">@wallet.MainPocketBalanceInPreferredFiatCurrencyDisplayText</td>
+                            <td class="text-right">@wallet.MainPocketBalanceInPreferredCoinCurrencyDisplayText</td>
+                            <td class="text-center">
+                                <a href="/wallets/details/@wallet.WalletID" class="btn btn-primary btn-sm">Details</a>
+                            </td>
+                        </tr>
 
-                            index++;
-                        }
+                        index++;
                     }
-                </tbody>
-            }
-            else if (IsLoading)
-            {
-                <caption><div class="text-center"><i class="fas fa-circle-notch fa-spin"></i></div></caption>
-            }
-            else
-            {
-                <caption><div class="alert alert-info text-center">No data available in table</div></caption>
-            }
-</table>
-    </div>
+                }
+            </tbody>
+        }
+        else if (IsLoading)
+        {
+            <caption><div class="text-center"><i class="fas fa-circle-notch fa-spin"></i></div></caption>
+        }
+        else
+        {
+            <caption><div class="alert alert-info text-center">No data available in table</div></caption>
+        }
+    </table>
+</div>
 
-    <ModalPersonalWallet @ref="ModalPersonalWallet" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalCreatePersonalWallet @ref="ModalCreatePersonalWallet" OnAfterSuccessful="UpdateStateHasChanged" />

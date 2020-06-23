@@ -3,7 +3,9 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Common;
 using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
+using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
 using Fortifex4.Shared.Wallets.Commands.SyncPersonalWallet;
+using Fortifex4.Shared.Wallets.Commands.UpdatePersonalWallet;
 using Fortifex4.Shared.Wallets.Queries.GetPersonalWallets;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Fortifex4.WebUI.Common;
@@ -14,7 +16,9 @@ namespace Fortifex4.WebUI.Services
 {
     public interface IWalletsService
     {
-        public Task<ApiResponse<CreatePersonalWalletResponse>> CreatePersonalWallet(CreatePersonalWalletRequest memberUsername);
+        public Task<ApiResponse<CreatePersonalWalletResponse>> CreatePersonalWallet(CreatePersonalWalletRequest request);
+        public Task<ApiResponse<UpdatePersonalWalletResponse>> UpdatePersonalWallet(UpdatePersonalWalletRequest request);
+        public Task<ApiResponse<DeleteWalletResponse>> DeleteWallet(DeleteWalletRequest request);
         public Task<ApiResponse<GetPersonalWalletsResponse>> GetPersonalWallets(string memberUsername);
         public Task<ApiResponse<GetWalletResponse>> GetWallet(int walletID);
         public Task<ApiResponse<SyncPersonalWalletResponse>> SyncPersonalWallet(int walletID);
@@ -73,6 +77,24 @@ namespace Fortifex4.WebUI.Services
             var createPersonalWalletResponse = await _httpClient.PostJsonAsync<ApiResponse<CreatePersonalWalletResponse>>(Constants.URI.Wallets.CreatePersonalWallet, request);
 
             return createPersonalWalletResponse;
+        }
+
+        public async Task<ApiResponse<UpdatePersonalWalletResponse>> UpdatePersonalWallet(UpdatePersonalWalletRequest request)
+        {
+            await SetHeader();
+
+            var updatePersonalWalletResponse = await _httpClient.PutJsonAsync<ApiResponse<UpdatePersonalWalletResponse>>(Constants.URI.Wallets.UpdatePersonalWallet, request);
+
+            return updatePersonalWalletResponse;
+        }
+
+        public async Task<ApiResponse<DeleteWalletResponse>> DeleteWallet(DeleteWalletRequest request)
+        {
+            await SetHeader();
+
+            var deleteWalletResponse = await _httpClient.PostJsonAsync<ApiResponse<DeleteWalletResponse>>(Constants.URI.Wallets.DeleteWallet, request);
+
+            return deleteWalletResponse;
         }
     }
 }

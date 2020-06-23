@@ -61,6 +61,8 @@
             public static class Wallets
             {
                 public static readonly string CreatePersonalWallet = $"{BaseAPI}/wallets/createPersonalWallet";
+                public static readonly string UpdatePersonalWallet = $"{BaseAPI}/wallets/updatePersonalWallet";
+                public static readonly string DeleteWallet = $"{BaseAPI}/wallets/deleteWallet";
                 public static readonly string GetPersonalWallets = $"{BaseAPI}/wallets/getPersonalWallets";
                 public static readonly string GetWallet = $"{BaseAPI}/wallets/getWallet";
                 public static readonly string SyncPersonalWallet = $"{BaseAPI}/wallets/syncPersonalWallet";

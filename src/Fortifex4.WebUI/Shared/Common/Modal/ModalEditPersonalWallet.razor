@@ -1,0 +1,42 @@
+﻿@namespace Fortifex4.WebUI.Shared.Common.Modal
+@attribute [Authorize]
+
+@inject IBlockchainsService _blockchainsService
+@inject IWalletsService _walletsService
+
+@inject NavigationManager _navigationManager
+
+<BaseModal @ref="BaseModal"
+           ModalTitle="@Title"
+           IsLoading="IsLoading"
+           OnSubmit="OnSubmitEditPersonalWalletAsync">
+    <ChildContent>
+        <EditForm Model="Input" OnValidSubmit="OnSubmitEditPersonalWalletAsync">
+            <DataAnnotationsValidator />
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>Wallet Name</label>
+                    <InputText @bind-Value="Input.Name" class="form-control" placeholder="Enter Wallet Name" />
+                    <ValidationMessage For="@(() => Input.Name)" />
+                </div>
+                <div class="form-group col-6">
+                    <label>Wallet Address</label>
+                    <InputText @bind-Value="Input.Address" class="form-control" placeholder="Enter Wallet Address" />
+                    <ValidationMessage For="@(() => Input.Address)" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>Blockchain</label>
+                    <InputSelect @bind-Value="SelectedBlockchain" class="form-control chosen-select">
+                        @foreach (var blockchain in Blockchains)
+                        {
+                            <option value="@blockchain.BlockchainID.ToString()">@blockchain.Name</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </EditForm>
+    </ChildContent>
+</BaseModal>

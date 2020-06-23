@@ -16,7 +16,7 @@ namespace Fortifex4.WebUI.Pages.Wallets
 
         public GetPersonalWalletsResponse GetPersonalWalletsResponse { get; set; } = new GetPersonalWalletsResponse();
 
-        private ModalPersonalWallet ModalPersonalWallet { get; set; }
+        private ModalCreatePersonalWallet ModalCreatePersonalWallet { get; set; }
 
         public bool IsLoading { get; set; }
 
