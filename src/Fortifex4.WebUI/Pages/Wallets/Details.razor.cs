@@ -25,18 +25,43 @@ namespace Fortifex4.WebUI.Pages.Wallets
 
         public async void SyncWallet()
         {
+            IsLoading = true;
+
             SyncMessage = string.Empty;
 
             try
             {
                 var result = await _walletsService.SyncPersonalWallet(WalletID);
-
-                if (result.Result.IsSuccessful)
+                
+                if (result.Status.IsError)
                 {
-                    SyncMessage = "Synchronization process completed successfully";
+                    SyncMessage = "There's a problem in Synchronization process";
 
-                    await InitAsync();
+                    System.Console.WriteLine($"IsError: {result.Status.Message}");
+
+                    StateHasChanged();
                 }
+                else
+                {
+                    if (result.Result.IsSuccessful)
+                    {
+                        await InitAsync();
+                        SyncMessage = "Synchronization process completed successfully";
+
+                        StateHasChanged();
+
+                        IsLoading = false;
+                    }
+                    else
+                    {
+                        SyncMessage = "There's a problem in Synchronization process";
+
+                        System.Console.WriteLine($"ErrorMessage: {result.Result.ErrorMessage}");
+
+                        StateHasChanged();
+                    }
+                }
+         
             }
             catch (InvalidWalletAddressException iwaex)
             {

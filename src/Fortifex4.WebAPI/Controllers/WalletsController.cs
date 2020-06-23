@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Fortifex4.Domain.Exceptions;
 using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
 using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
 using Fortifex4.Shared.Wallets.Commands.SyncPersonalWallet;
@@ -49,6 +50,10 @@ namespace Fortifex4.WebAPI.Controllers
             try
             {
                 return Ok(new Success(await Mediator.Send(new SyncPersonalWalletRequest() { WalletID = walletID })));
+            }
+            catch (InvalidWalletAddressException iwaex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(iwaex.Message));
             }
             catch (Exception exception)
             {

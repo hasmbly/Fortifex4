@@ -11,7 +11,7 @@
     <ol class="breadcrumb">
         @if (Wallet.ProviderType == ProviderType.Personal)
         {
-            <li class="breadcrumb-item"><a asp-page="/Wallets/Index">Wallets</a></li>
+            <li class="breadcrumb-item"><a href="wallets">Wallets</a></li>
         }
         else
         {
@@ -62,7 +62,7 @@
             @if (!string.IsNullOrEmpty(SyncMessage))
             {
                 <div class="alert alert-warning">
-                    SyncMessage
+                    @SyncMessage
                 </div>
             }
         </div>
@@ -79,9 +79,7 @@
                 if (CurrencySymbol.IsSynchronizable(Wallet.MainPocket.CurrencySymbol))
                 {
                     <div class="mb-1">
-                        <form method="post">
-                            <button class="btn btn-primary">Sync</button>
-                        </form>
+                        <button class="btn btn-primary" @onclick="SyncWallet">Sync</button>
                     </div>
                 }
             }
