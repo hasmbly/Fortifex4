@@ -67,6 +67,16 @@
                 public static readonly string GetWallet = $"{BaseAPI}/wallets/getWallet";
                 public static readonly string SyncPersonalWallet = $"{BaseAPI}/wallets/syncPersonalWallet";
             }
+
+            public static class InternalTransfers
+            {
+                public static readonly string GetInternalTransfer = $"{BaseAPI}/internalTransfers/getInternalTransfer";
+                public static readonly string CreateInternalTransfer = $"{BaseAPI}/internalTransfers/createInternalTransfer";
+                public static readonly string UpdateInternalTransfer = $"{BaseAPI}/internalTransfers/updateInternalTransfer";
+                public static readonly string DeleteInternalTransfer = $"{BaseAPI}/internalTransfers/deleteInternalTransfer";
+                public static readonly string GetWalletsWithSameCurrency = $"{BaseAPI}/internalTransfers/getWalletsWithSameCurrency";
+                public static readonly string GetAllWalletsWithSameCurrency = $"{BaseAPI}/internalTransfers/getAllWalletsWithSameCurrency";
+            }
         }
 
         public static class AlertMessageStatus

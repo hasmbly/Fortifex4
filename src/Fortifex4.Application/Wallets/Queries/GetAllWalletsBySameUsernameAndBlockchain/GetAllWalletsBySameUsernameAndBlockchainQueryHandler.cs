@@ -5,6 +5,7 @@ using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Wallets.Common;
 using Fortifex4.Shared.Wallets.Queries.GetAllWalletsBySameUsernameAndBlockchain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -50,7 +51,7 @@ namespace Fortifex4.Application.Wallets.Queries.GetAllWalletsBySameUsernameAndBl
 
                     if (pocket != null)
                     {
-                        result.Wallets.Add(new AllWalletDTO
+                        result.Wallets.Add(new WalletSameCurrencyDTO
                         {
                             OwnerProviderName = wallet.Owner.Provider.Name,
                             WalletID = wallet.WalletID,
@@ -63,6 +64,9 @@ namespace Fortifex4.Application.Wallets.Queries.GetAllWalletsBySameUsernameAndBl
                     }
                 }
             }
+
+            if (result.Wallets.Count > 0)
+                result.IsSuccessful = true;
 
             return result;
         }

@@ -102,7 +102,7 @@
                     <button class="btn btn-primary">Add External Transfer</button>
                 </div>
                 <div class="mb-1">
-                    <button class="btn btn-primary">Add Internal Transfer</button>
+                    <button class="btn btn-primary" @onclick="() => ModalCreateInternalTransfer.BaseModal.Open()">Add Internal Transfer</button>
                 </div>
             }
         </div>
@@ -227,29 +227,27 @@
 <ModalEditPersonalWallet @ref="ModalEditPersonalWallet" WalletID="@WalletID" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalDeletePersonalWallet @ref="ModalDeletePersonalWallet" WalletID="@WalletID" />
 
-@*@if (Wallet.MainPocket.CurrencyType == CurrencyType.Fiat)
-    {
-        @await Component.InvokeAsync(nameof(ModalCreateDeposit), new { walletID = Wallet.WalletID })
-        @await Component.InvokeAsync(nameof(ModalEditDeposit), new { walletID = Wallet.WalletID })
-        @await Component.InvokeAsync(nameof(ModalDeleteDeposit))
-        @await Component.InvokeAsync(nameof(ModalCreateWithdrawal), new { walletID = Wallet.WalletID })
-        @await Component.InvokeAsync(nameof(ModalDeleteWithdrawal))
-        @await Component.InvokeAsync(nameof(ModalEditWithdrawal), new { walletID = Wallet.WalletID })
-    }
+<ModalCreateInternalTransfer @ref="ModalCreateInternalTransfer" WalletID="@WalletID" OnAfterSuccessful="UpdateStateHasChanged"/>
 
-    @await Component.InvokeAsync(nameof(ModalEditStartingBalance))
-
-    @await Component.InvokeAsync(nameof(ModalEditImportBalance))
-
-    @await Component.InvokeAsync(nameof(ModalEditSync))
-
-    @await Component.InvokeAsync(nameof(ModalCreateExternalTransfer), new { walletID = Wallet.WalletID })
-    @await Component.InvokeAsync(nameof(ModalEditExternalTransfer))
-    @await Component.InvokeAsync(nameof(ModalDeleteExternalTransfer))
-
-    @await Component.InvokeAsync(nameof(ModalCreateInternalTransfer), new { walletID = Wallet.WalletID })
-    @await Component.InvokeAsync(nameof(ModalEditInternalTransfer))
-    @await Component.InvokeAsync(nameof(ModalDeleteInternalTransfer))
-
-    @await Component.InvokeAsync(nameof(ModalEditTrade))
-    @await Component.InvokeAsync(nameof(ModalDeleteTrade))*@
+@*
+@if (Wallet.MainPocket.CurrencyType= =CurrencyType.Fiat)
+{
+@await Component.InvokeAsync(nameof(ModalCreateDeposit), new { walletID=Wallet.WalletID })
+@await Component.InvokeAsync(nameof(ModalEditDeposit), new { walletID=Wallet.WalletID })
+@await Component.InvokeAsync(nameof(ModalDeleteDeposit))
+@await Component.InvokeAsync(nameof(ModalCreateWithdrawal), new { walletID=Wallet.WalletID })
+@await Component.InvokeAsync(nameof(ModalDeleteWithdrawal))
+@await Component.InvokeAsync(nameof(ModalEditWithdrawal), new { walletID=Wallet.WalletID })
+}
+@await Component.InvokeAsync(nameof(ModalEditStartingBalance))
+@await Component.InvokeAsync(nameof(ModalEditImportBalance))
+@await Component.InvokeAsync(nameof(ModalEditSync))
+@await Component.InvokeAsync(nameof(ModalCreateExternalTransfer), new { walletID=Wallet.WalletID })
+@await Component.InvokeAsync(nameof(ModalEditExternalTransfer))
+@await Component.InvokeAsync(nameof(ModalDeleteExternalTransfer))
+@await Component.InvokeAsync(nameof(ModalCreateInternalTransfer), new { walletID=Wallet.WalletID })
+@await Component.InvokeAsync(nameof(ModalEditInternalTransfer))
+@await Component.InvokeAsync(nameof(ModalDeleteInternalTransfer))
+@await Component.InvokeAsync(nameof(ModalEditTrade))
+@await Component.InvokeAsync(nameof(ModalDeleteTrade))
+*@

@@ -14,8 +14,8 @@ namespace Fortifex4.WebUI.Pages.Wallets
         public GetWalletResponse Wallet { get; set; } = new GetWalletResponse();
 
         private ModalEditPersonalWallet ModalEditPersonalWallet { get; set; }
-
         private ModalDeletePersonalWallet ModalDeletePersonalWallet { get; set; }
+        private ModalCreateInternalTransfer ModalCreateInternalTransfer { get; set; }
 
         public string SyncMessage { get; set; }
         

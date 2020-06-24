@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
+using Fortifex4.Shared.Wallets.Common;
 using Fortifex4.Shared.Wallets.Queries.GetWalletsBySameUsernameAndBlockchain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,7 @@ namespace Fortifex4.Application.Wallets.Queries.GetWalletsBySameUsernameAndBlock
                         .Where(x => x.WalletID == wallet.WalletID && x.IsMain)
                         .SingleAsync(cancellationToken);
 
-                    result.Wallets.Add(new WalletDTO
+                    result.Wallets.Add(new WalletSameCurrencyDTO
                     {
                         OwnerProviderName = wallet.Owner.Provider.Name,
                         WalletID = wallet.WalletID,
@@ -62,6 +63,9 @@ namespace Fortifex4.Application.Wallets.Queries.GetWalletsBySameUsernameAndBlock
                     });
                 }
             }
+
+            if (result.Wallets.Count > 0)
+                result.IsSuccessful = true;
 
             return result;
         }

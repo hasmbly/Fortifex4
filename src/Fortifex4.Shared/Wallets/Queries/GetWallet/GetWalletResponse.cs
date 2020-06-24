@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Common;
 
@@ -19,6 +20,15 @@ namespace Fortifex4.Shared.Wallets.Queries.GetWallet
         public PocketDTO MainPocket { get; set; }
 
         public IList<PocketDTO> TokenPockets { get; set; }
+
+        public string ProviderNameWithWalletName
+        {
+            get => $"{this.OwnerProviderName} - {this.Name}";
+            set
+            {
+                return;
+            }
+        }
 
         public GetWalletResponse()
         {
