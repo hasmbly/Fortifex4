@@ -6,12 +6,6 @@ using Fortifex4.Shared.InternalTransfers.Commands.CreateInternalTransfer;
 using Fortifex4.Shared.InternalTransfers.Commands.DeleteInternalTransfer;
 using Fortifex4.Shared.InternalTransfers.Commands.UpdateInternalTransfer;
 using Fortifex4.Shared.InternalTransfers.Queries.GetInternalTransfer;
-using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
-using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
-using Fortifex4.Shared.Wallets.Commands.SyncPersonalWallet;
-using Fortifex4.Shared.Wallets.Commands.UpdatePersonalWallet;
-using Fortifex4.Shared.Wallets.Queries.GetAllWalletsBySameUsernameAndBlockchain;
-using Fortifex4.Shared.Wallets.Queries.GetWalletsBySameUsernameAndBlockchain;
 using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -21,8 +15,6 @@ namespace Fortifex4.WebUI.Services
     public interface IInternalTransfersService
     {
         public Task<ApiResponse<GetInternalTransferResponse>> GetInternalTransfer(int internalTransferID);
-        public Task<ApiResponse<GetWalletsBySameUsernameAndBlockchainResponse>> GetWalletsWithSameCurrency(int walletID);
-        public Task<ApiResponse<GetAllWalletsBySameUsernameAndBlockchainResponse>> GetAllWalletsWithSameCurrency(string memberUsername);
         public Task<ApiResponse<CreateInternalTransferResponse>> CreateInternalTransfer(CreateInternalTransferRequest request);
         public Task<ApiResponse<UpdateInternalTransferResponse>> UpdateInternalTransfer(UpdateInternalTransferRequest request);
         public Task<ApiResponse<DeleteInternalTransferResponse>> DeleteInternalTransfer(DeleteInternalTransferRequest request);
@@ -52,20 +44,6 @@ namespace Fortifex4.WebUI.Services
             await SetHeader();
 
             return await _httpClient.GetJsonAsync<ApiResponse<GetInternalTransferResponse>>($"{Constants.URI.InternalTransfers.GetInternalTransfer}/{internalTransferID}");
-        }
-
-        public async Task<ApiResponse<GetWalletsBySameUsernameAndBlockchainResponse>> GetWalletsWithSameCurrency(int walletID)
-        {
-            await SetHeader();
-
-            return await _httpClient.GetJsonAsync<ApiResponse<GetWalletsBySameUsernameAndBlockchainResponse>>($"{Constants.URI.InternalTransfers.GetWalletsWithSameCurrency}/{walletID}");
-        }
-        
-        public async Task<ApiResponse<GetAllWalletsBySameUsernameAndBlockchainResponse>> GetAllWalletsWithSameCurrency(string memberUsername)
-        {
-            await SetHeader();
-
-            return await _httpClient.GetJsonAsync<ApiResponse<GetAllWalletsBySameUsernameAndBlockchainResponse>>($"{Constants.URI.InternalTransfers.GetAllWalletsWithSameCurrency}/{memberUsername}");
         }
 
         public async Task<ApiResponse<CreateInternalTransferResponse>> CreateInternalTransfer(CreateInternalTransferRequest request)

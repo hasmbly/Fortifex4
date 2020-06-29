@@ -32,8 +32,6 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         public bool IsPublic { get; set; }
 
-        public GetWalletResponse MyProperty { get; set; }
-
         public CreateInternalTransferRequest Input { get; set; } = new CreateInternalTransferRequest();
         
         public GetWalletResponse Wallet { get; set; } = new GetWalletResponse();
@@ -100,7 +98,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         private async Task LoadSelectOptionToWallet()
         {
-            var getWalletsWithSameCurrency = await _internalTransfersService.GetWalletsWithSameCurrency(WalletID.Value);
+            var getWalletsWithSameCurrency = await _walletsService.GetWalletsWithSameCurrency(WalletID.Value);
             ListToWallets = getWalletsWithSameCurrency.Result.Wallets.ToList();
 
             // default value for select option -> SelectedToWallet
@@ -109,7 +107,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         private async Task LoadSelectOptionFromWallet()
         {
-            var getAllWalletsWithSameCurrency = await _internalTransfersService.GetAllWalletsWithSameCurrency(User.Identity.Name);
+            var getAllWalletsWithSameCurrency = await _walletsService.GetAllWalletsWithSameCurrency(User.Identity.Name);
             ListFromWallets = getAllWalletsWithSameCurrency.Result.Wallets.ToList();
 
             // default value for select option -> SelectedToWallet

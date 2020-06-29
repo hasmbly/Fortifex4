@@ -51,7 +51,7 @@ namespace Fortifex4.WebAPI.Controllers
         public async Task<IActionResult> Activate(string code)
         {
             if (string.IsNullOrEmpty(code))
-                return Ok($"You did't provide any Activation Code.");
+                return Ok($"You didn't provide any Activation Code.");
 
             try
             {

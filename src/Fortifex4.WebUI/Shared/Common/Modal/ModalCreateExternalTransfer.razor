@@ -1,0 +1,89 @@
+﻿@namespace Fortifex4.WebUI.Shared.Common.Modal
+@attribute [Authorize]
+
+@inject IExternalTransfersService _externalTransfersService
+@inject IWalletsService _walletsService
+@inject IToolsService _toolsService
+
+@inject NavigationManager _navigationManager
+
+<BaseModal @ref="BaseModal"
+           ModalTitle="@Title"
+           IsLoading="IsLoading"
+           OnSubmit="OnSubmitInternalTransferAsync">
+    <ChildContent>
+        <EditForm Model="Input" OnValidSubmit="OnSubmitInternalTransferAsync">
+            <DataAnnotationsValidator />
+            <div class="form-row">
+                @if (IsPublic)
+                {
+                    <div class="form-group col-6">
+                        <label>Wallet</label>
+                        <InputSelect @bind-Value="SelectWallet" class="form-control chosen-select">
+                            @if (Wallets.Count > 0)
+                                {
+                                @foreach (var wallet in Wallets)
+                                    {
+                                    <option value="@wallet.WalletID.ToString()">@wallet.ProviderNameWithWalletName</option>
+                                    }
+                                }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => Input.WalletID)" />
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group col-6">
+                        <label>Wallet</label>
+                        <InputText @bind-Value="Wallet.ProviderNameWithWalletName" class="form-control" disabled />
+                        <ValidationMessage For="@(() => Input.WalletID)" />
+                    </div>
+                }
+                <div class="form-group col-6">
+                    <label>Currency</label>
+                    <InputText @bind-Value="Wallet.MainPocket.CurrencyName" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-3">
+                    <label>Direction</label>
+                    <InputCheckbox class="form-check-input" id="external-transfer-toggle-direction" @bind-Value="@IsChecked" checked data-toggle="toggle" data-on="IN" data-off="OUT" data-onstyle="primary" data-offstyle="secondary" data-width="100%" data-height="38" />
+                </div>
+                <div class="form-group col-3">
+                    <label>Incoming Amount</label>
+                    <InputNumber @bind-Value="Amount" class="form-control" />
+                    <ValidationMessage For="@(() => Input.Amount)" />
+                </div>
+                <div class="form-group col-6">
+                    <label>Date & Time</label>
+                    <InputDate @bind-Value="Input.TransactionDateTime" class="form-control" />
+                    <ValidationMessage For="@(() => Input.TransactionDateTime)" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>USD Unit Price</label>
+                    <InputNumber @bind-Value="Input.UnitPriceInUSD" class="form-control" />
+                    <ValidationMessage For="@(() => Input.UnitPriceInUSD)" />
+                </div>
+                <div class="form-group col-6">
+                    <label>USD Total</label>
+                    <InputNumber @bind-Value="Total" class="form-control" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>Pair Wallet Name</label>
+                    <InputText @bind-Value="Input.PairWalletName" class="form-control" />
+                    <ValidationMessage For="@(() => Input.PairWalletName)" />
+                </div>
+                <div class="form-group col-6">
+                    <label>Pair Wallet Address</label>
+                    <InputText @bind-Value="Input.PairWalletAddress" class="form-control" />
+                    <ValidationMessage For="@(() => Input.PairWalletAddress)" />
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </EditForm>
+    </ChildContent>
+</BaseModal>

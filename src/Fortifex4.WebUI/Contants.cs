@@ -27,6 +27,13 @@
                 public static readonly string UpdatePreferredFiatCurrency = $"{BaseAPI}/members/updatePreferredFiatCurrency";
             }
 
+            public static class Tools
+            {
+                public static readonly string GetPriceConversion = $"{BaseAPI}/tools/getPriceConversion";
+                public static readonly string GetUnitPrice = $"{BaseAPI}/tools/getUnitPrice";
+                public static readonly string GetUnitPriceInUSD = $"{BaseAPI}/tools/getUnitPriceInUSD";
+            }
+
             public static class TimeFrames
             {
                 public static readonly string GetAllTimeFrames = $"{BaseAPI}/timeFrames/getAllTimeFrames";
@@ -76,6 +83,14 @@
                 public static readonly string DeleteInternalTransfer = $"{BaseAPI}/internalTransfers/deleteInternalTransfer";
                 public static readonly string GetWalletsWithSameCurrency = $"{BaseAPI}/internalTransfers/getWalletsWithSameCurrency";
                 public static readonly string GetAllWalletsWithSameCurrency = $"{BaseAPI}/internalTransfers/getAllWalletsWithSameCurrency";
+            }
+            
+            public static class ExternalTransfers
+            {
+                public static readonly string GetExternalTransfer = $"{BaseAPI}/externalTransfers/getExternalTransfer";
+                public static readonly string CreateExternalTransfer = $"{BaseAPI}/externalTransfers/createExternalTransfer";
+                public static readonly string UpdateExternalTransfer = $"{BaseAPI}/externalTransfers/updateExternalTransfer";
+                public static readonly string DeleteExternalTransfer = $"{BaseAPI}/externalTransfers/deleteExternalTransfer";
             }
         }
 

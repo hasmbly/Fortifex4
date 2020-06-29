@@ -3,6 +3,7 @@ using Fortifex4.Domain.Exceptions;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Fortifex4.WebUI.Shared.Common.Modal;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace Fortifex4.WebUI.Pages.Wallets
 {
@@ -16,6 +17,7 @@ namespace Fortifex4.WebUI.Pages.Wallets
         private ModalEditPersonalWallet ModalEditPersonalWallet { get; set; }
         private ModalDeletePersonalWallet ModalDeletePersonalWallet { get; set; }
         private ModalCreateInternalTransfer ModalCreateInternalTransfer { get; set; }
+        private ModalCreateExternalTransfer ModalCreateExternalTransfer { get; set; }
 
         public string SyncMessage { get; set; }
         

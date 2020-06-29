@@ -36,10 +36,8 @@ namespace Fortifex4.WebUI.Services
         public async Task<ApiResponse<GetAllTimeFramesResponse>> GetAllTimeFrames()
         {
             await SetHeader();
-
-            var getAllTimeFramesResponse = await _httpClient.GetJsonAsync<ApiResponse<GetAllTimeFramesResponse>>(Constants.URI.TimeFrames.GetAllTimeFrames);
-
-            return getAllTimeFramesResponse;
+            
+            return await _httpClient.GetJsonAsync<ApiResponse<GetAllTimeFramesResponse>>(Constants.URI.TimeFrames.GetAllTimeFrames);
         }
     }
 }

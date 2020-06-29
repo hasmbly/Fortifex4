@@ -39,8 +39,10 @@ namespace Fortifex4.WebUI
             builder.Services.AddHttpClient<IWalletsService, WalletsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IBlockchainsService, BlockchainsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IInternalTransfersService, InternalTransfersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<IExternalTransfersService, ExternalTransfersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<IToolsService, ToolsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
 
-            var host = builder.Build();
+              var host = builder.Build();
 
             await host.RunAsync();
         }
