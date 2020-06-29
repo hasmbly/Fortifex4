@@ -29,9 +29,6 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         [Parameter]
         public int? WalletID { get; set; }
 
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
         public BaseModal BaseModal { get; set; }
 
         public bool IsLoading { get; set; }
@@ -44,8 +41,6 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         public GetWalletResponse Wallet { get; set; } = new GetWalletResponse();
       
-        public DotNetObjectReference<ToggleDirection> ToggleDirection { get; set; }
-
         // this select option will use if IsPublic -> True
         public string SelectWallet
         {
@@ -97,17 +92,6 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             IsLoading = false;
 
             StateHasChanged();
-        }
-
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender)
-            {
-                ToggleDirection = DotNetObjectReference.Create(new ToggleDirection(false));
-
-                JsRuntime.InvokeVoidAsync("Toggle.init");
-                JsRuntime.InvokeVoidAsync("Toggle.onChangeToggle", "#external-transfer-toggle-direction", ToggleDirection);
-            }
         }
 
         private async Task LoadDataAsync()
@@ -205,7 +189,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         {
             StateHasChanged();
 
-            IsChecked = ToggleDirection.Value.IsChecked;
+            IsChecked = _toggleCheckboxState.IsChecked;
 
             Console.WriteLine($"OnSubmit - IsChecked: {IsChecked}");
 
@@ -234,21 +218,6 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
                     Console.WriteLine($"ErrorMessage: {result.Result.ErrorMessage}");
                 }
             }
-        }
-    }
-
-    public class ToggleDirection
-    {
-        public bool IsChecked { get; set; }
-
-        public ToggleDirection(bool isChecked) => IsChecked = isChecked;
-
-        [JSInvokable]
-        public void SetIsChecked(bool checkedState) 
-        {
-            IsChecked = checkedState;
-            
-            Console.WriteLine($"SetIsChecked: {IsChecked}");
         }
     }
 }

@@ -28,6 +28,7 @@ namespace Fortifex4.WebUI
 
             builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
             builder.Services.AddScoped<ActivateMemberState>();
+            builder.Services.AddScoped<ToggleCheckboxState>();
 
             builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IMembersService, MembersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });

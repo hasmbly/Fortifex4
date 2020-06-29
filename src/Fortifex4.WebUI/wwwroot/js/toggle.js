@@ -2,7 +2,7 @@
 {
     init: function ()
     {
-        console.log("Initialize Toggle");
+        console.log("ToggleCheckbox - Initialize Toggle from Js");
 
         !function (a)
         {
@@ -19,8 +19,6 @@
             console.log("checked: " + this.checked);
 
             dotnetObject.invokeMethodAsync('SetIsChecked', this.checked);
-
-            return this.checked;
         });
     }
 };
