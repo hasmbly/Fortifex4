@@ -24,5 +24,17 @@ namespace Fortifex4.Shared.ExternalTransfers.Queries.GetExternalTransfer
                 return Math.Abs(this.Amount);
             }
         }
+
+        public string WalletWithProviderName
+        {
+            get
+            {
+                return $"{this.WalletOwnerProviderName} - {this.WalletName}";
+            }
+
+            set
+            {
+            }
+        }
     }
 }

@@ -2,6 +2,8 @@
 using System.Net;
 using System.Threading.Tasks;
 using Fortifex4.Domain.Exceptions;
+using Fortifex4.Shared.Sync.Commands.UpdateSync;
+using Fortifex4.Shared.Sync.Queries.GetSync;
 using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
 using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
 using Fortifex4.Shared.Wallets.Commands.SyncPersonalWallet;
@@ -43,24 +45,6 @@ namespace Fortifex4.WebAPI.Controllers
             }
         }
 
-        [Authorize]
-        [HttpGet("syncPersonalWallet/{walletID}")]
-        public async Task<IActionResult> SyncPersonalWallet(int walletID)
-        {
-            try
-            {
-                return Ok(new Success(await Mediator.Send(new SyncPersonalWalletRequest() { WalletID = walletID })));
-            }
-            catch (InvalidWalletAddressException iwaex)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(iwaex.Message));
-            }
-            catch (Exception exception)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
-            }
-        }
-
         [AllowAnonymous]
         [HttpPost("createPersonalWallet")]
         public async Task<ActionResult> CreatePersonalWallet(CreatePersonalWalletRequest request)
@@ -92,6 +76,56 @@ namespace Fortifex4.WebAPI.Controllers
         [Authorize]
         [HttpPost("deleteWallet")]
         public async Task<IActionResult> DeleteWallet(DeleteWalletRequest request)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(request)));
+            }
+            catch (Exception exception)
+            {
+                return Ok(new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("syncPersonalWallet/{walletID}")]
+        public async Task<IActionResult> SyncPersonalWallet(int walletID)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new SyncPersonalWalletRequest() { WalletID = walletID })));
+            }
+            catch (InvalidWalletAddressException iwaex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(iwaex.Message));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("sync/details/{transactionID}")]
+        public async Task<IActionResult> GetSyncPersonalWallet(int transactionID)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetSyncRequest() { TransactionID = transactionID })));
+            }
+            catch (InvalidWalletAddressException iwaex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(iwaex.Message));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpPut("sync/edit")]
+        public async Task<IActionResult> UpdateSyncPersonalWallet(UpdateSyncRequest request)
         {
             try
             {

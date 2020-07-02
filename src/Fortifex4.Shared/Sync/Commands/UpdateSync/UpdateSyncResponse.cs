@@ -1,8 +1,9 @@
-﻿namespace Fortifex4.Shared.Sync.Commands.UpdateSync
+﻿using Fortifex4.Shared.Common;
+
+namespace Fortifex4.Shared.Sync.Commands.UpdateSync
 {
-    public class UpdateSyncResponse
+    public class UpdateSyncResponse : GeneralResponse
     {
-        public bool IsSuccessful { get; set; }
         public int WalletID { get; set; }
     }
 }

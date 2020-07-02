@@ -9,7 +9,7 @@ using Fortifex4.Shared.Wallets.Common;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.JSInterop;
+using static Fortifex4.WebUI.Shared.Common.ToggleCheckbox;
 
 namespace Fortifex4.WebUI.Shared.Common.Modal
 {
@@ -33,15 +33,14 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         public bool IsLoading { get; set; }
         public bool IsPublic { get; set; }
-        public bool IsChecked { get; set; }
         public decimal Total { get; set; }
         public string LabelAmount { get; set; }
-
+        
         public CreateExternalTransferRequest Input { get; set; } = new CreateExternalTransferRequest();
 
         public GetWalletResponse Wallet { get; set; } = new GetWalletResponse();
       
-        // this select option will use if IsPublic -> True
+        // this select option will use in Transaction Index (IsPublic -> True)
         public string SelectWallet
         {
             get => Input.WalletID.ToString();
@@ -53,33 +52,31 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             }
         }
 
-        public bool Direction
+        public decimal Amount
         {
-            get => IsChecked;
+            get => Input.Amount;
             set
             {
-                IsChecked = value;
+                Input.Amount = ToFixed4(value);
 
-                Console.WriteLine($"IsChecked: {IsChecked}");
-
-                StateHasChanged();
+                CalculateAmount();
             }
         }
 
-        public int Amount
+        public decimal UnitPriceInUSD
         {
-            get => (int)Input.Amount;
+            get => Input.UnitPriceInUSD;
             set
             {
-                Input.Amount = value;
-
-                Console.WriteLine("OnSetAmount");
+                Input.UnitPriceInUSD = ToFixed4(value);
 
                 CalculateAmount();
             }
         }
 
         public IList<WalletSameCurrencyDTO> Wallets { get; set; } = new List<WalletSameCurrencyDTO>();
+
+        public ToggleCheckboxAttributes Attributes { get; set; } = new ToggleCheckboxAttributes("create-external-transfer-direction");
 
         protected async override Task OnInitializedAsync()
         {
@@ -179,21 +176,26 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         {
             var result = await _toolsService.GetUnitPriceInUSD(symbol);
 
-            Input.UnitPriceInUSD = result.Result.UnitPriceInUSD;
+            Input.UnitPriceInUSD = ToFixed4(result.Result.UnitPriceInUSD);
 
             StateHasChanged();
         }
         #endregion
 
+        private decimal ToFixed4(decimal value)
+        {
+            value = decimal.Parse(value.ToString("N4").Replace(".0000", ""));
+
+            return value;
+        }
+
         private async void OnSubmitInternalTransferAsync()
         {
             StateHasChanged();
 
-            IsChecked = _toggleCheckboxState.IsChecked;
+            Console.WriteLine($"OnSubmit - IsChecked: {_toggleCheckboxState.IsChecked}");
 
-            Console.WriteLine($"OnSubmit - IsChecked: {IsChecked}");
-
-            OnChangeDirection(IsChecked);
+            OnChangeDirection(_toggleCheckboxState.IsChecked);
 
             IsLoading = true;
 

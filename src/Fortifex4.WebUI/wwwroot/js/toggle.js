@@ -16,9 +16,23 @@
 
         $(elementID).change(function ()
         {
-            console.log("checked: " + this.checked);
+            console.log("checked from JS: " + this.checked);
 
             dotnetObject.invokeMethodAsync('SetIsChecked', this.checked);
         });
+    },
+
+    setToggle: function (elementID, isChecked)
+    {
+        console.log("setToggle - Started ->  (elementID) (isChecked): " + elementID + ", " + isChecked);
+
+        if (isChecked == true || isChecked == "true" || isChecked == "True")
+        {
+            $(elementID).bootstrapToggle('on');
+        }
+        else
+        {
+            $(elementID).bootstrapToggle('off');
+        }
     }
 };

@@ -3,4 +3,6 @@
 @inject ToggleCheckboxState _toggleCheckboxState
 @inject IJSRuntime JsRuntime;
 
-<input @attributes="Attributes" />
+@implements IDisposable
+
+<input @attributes="Attributes.ElementAttributes" />

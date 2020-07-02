@@ -15,6 +15,8 @@ namespace Fortifex4.WebUI.Pages.Wallets
         public GetWalletResponse Wallet { get; set; } = new GetWalletResponse();
 
         private ModalEditPersonalWallet ModalEditPersonalWallet { get; set; }
+        private ModalEditImportBalance ModalEditImportBalance { get; set; }
+        private ModalEditExternalTransfer ModalEditExternalTransfer { get; set; }
         private ModalDeletePersonalWallet ModalDeletePersonalWallet { get; set; }
         private ModalCreateInternalTransfer ModalCreateInternalTransfer { get; set; }
         private ModalCreateExternalTransfer ModalCreateExternalTransfer { get; set; }
@@ -24,6 +26,14 @@ namespace Fortifex4.WebUI.Pages.Wallets
         public bool IsLoading { get; set; }
 
         protected async override Task OnInitializedAsync() => await InitAsync();
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await JsRuntime.InvokeVoidAsync("Toggle.init");
+            }
+        }
 
         public async void SyncWallet()
         {

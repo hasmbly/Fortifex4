@@ -2,6 +2,8 @@
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Common;
+using Fortifex4.Shared.Sync.Commands.UpdateSync;
+using Fortifex4.Shared.Sync.Queries.GetSync;
 using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
 using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
 using Fortifex4.Shared.Wallets.Commands.SyncPersonalWallet;
@@ -18,14 +20,18 @@ namespace Fortifex4.WebUI.Services
 {
     public interface IWalletsService
     {
+        public Task<ApiResponse<GetWalletResponse>> GetWallet(int walletID);
+        public Task<ApiResponse<GetPersonalWalletsResponse>> GetPersonalWallets(string memberUsername);
         public Task<ApiResponse<CreatePersonalWalletResponse>> CreatePersonalWallet(CreatePersonalWalletRequest request);
         public Task<ApiResponse<UpdatePersonalWalletResponse>> UpdatePersonalWallet(UpdatePersonalWalletRequest request);
         public Task<ApiResponse<DeleteWalletResponse>> DeleteWallet(DeleteWalletRequest request);
-        public Task<ApiResponse<GetPersonalWalletsResponse>> GetPersonalWallets(string memberUsername);
-        public Task<ApiResponse<GetWalletResponse>> GetWallet(int walletID);
-        public Task<ApiResponse<SyncPersonalWalletResponse>> SyncPersonalWallet(int walletID);
+        
         public Task<ApiResponse<GetWalletsBySameUsernameAndBlockchainResponse>> GetWalletsWithSameCurrency(int walletID);
         public Task<ApiResponse<GetAllWalletsBySameUsernameAndBlockchainResponse>> GetAllWalletsWithSameCurrency(string memberUsername);
+
+        public Task<ApiResponse<SyncPersonalWalletResponse>> SyncPersonalWallet(int walletID);
+        public Task<ApiResponse<GetSyncResponse>> GetDetailsSyncPersonalWallet(int transactionID);
+        public Task<ApiResponse<UpdateSyncResponse>> UpdateDetailsSyncPersonalWallet(UpdateSyncRequest request);
     }
 
     public class WalletsService : IWalletsService
@@ -113,6 +119,20 @@ namespace Fortifex4.WebUI.Services
             await SetHeader();
 
             return await _httpClient.GetJsonAsync<ApiResponse<GetAllWalletsBySameUsernameAndBlockchainResponse>>($"{Constants.URI.InternalTransfers.GetAllWalletsWithSameCurrency}/{memberUsername}");
+        }
+
+        public async Task<ApiResponse<GetSyncResponse>> GetDetailsSyncPersonalWallet(int transactionID)
+        {
+            await SetHeader();
+
+            return await _httpClient.GetJsonAsync<ApiResponse<GetSyncResponse>>($"{Constants.URI.Wallets.GetDetailsSyncPersonalWallet}/{transactionID}");
+        }
+
+        public async Task<ApiResponse<UpdateSyncResponse>> UpdateDetailsSyncPersonalWallet(UpdateSyncRequest request)
+        {
+            await SetHeader();
+
+            return await _httpClient.PutJsonAsync<ApiResponse<UpdateSyncResponse>>(Constants.URI.Wallets.UpdateDetailsSyncPersonalWallet, request);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;
@@ -9,44 +10,67 @@ namespace Fortifex4.WebUI.Shared.Common
     public partial class ToggleCheckbox
     {
         [Parameter]
-        public Dictionary<string, object> Attributes { get; set; } =
-            new Dictionary<string, object>()
-            {
-                { "id", "external-transfer-toggle-direction" },
-                { "class", "form-check-input" },
-                { "type", "checkbox" },
-                { "checked", null },
-                { "data-toggle", "toggle" },
-                { "data-on", "IN" },
-                { "data-off", "OUT" },
-                { "data-onstyle", "primary" },
-                { "data-offstyle", "secondary" },
-                { "data-width", "100%" },
-                { "data-height", "38" },
-            };
+        public ToggleCheckboxAttributes Attributes { get; set; }
 
         public DotNetObjectReference<ToggleCheckboxState> ToggleCheckboxState { get; set; }
 
         protected override void OnInitialized()
         {
-            System.Console.WriteLine("ToggleCheckbox - OnInitialized");
-
             _toggleCheckboxState.SetDefaultIsChecked();
+
+            _toggleCheckboxState.SetToggleChange += SetToggle;
+            _toggleCheckboxState.OnChange += StateHasChanged;
+        }
+
+        public void Dispose()
+        {
+            _toggleCheckboxState.SetDefaultIsChecked();
+
+            _toggleCheckboxState.SetToggleChange -= SetToggle;
+            _toggleCheckboxState.OnChange -= StateHasChanged;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            System.Console.WriteLine("ToggleCheckbox - OnAfterRender");
-
             if (firstRender)
             {
-                System.Console.WriteLine("ToggleCheckbox - OnAfterRender - firstRender");
-
                 ToggleCheckboxState = DotNetObjectReference.Create(_toggleCheckboxState);
 
-                await JsRuntime.InvokeVoidAsync("Toggle.init");
+                await JsRuntime.InvokeVoidAsync("Toggle.onChangeToggle", $"#{Attributes.ElementID}", ToggleCheckboxState);
+            }
+        }
 
-                await JsRuntime.InvokeVoidAsync("Toggle.onChangeToggle", "#external-transfer-toggle-direction", ToggleCheckboxState);
+        public async void SetToggle(string elementID, bool isChecked)
+        {
+            Console.WriteLine($"SetToggle from ToggleCheckbox : elementID = {elementID}, isChecked = {isChecked}");
+
+            await JsRuntime.InvokeVoidAsync("Toggle.setToggle", $"#{elementID}", isChecked);
+        }
+
+        public class ToggleCheckboxAttributes
+        {
+            public string ElementID { get; set; } = "";
+            
+            public Dictionary<string, object> ElementAttributes { get; set; }
+
+            public ToggleCheckboxAttributes(string _elementID)
+            {
+                ElementID = _elementID;
+
+                ElementAttributes = new Dictionary<string, object>()
+                {
+                    { "id", ElementID },
+                    { "class", "form-check-input" },
+                    { "type", "checkbox" },
+                    { "checked", "" },
+                    { "data-toggle", "toggle" },
+                    { "data-on", "IN" },
+                    { "data-off", "OUT" },
+                    { "data-onstyle", "primary" },
+                    { "data-offstyle", "secondary" },
+                    { "data-width", "100%" },
+                    { "data-height", "38" },
+                };
             }
         }
     }

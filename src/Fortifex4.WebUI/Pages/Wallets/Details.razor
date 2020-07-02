@@ -3,6 +3,7 @@
 
 @inject IWalletsService _walletsService
 @inject NavigationManager _navigationManager
+@inject IJSRuntime JsRuntime
 
 @using Fortifex4.Domain.Enums
 @using Fortifex4.Domain.Entities
@@ -159,7 +160,7 @@
                         }
                         else if (transaction.TransactionType == TransactionType.SyncBalanceImport)
                         {
-                            <a href="#" title="Edit" class="import-balance-edit-id" data-toggle="modal" data-target="#modal-edit-import-balance-id" data-id="@transaction.TransactionID"><i class="fas fa-edit"></i></a>
+                            <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditImportBalance.BaseModal.OpenWithID(transaction.TransactionID); }"><i class="fas fa-edit"></i></a>
                         }
                         else if (transaction.TransactionType == TransactionType.SyncTransactionIN || transaction.TransactionType == TransactionType.SyncTransactionOUT)
                         {
@@ -167,7 +168,8 @@
                         }
                         else if (transaction.TransactionType == TransactionType.ExternalTransferIN || transaction.TransactionType == TransactionType.ExternalTransferOUT)
                         {
-                            <a href="#" title="Edit" class="external-transfer-edit-id" data-toggle="modal" data-target="#modal-edit-external-transfer" data-id="@transaction.TransactionID"><i class="fas fa-edit"></i></a>
+                            <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditExternalTransfer.BaseModal.OpenWithID(transaction.TransactionID); }"><i class="fas fa-edit"></i></a>
+
                             <a href="#" title="Delete" class="external-transfer-delete-id" data-toggle="modal" data-target="#modal-delete-external-transfer" data-id="@transaction.TransactionID"><i class="fas fa-trash-alt"></i></a>
                         }
                         else if (transaction.InternalTransferID.HasValue)
@@ -225,6 +227,9 @@
 }
 
 <ModalEditPersonalWallet @ref="ModalEditPersonalWallet" WalletID="@WalletID" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditImportBalance @ref="ModalEditImportBalance" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditExternalTransfer @ref="ModalEditExternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
+
 <ModalDeletePersonalWallet @ref="ModalDeletePersonalWallet" WalletID="@WalletID" />
 
 <ModalCreateInternalTransfer @ref="ModalCreateInternalTransfer" WalletID="@WalletID" OnAfterSuccessful="UpdateStateHasChanged" />
