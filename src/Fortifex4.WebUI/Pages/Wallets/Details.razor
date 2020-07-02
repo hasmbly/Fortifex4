@@ -174,7 +174,8 @@
                         }
                         else if (transaction.InternalTransferID.HasValue)
                         {
-                            <a href="#" title="Edit" class="internal-transfer-edit-id" data-toggle="modal" data-target="#modal-edit-internal-transfer" data-id="@transaction.InternalTransferID"><i class="fas fa-edit"></i></a>
+                            <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditInternalTransfer.BaseModal.OpenWithID(transaction.InternalTransferID.Value); }"><i class="fas fa-edit"></i></a>
+
                             <a href="#" title="Delete" class="internal-transfer-delete-id" data-toggle="modal" data-target="#modal-delete-internal-transfer" data-id="@transaction.InternalTransferID"><i class="fas fa-trash-alt"></i></a>
                         }
                         else if (transaction.TradeID.HasValue)
@@ -229,6 +230,7 @@
 <ModalEditPersonalWallet @ref="ModalEditPersonalWallet" WalletID="@WalletID" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalEditImportBalance @ref="ModalEditImportBalance" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalEditExternalTransfer @ref="ModalEditExternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditInternalTransfer @ref="ModalEditInternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
 
 <ModalDeletePersonalWallet @ref="ModalDeletePersonalWallet" WalletID="@WalletID" />
 

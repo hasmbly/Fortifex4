@@ -17,6 +17,7 @@ namespace Fortifex4.WebUI.Pages.Wallets
         private ModalEditPersonalWallet ModalEditPersonalWallet { get; set; }
         private ModalEditImportBalance ModalEditImportBalance { get; set; }
         private ModalEditExternalTransfer ModalEditExternalTransfer { get; set; }
+        private ModalEditInternalTransfer ModalEditInternalTransfer { get; set; }
         private ModalDeletePersonalWallet ModalDeletePersonalWallet { get; set; }
         private ModalCreateInternalTransfer ModalCreateInternalTransfer { get; set; }
         private ModalCreateExternalTransfer ModalCreateExternalTransfer { get; set; }
