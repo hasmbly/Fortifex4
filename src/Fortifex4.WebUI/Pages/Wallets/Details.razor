@@ -170,13 +170,13 @@
                         {
                             <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditExternalTransfer.BaseModal.OpenWithID(transaction.TransactionID); }"><i class="fas fa-edit"></i></a>
 
-                            <a href="#" title="Delete" class="external-transfer-delete-id" data-toggle="modal" data-target="#modal-delete-external-transfer" data-id="@transaction.TransactionID"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" title="Delete" @onclick:preventDefault @onclick="() => { ModalDeleteExternalTransfer.BaseModal.OpenWithID(transaction.TransactionID); }"><i class="fas fa-trash-alt"></i></a>
                         }
                         else if (transaction.InternalTransferID.HasValue)
                         {
                             <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditInternalTransfer.BaseModal.OpenWithID(transaction.InternalTransferID.Value); }"><i class="fas fa-edit"></i></a>
 
-                            <a href="#" title="Delete" class="internal-transfer-delete-id" data-toggle="modal" data-target="#modal-delete-internal-transfer" data-id="@transaction.InternalTransferID"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" title="Delete" @onclick:preventDefault @onclick="() => { ModalDeleteInternalTransfer.BaseModal.OpenWithID(transaction.InternalTransferID.Value); }"><i class="fas fa-trash-alt"></i></a>
                         }
                         else if (transaction.TradeID.HasValue)
                         {
@@ -230,8 +230,9 @@
 <ModalEditPersonalWallet @ref="ModalEditPersonalWallet" WalletID="@WalletID" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalEditImportBalance @ref="ModalEditImportBalance" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalEditExternalTransfer @ref="ModalEditExternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
-<ModalEditInternalTransfer @ref="ModalEditInternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
 
+<ModalDeleteInternalTransfer @ref="ModalDeleteInternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalDeleteExternalTransfer @ref="ModalDeleteExternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalDeletePersonalWallet @ref="ModalDeletePersonalWallet" WalletID="@WalletID" />
 
 <ModalCreateInternalTransfer @ref="ModalCreateInternalTransfer" WalletID="@WalletID" OnAfterSuccessful="UpdateStateHasChanged" />
