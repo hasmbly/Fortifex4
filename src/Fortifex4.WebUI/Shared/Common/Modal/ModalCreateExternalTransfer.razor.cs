@@ -35,7 +35,8 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         public bool IsPublic { get; set; }
         public decimal Total { get; set; }
         public string LabelAmount { get; set; }
-        
+        public string ToggleCheckboxElementID { get; set; } = "create-external-transfer-direction";
+
         public CreateExternalTransferRequest Input { get; set; } = new CreateExternalTransferRequest();
 
         public GetWalletResponse Wallet { get; set; } = new GetWalletResponse();
@@ -80,19 +81,22 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         protected async override Task OnInitializedAsync()
         {
-            IsLoading = true;
-
             User = Task.FromResult(await AuthenticationStateTask).Result.User;
 
-            await LoadDataAsync();
+            _toggleCheckboxState.OnChange += StateHasChanged;
+        }
 
-            IsLoading = false;
-
-            StateHasChanged();
+        public void Dispose()
+        {
+            _toggleCheckboxState.OnChange -= StateHasChanged;
         }
 
         private async Task LoadDataAsync()
         {
+            IsLoading = true;
+
+            _toggleCheckboxState.SetToggle(ToggleCheckboxElementID, true);
+
             SetDefaultValue();
 
             if (WalletID.HasValue)
@@ -110,6 +114,10 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
                 await LoadSelectOptionWallet();
             }
+
+            IsLoading = false;
+
+            StateHasChanged();
         }
         
         private void SetDefaultValue()

@@ -7,7 +7,7 @@ namespace Fortifex4.WebUI.Common.StateContainer
     {
         public bool IsChecked { get; private set; }
 
-        public string LabelAmount { get; set; }
+        public string LabelAmount { get; set; } = "Incoming Amount";
 
         public event Action OnChange;
 
@@ -33,6 +33,7 @@ namespace Fortifex4.WebUI.Common.StateContainer
         public void SetDefaultIsChecked()
         {
             IsChecked = true;
+            LabelAmount = "Incoming Amount";
 
             NotifyStateChanged();
         }

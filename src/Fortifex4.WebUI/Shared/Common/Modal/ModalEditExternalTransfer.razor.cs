@@ -69,7 +69,6 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         {
             User = Task.FromResult(await AuthenticationStateTask).Result.User;
 
-            // this line must be debugging in the future to avoid memory leaks!
             _toggleCheckboxState.OnChange += StateHasChanged;
         }
 
