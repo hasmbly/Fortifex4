@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Fortifex4.Domain.Exceptions;
+using Fortifex4.Shared.Pockets.Queries.GetPocket;
 using Fortifex4.Shared.Sync.Commands.UpdateSync;
 using Fortifex4.Shared.Sync.Queries.GetSync;
 using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
@@ -38,6 +39,20 @@ namespace Fortifex4.WebAPI.Controllers
             try
             {
                 return Ok(new Success(await Mediator.Send(new GetWalletRequest() { WalletID = walletID })));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getPocket/{pocketID}")]
+        public async Task<IActionResult> GetPocket(int pocketID)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetPocketRequest() { PocketID = pocketID })));
             }
             catch (Exception exception)
             {

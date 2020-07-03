@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using Fortifex4.WebUI.Common;
+using Fortifex4.WebUI.Common.StateContainer;
 using Fortifex4.WebUI.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -43,7 +44,7 @@ namespace Fortifex4.WebUI
             builder.Services.AddHttpClient<IExternalTransfersService, ExternalTransfersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IToolsService, ToolsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
 
-              var host = builder.Build();
+            var host = builder.Build();
 
             await host.RunAsync();
         }

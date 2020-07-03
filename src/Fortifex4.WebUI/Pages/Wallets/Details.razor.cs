@@ -15,16 +15,10 @@ namespace Fortifex4.WebUI.Pages.Wallets
         public GetWalletResponse Wallet { get; set; } = new GetWalletResponse();
 
         private ModalEditPersonalWallet ModalEditPersonalWallet { get; set; }
-        private ModalEditImportBalance ModalEditImportBalance { get; set; }
-        private ModalEditExternalTransfer ModalEditExternalTransfer { get; set; }
-        private ModalEditInternalTransfer ModalEditInternalTransfer { get; set; }
+        private ModalDeletePersonalWallet ModalDeletePersonalWallet { get; set; }
 
         private ModalCreateExternalTransfer ModalCreateExternalTransfer { get; set; }
         private ModalCreateInternalTransfer ModalCreateInternalTransfer { get; set; }
-
-        private ModalDeleteExternalTransfer ModalDeleteExternalTransfer { get; set; }
-        private ModalDeleteInternalTransfer ModalDeleteInternalTransfer { get; set; }
-        private ModalDeletePersonalWallet ModalDeletePersonalWallet { get; set; }
 
         public string SyncMessage { get; set; }
         

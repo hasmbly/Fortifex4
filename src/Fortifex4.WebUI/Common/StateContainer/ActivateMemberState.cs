@@ -1,7 +1,7 @@
 ﻿using System;
 using Fortifex4.Shared.Members.Commands.CreateMember;
 
-namespace Fortifex4.WebUI.Common
+namespace Fortifex4.WebUI.Common.StateContainer
 {
     public class ActivateMemberState
     {

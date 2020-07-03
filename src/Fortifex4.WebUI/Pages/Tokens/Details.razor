@@ -1,0 +1,63 @@
+﻿@page "/tokens/details/{pocketID:int}"
+@attribute [Authorize]
+
+@inject IWalletsService _walletsService
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="wallets">Wallets</a></li>
+        <li class="breadcrumb-item"><a href="wallets/details/@Pocket.WalletID">@Pocket.WalletName</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Pocket.CurrencyName</li>
+    </ol>
+</nav>
+
+<h1>
+    Token Details
+    @if (IsLoading)
+    {
+        <i class="fas fa-circle-notch fa-spin"></i>
+    }
+</h1>
+<div class="container-body shadow-sm mb-5">
+    <div class="row">
+        <div class="col-8">
+            <dl class="row mb-0">
+                <dt class="col-sm-4">Currency</dt>
+                <dd class="col-sm-8">@Pocket.CurrencyName (@Pocket.CurrencySymbol)</dd>
+                <dt class="col-sm-4">Address</dt>
+                <dd class="col-sm-8">@Pocket.Address</dd>
+                <dt class="col-sm-4">Blockchain</dt>
+                <dd class="col-sm-8">@Pocket.WalletBlockchainName</dd>
+                <dt class="col-sm-4">Balance</dt>
+                <dd class="col-sm-8">@Pocket.BalanceDisplayText</dd>
+                <dt class="col-sm-4">Transactions Count</dt>
+                <dd class="col-sm-8">@Pocket.Transactions.Count</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<WalletTransactions Pocket="Pocket" OnAfterSuccessful="UpdateStateHasChanged" />
+
+@*
+    @if (Wallet.MainPocket.CurrencyType= =CurrencyType.Fiat)
+    {
+    @await Component.InvokeAsync(nameof(ModalCreateDeposit), new { walletID=Wallet.WalletID })
+    @await Component.InvokeAsync(nameof(ModalEditDeposit), new { walletID=Wallet.WalletID })
+    @await Component.InvokeAsync(nameof(ModalDeleteDeposit))
+    @await Component.InvokeAsync(nameof(ModalCreateWithdrawal), new { walletID=Wallet.WalletID })
+    @await Component.InvokeAsync(nameof(ModalDeleteWithdrawal))
+    @await Component.InvokeAsync(nameof(ModalEditWithdrawal), new { walletID=Wallet.WalletID })
+    }
+    @await Component.InvokeAsync(nameof(ModalEditStartingBalance))
+    @await Component.InvokeAsync(nameof(ModalEditImportBalance))
+    @await Component.InvokeAsync(nameof(ModalEditSync))
+    @await Component.InvokeAsync(nameof(ModalCreateExternalTransfer), new { walletID=Wallet.WalletID })
+    @await Component.InvokeAsync(nameof(ModalEditExternalTransfer))
+    @await Component.InvokeAsync(nameof(ModalDeleteExternalTransfer))
+    @await Component.InvokeAsync(nameof(ModalCreateInternalTransfer), new { walletID=Wallet.WalletID })
+    @await Component.InvokeAsync(nameof(ModalEditInternalTransfer))
+    @await Component.InvokeAsync(nameof(ModalDeleteInternalTransfer))
+    @await Component.InvokeAsync(nameof(ModalEditTrade))
+    @await Component.InvokeAsync(nameof(ModalDeleteTrade))
+*@

@@ -2,6 +2,7 @@
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Common;
+using Fortifex4.Shared.Pockets.Queries.GetPocket;
 using Fortifex4.Shared.Sync.Commands.UpdateSync;
 using Fortifex4.Shared.Sync.Queries.GetSync;
 using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
@@ -21,6 +22,7 @@ namespace Fortifex4.WebUI.Services
     public interface IWalletsService
     {
         public Task<ApiResponse<GetWalletResponse>> GetWallet(int walletID);
+        public Task<ApiResponse<GetPocketResponse>> GetPocket(int pocketID);
         public Task<ApiResponse<GetPersonalWalletsResponse>> GetPersonalWallets(string memberUsername);
         public Task<ApiResponse<CreatePersonalWalletResponse>> CreatePersonalWallet(CreatePersonalWalletRequest request);
         public Task<ApiResponse<UpdatePersonalWalletResponse>> UpdatePersonalWallet(UpdatePersonalWalletRequest request);
@@ -69,6 +71,15 @@ namespace Fortifex4.WebUI.Services
             var getWalletResponse = await _httpClient.GetJsonAsync<ApiResponse<GetWalletResponse>>($"{Constants.URI.Wallets.GetWallet}/{walletID}");
 
             return getWalletResponse;
+        }
+
+        public async Task<ApiResponse<GetPocketResponse>> GetPocket(int pocketID)
+        {
+            await SetHeader();
+
+            var getPocketResponse = await _httpClient.GetJsonAsync<ApiResponse<GetPocketResponse>>($"{Constants.URI.Wallets.GetPocket}/{pocketID}");
+
+            return getPocketResponse;
         }
 
         public async Task<ApiResponse<SyncPersonalWalletResponse>> SyncPersonalWallet(int walletID)

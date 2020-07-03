@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.JSInterop;
 
-namespace Fortifex4.WebUI.Common
+namespace Fortifex4.WebUI.Common.StateContainer
 {
     public class ToggleCheckboxState
     {
