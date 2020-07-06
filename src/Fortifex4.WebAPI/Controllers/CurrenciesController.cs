@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Fortifex4.Shared.Currencies.Queries.GetAllCoinCurrencies;
 using Fortifex4.Shared.Currencies.Queries.GetAllFiatCurrencies;
+using Fortifex4.Shared.Currencies.Queries.GetCurrency;
+using Fortifex4.Shared.Currencies.Queries.GetDestinationCurrenciesForMember;
 using Fortifex4.Shared.Currencies.Queries.GetPreferrableCoinCurrencies;
 using Fortifex4.WebAPI.Common.ApiEnvelopes;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +14,49 @@ namespace Fortifex4.WebAPI.Controllers
 {
     public class CurrenciesController : ApiController
     {
+        [Authorize]
+        [HttpGet("getCurrency/{currencyID}")]
+        public async Task<IActionResult> GetCurrency(int currencyID)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetCurrencyRequest() { CurrencyID = currencyID })));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        
+        [Authorize]
+        [HttpGet("getDestinationCurrenciesForMember/{memberUsername}")]
+        public async Task<IActionResult> GetDestinationCurrenciesForMember(string memberUsername)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetDestinationCurrenciesForMemberRequest() { MemberUsername = memberUsername })));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getAllCoinCurrencies")]
+        public async Task<IActionResult> GetAllCoinCurrencies()
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetAllCoinCurrenciesRequest())));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
         [Authorize]
         [HttpGet("getAllFiatCurrencies")]
         public async Task<IActionResult> GetAllFiatCurrencies()

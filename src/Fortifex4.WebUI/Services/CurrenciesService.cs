@@ -2,7 +2,10 @@
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Common;
+using Fortifex4.Shared.Currencies.Queries.GetAllCoinCurrencies;
 using Fortifex4.Shared.Currencies.Queries.GetAllFiatCurrencies;
+using Fortifex4.Shared.Currencies.Queries.GetCurrency;
+using Fortifex4.Shared.Currencies.Queries.GetDestinationCurrenciesForMember;
 using Fortifex4.Shared.Currencies.Queries.GetPreferrableCoinCurrencies;
 using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;
@@ -12,6 +15,11 @@ namespace Fortifex4.WebUI.Services
 {
     public interface ICurrenciesService
     {
+        public Task<ApiResponse<GetCurrencyResponse>> GetCurrency(int currencyID);
+        public Task<ApiResponse<GetDestinationCurrenciesForMemberResponse>> GetDestinationCurrenciesForMember(string memberUsername);
+        public Task<ApiResponse<GetAllCoinCurrenciesResponse>> GetAllCoinCurrencies();
+
+
         public Task<ApiResponse<GetAllFiatCurrenciesResponse>> GetAllFiatCurrencies();
         public Task<ApiResponse<GetPreferableCoinCurrenciesResponse>> GetPreferableCoinCurrencies();
     }
@@ -51,6 +59,27 @@ namespace Fortifex4.WebUI.Services
             var getPreferableCoinCurrenciesResponse = await _httpClient.GetJsonAsync<ApiResponse<GetPreferableCoinCurrenciesResponse>>(Constants.URI.Currencies.GetPreferableCoinCurrencies);
 
             return getPreferableCoinCurrenciesResponse;
+        }
+
+        public async Task<ApiResponse<GetCurrencyResponse>> GetCurrency(int currencyID)
+        {
+            await SetHeader();
+
+            return await _httpClient.GetJsonAsync<ApiResponse<GetCurrencyResponse>>($"{Constants.URI.Currencies.GetCurrency}/{currencyID}");
+        }
+
+        public async Task<ApiResponse<GetDestinationCurrenciesForMemberResponse>> GetDestinationCurrenciesForMember(string memberUsername)
+        {
+            await SetHeader();
+
+            return await _httpClient.GetJsonAsync<ApiResponse<GetDestinationCurrenciesForMemberResponse>>($"{Constants.URI.Currencies.GetDestinationCurrenciesForMember}/{memberUsername}");
+        }
+
+        public async Task<ApiResponse<GetAllCoinCurrenciesResponse>> GetAllCoinCurrencies()
+        {
+            await SetHeader();
+
+            return await _httpClient.GetJsonAsync<ApiResponse<GetAllCoinCurrenciesResponse>>(Constants.URI.Currencies.GetAllCoinCurrencies);
         }
     }
 }

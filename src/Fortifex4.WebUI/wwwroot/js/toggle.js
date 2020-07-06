@@ -17,8 +17,9 @@
         $(elementID).change(function ()
         {
             console.log("checked from JS: " + this.checked);
+            console.log("elementID from JS: " + elementID);
 
-            dotnetObject.invokeMethodAsync('SetIsChecked', this.checked);
+            dotnetObject.invokeMethodAsync('SetIsChecked', elementID, this.checked);
         });
     },
 
@@ -34,5 +35,10 @@
         {
             $(elementID).bootstrapToggle('off');
         }
+    },
+
+    setToggleProp: function (elementID, propName, propState)
+    {
+        $(elementID).prop(propName, propState).change();
     }
 };

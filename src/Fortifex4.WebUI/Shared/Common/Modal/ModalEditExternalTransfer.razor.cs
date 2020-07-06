@@ -6,6 +6,7 @@ using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.ExternalTransfers.Commands.UpdateExternalTransfer;
 using Fortifex4.Shared.ExternalTransfers.Queries.GetExternalTransfer;
 using Fortifex4.Shared.Wallets.Common;
+using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using static Fortifex4.WebUI.Shared.Common.ToggleCheckbox;
@@ -39,7 +40,11 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         public GetExternalTransferResponse Wallet { get; set; } = new GetExternalTransferResponse();
 
-        public ToggleCheckboxAttributes Attributes { get; set; } = new ToggleCheckboxAttributes("edit-external-transfer-direction");
+        public ToggleCheckboxAttributes Attributes { get; set; } = new ToggleCheckboxAttributes
+            (new ToggleCheckboxAttributesValue
+            {
+                ElementID = "edit-external-transfer-direction"
+            });
 
         public decimal Amount
         {

@@ -1,5 +1,93 @@
-﻿<h3>Index</h3>
+﻿@page "/exchanges"
+@attribute [Authorize]
 
-@code {
+@inject IOwnersService _ownersService
+@inject NavigationManager _navigationManager
 
-}
+<PageTitle Title="Exchanges" />
+
+<h1>
+    Exchanges
+    @if (IsLoading)
+    {
+        <i class="fas fa-circle-notch fa-spin"></i>
+    }
+</h1>
+<div class="text-right mb-3">
+    <button class="btn btn-primary" @onclick="() => ModalCreateExchange.BaseModal.Open()">New Exchange</button>
+</div>
+<div class="container-body shadow-sm">
+    <div class="accordion" id="exchange-accordion">
+        <table class="table table-custom">
+            <thead>
+                <tr>
+                    <th class="td-index">No</th>
+                    <th class="td-exchange-name">Exchange Name</th>
+                    <th class="td-url">URL</th>
+                    <th class="td-qty">Qty</th>
+                    <th class="td-balance">Balance (@GetExchangeOwnersResponse.MemberPreferredFiatCurrencySymbol)</th>
+                    <th class="td-balance">Balance (@GetExchangeOwnersResponse.MemberPreferredCoinCurrencySymbol)</th>
+                    <th class="td-action">Action</th>
+                </tr>
+            </thead>
+            @if (GetExchangeOwnersResponse.ExchangeOwners.Count > 0)
+            {
+                <tbody>
+                    @{
+                        int index = 1;
+
+                        @foreach (var exchangeOwner in GetExchangeOwnersResponse.ExchangeOwners)
+                        {
+                            <tr class="tr-exchange" data-toggle="collapse" data-target="#exchangeWallet_@index" aria-controls="exchangeWallet_@index">
+                                <td class="td-index">@index</td>
+                                <td class="td-exchange-name">@exchangeOwner.ProviderName</td>
+                                <td class="td-url">@exchangeOwner.ProviderSiteURL</td>
+                                <td class="td-qty"></td>
+                                <td class="td-balance"></td>
+                                <td class="td-balance"></td>
+                                <td class="td-action">
+                                    <a href="/exchanges/details/@exchangeOwner.OwnerID" class="btn btn-primary btn-sm">Details</a>
+                                </td>
+                            </tr>
+                            @if (LoadPockets)
+                            {
+                                <tr>
+                                    <td colspan="7" class="p-0">
+                                        <div class="collapse" id="exchangeWallet_@index" data-parent="#exchange-accordion">
+                                            <table class="table table-custom">
+                                                @foreach (var wallet in exchangeOwner.ExchangeWallets)
+                                                {
+                                                    <tr class="tr-exchange-wallet">
+                                                        <td class="td-index">&nbsp;</td>
+                                                        <td class="td-exchange-name">@wallet.MainPocketCurrencyName (@wallet.MainPocketCurrencySymbol)</td>
+                                                        <td class="td-url"></td>
+                                                        <td class="td-qty">@wallet.MainPocketBalanceDisplayText</td>
+                                                        <td class="td-balance">@wallet.MainPocketBalanceInPreferredFiatCurrencyDisplayText</td>
+                                                        <td class="td-balance">@wallet.MainPocketBalanceInPreferredCoinCurrencyDisplayText</td>
+                                                        <td class="td-action"></td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                            index++;
+                        }
+                    }
+                </tbody>
+            }
+            else if (IsLoading)
+            {
+                <caption><div class="text-center"><i class="fas fa-circle-notch fa-spin"></i></div></caption>
+            }
+            else
+            {
+                <caption><div class="alert alert-info text-center">No data available in table</div></caption>
+            }
+        </table>
+    </div>
+</div>
+
+<ModalCreateExchange @ref="ModalCreateExchange" OnAfterSuccessful="UpdateStateHasChanged" />

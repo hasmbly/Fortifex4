@@ -76,12 +76,23 @@ namespace Fortifex4.Application.Owners.Queries.GetOwner
                     MainPocketCurrencyName = mainPocket.Currency.Name,
                     MainPocketCurrencyType = mainPocket.CurrencyType,
                     MainPocketCurrencyUnitPriceInUSD = mainPocket.Currency.UnitPriceInUSD,
-                    MainPocketBalance = mainPocket.Transactions.Sum(x => x.Amount),
-                    Container = result
+                    MainPocketBalance = mainPocket.Transactions.Sum(x => x.Amount)
                 };
+
+                if (result.MemberPreferredFiatCurrencyUnitPriceInUSD > 0)
+                    walletDTO.MainPocketBalanceInPreferredFiatCurrency = walletDTO.MainPocketBalance * (walletDTO.MainPocketCurrencyUnitPriceInUSD / result.MemberPreferredFiatCurrencyUnitPriceInUSD);
+                else
+                    walletDTO.MainPocketBalanceInPreferredFiatCurrency = 0m;
+
+                if (result.MemberPreferredCoinCurrencyUnitPriceInUSD > 0)
+                    walletDTO.MainPocketBalanceInPreferredCoinCurrency = walletDTO.MainPocketBalance * (walletDTO.MainPocketCurrencyUnitPriceInUSD / result.MemberPreferredCoinCurrencyUnitPriceInUSD);
+                else
+                    walletDTO.MainPocketBalanceInPreferredCoinCurrency = 0m;
 
                 result.Wallets.Add(walletDTO);
             }
+
+            result.IsSuccessful = true;
 
             return result;
         }

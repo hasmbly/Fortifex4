@@ -61,6 +61,9 @@
 
             public static class Currencies
             {
+                public static readonly string GetCurrency = $"{BaseAPI}/currencies/getCurrency";
+                public static readonly string GetDestinationCurrenciesForMember = $"{BaseAPI}/currencies/getDestinationCurrenciesForMember";
+                public static readonly string GetAllCoinCurrencies = $"{BaseAPI}/currencies/getAllCoinCurrencies";
                 public static readonly string GetAllFiatCurrencies = $"{BaseAPI}/currencies/getAllFiatCurrencies";
                 public static readonly string GetPreferableCoinCurrencies = $"{BaseAPI}/currencies/getPreferableCoinCurrencies";
             }
@@ -95,6 +98,26 @@
                 public static readonly string CreateExternalTransfer = $"{BaseAPI}/externalTransfers/createExternalTransfer";
                 public static readonly string UpdateExternalTransfer = $"{BaseAPI}/externalTransfers/updateExternalTransfer";
                 public static readonly string DeleteExternalTransfer = $"{BaseAPI}/externalTransfers/deleteExternalTransfer";
+            }
+
+            public static class Owners
+            {
+                public static readonly string GetOwner = $"{BaseAPI}/owners/getOwner";
+                public static readonly string GetOwners = $"{BaseAPI}/owners/getOwners";
+                public static readonly string GetProvider = $"{BaseAPI}/owners/getProvider";
+                public static readonly string GetExchangeOwners = $"{BaseAPI}/owners/getExchangeOwners";
+                public static readonly string GetAvailableExchangeProviders = $"{BaseAPI}/owners/getAvailableExchangeProviders";
+                public static readonly string CreateExchangeOwner = $"{BaseAPI}/owners/createExchangeOwner";
+                public static readonly string UpdateExchangeOwner = $"{BaseAPI}/owners/updateExchangeOwner";
+                public static readonly string DeleteOwner = $"{BaseAPI}/owners/deleteOwner";
+            }
+
+            public static class Trades
+            {
+                public static readonly string GetTrade = $"{BaseAPI}/trades/getTrade";
+                public static readonly string CreateTrade = $"{BaseAPI}/trades/createTrade";
+                public static readonly string UpdateTrade = $"{BaseAPI}/trades/updateTrade";
+                public static readonly string DeleteTrade = $"{BaseAPI}/trades/deleteTrade";
             }
         }
 

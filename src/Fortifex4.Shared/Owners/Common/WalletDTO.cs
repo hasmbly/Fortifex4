@@ -2,7 +2,7 @@
 
 namespace Fortifex4.Shared.Owners.Common
 {
-    public class WalletDTO
+    public class WalletDTO : WalletContainer
     {
         public int WalletID { get; set; }
         public string Name { get; set; }
@@ -15,8 +15,6 @@ namespace Fortifex4.Shared.Owners.Common
         public decimal MainPocketCurrencyUnitPriceInUSD { get; set; }
         public decimal MainPocketBalance { get; set; }
 
-        public WalletContainer Container { get; set; }
-
         public string MainPocketBalanceDisplayText
         {
             get
@@ -25,16 +23,7 @@ namespace Fortifex4.Shared.Owners.Common
             }
         }
 
-        public decimal MainPocketBalanceInPreferredFiatCurrency
-        {
-            get
-            {
-                if (this.Container.MemberPreferredFiatCurrencyUnitPriceInUSD > 0)
-                    return this.MainPocketBalance * (this.MainPocketCurrencyUnitPriceInUSD / this.Container.MemberPreferredFiatCurrencyUnitPriceInUSD);
-                else
-                    return 0m;
-            }
-        }
+        public decimal MainPocketBalanceInPreferredFiatCurrency { get; set; }
 
         public string MainPocketBalanceInPreferredFiatCurrencyDisplayText
         {
@@ -44,16 +33,7 @@ namespace Fortifex4.Shared.Owners.Common
             }
         }
 
-        public decimal MainPocketBalanceInPreferredCoinCurrency
-        {
-            get
-            {
-                if (this.Container.MemberPreferredCoinCurrencyUnitPriceInUSD > 0)
-                    return this.MainPocketBalance * (this.MainPocketCurrencyUnitPriceInUSD / this.Container.MemberPreferredCoinCurrencyUnitPriceInUSD);
-                else
-                    return 0m;
-            }
-        }
+        public decimal MainPocketBalanceInPreferredCoinCurrency { get; set; }
 
         public string MainPocketBalanceInPreferredCoinCurrencyDisplayText
         {

@@ -13,8 +13,12 @@ namespace Fortifex4.WebUI.Common.StateContainer
 
         public event Action<string, bool> SetToggleChange;
 
-        [JSInvokable]
-        public void SetIsChecked(bool isChecked)
+        public event Action<string> ToggleHasChanged;
+
+        public event Action<string, string, bool> SetTogglePropChange;
+
+         [JSInvokable]
+        public void SetIsChecked(string elementID, bool isChecked)
         {
             if (isChecked)
                 LabelAmount = "Incoming Amount";
@@ -23,11 +27,9 @@ namespace Fortifex4.WebUI.Common.StateContainer
 
             IsChecked = isChecked;
 
+            ToggleHasChanged.Invoke(elementID);
+
             NotifyStateChanged();
-
-            Console.WriteLine($"SetIsChecked from Blazor: {IsChecked}");
-
-            Console.WriteLine($"LabelAmount from Blazor: {IsChecked}");
         }
 
         public void SetDefaultIsChecked()
@@ -41,6 +43,11 @@ namespace Fortifex4.WebUI.Common.StateContainer
         public void SetToggle(string elementID, bool isChecked)
         {
             SetToggleChange.Invoke(elementID, isChecked);
+        }
+
+        public void SetToggleProp(string elementID, string propName, bool propState) 
+        {
+            SetTogglePropChange.Invoke(elementID, propName, propState);
         }
 
         private void NotifyStateChanged() => OnChange?.Invoke();

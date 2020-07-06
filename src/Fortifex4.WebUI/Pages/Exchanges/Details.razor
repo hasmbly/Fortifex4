@@ -1,5 +1,94 @@
-﻿<h3>Details</h3>
+﻿@page "/exchanges/details/{ownerID:int}"
+@attribute [Authorize]
 
-@code {
+@inject IOwnersService _ownersService
+@inject NavigationManager _navigationManager
+@inject IJSRuntime JsRuntime
 
-}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="exchanges">Exchanges</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Owner.ProviderName</li>
+    </ol>
+</nav>
+
+<h1>
+    Exchange Details
+    @if (IsLoading)
+    {
+        <i class="fas fa-circle-notch fa-spin"></i>
+    }
+</h1>
+<div class="container-body shadow-sm mb-5">
+    <div class="row">
+        <div class="col-8">
+            <dl class="row mb-0">
+                <dt class="col-sm-4">Name</dt>
+                <dd class="col-sm-8">@Owner.ProviderName</dd>
+                <dt class="col-sm-4">URL</dt>
+                <dd class="col-sm-8">@Owner.ProviderSiteURL</dd>
+            </dl>
+        </div>
+        <div class="col-4 text-right">
+            <div class="mb-1">
+                <button class="btn btn-primary" @onclick="() => ModalEditExchange.BaseModal.Open()">Edit</button>
+
+                <button class="btn btn-danger" @onclick="() => ModalDeleteExchange.BaseModal.Open()">Delete</button>
+            </div>
+            <div>
+                <button class="btn btn-primary">Add Deposit</button>
+                <button class="btn btn-primary" @onclick="() => ModalCreateTrade.BaseModal.Open()">Add Trade</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Wallets</h2>
+<div class="text-right mb-3">
+    <button class="btn btn-primary">Add Wallet</button>
+</div>
+<div class="container-body shadow-sm">
+    <table class="table table-custom">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Currency</th>
+                <th class="td-qty">Balance</th>
+                <th class="td-balance">Balance (@Owner.MemberPreferredFiatCurrencySymbol)</th>
+                <th class="td-balance">Balance (@Owner.MemberPreferredCoinCurrencySymbol)</th>
+                <th class="text-center">Details</th>
+            </tr>
+        </thead>
+        @if (Owner.Wallets.Count > 0)
+        {
+            <tbody>
+                @{int index = 1;}
+                @foreach (var wallet in Owner.Wallets)
+                {
+                    <tr>
+                        <td>@index</td>
+                        <td class="td-exchange-name">@wallet.MainPocketCurrencyName (@wallet.MainPocketCurrencySymbol)</td>
+                        <td class="td-balance">@wallet.MainPocketBalanceDisplayText</td>
+                        <td class="td-balance">@wallet.MainPocketBalanceInPreferredFiatCurrencyDisplayText</td>
+                        <td class="td-balance">@wallet.MainPocketBalanceInPreferredCoinCurrencyDisplayText</td>
+                        <td class="text-center">
+                            <a href="/wallets/details/@wallet.WalletID" class="btn btn-primary btn-sm">Details</a>
+                        </td>
+                    </tr>
+
+                    <tr class="collapse" id="collapseExample_@index"><td colspan="8">test collapse</td></tr>
+                    index++;
+                }
+            </tbody>
+        }
+        else
+        {
+            <caption><div class="alert alert-info text-center">No data available in table</div></caption>
+        }
+    </table>
+</div>
+
+<ModalEditExchange @ref="ModalEditExchange" OwnerID="OwnerID" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalDeleteExchange @ref="ModalDeleteExchange" OwnerID="OwnerID" />
+
+<ModalCreateTrade @ref="ModalCreateTrade" OwnerID="OwnerID" OnAfterSuccessful="UpdateStateHasChanged" />

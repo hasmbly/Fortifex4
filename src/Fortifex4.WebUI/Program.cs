@@ -32,6 +32,7 @@ namespace Fortifex4.WebUI
             builder.Services.AddScoped<ToggleCheckboxState>();
 
             builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<IToolsService, ToolsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IMembersService, MembersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IRegionsService, RegionsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IGendersService, GendersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
@@ -42,7 +43,8 @@ namespace Fortifex4.WebUI
             builder.Services.AddHttpClient<IBlockchainsService, BlockchainsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IInternalTransfersService, InternalTransfersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IExternalTransfersService, ExternalTransfersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
-            builder.Services.AddHttpClient<IToolsService, ToolsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<IOwnersService, OwnersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<ITradesService, TradesService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
 
             var host = builder.Build();
 

@@ -5,6 +5,9 @@
     <UserSecretsId>1f8f51f2-0e05-4c22-b6eb-dd73a5f9ed0f</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Controllers\OwnersController.cs~RF98be12d.TMP" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0" />

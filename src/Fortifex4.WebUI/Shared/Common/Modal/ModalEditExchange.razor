@@ -1,0 +1,34 @@
+﻿@namespace Fortifex4.WebUI.Shared.Common.Modal
+@attribute [Authorize]
+
+@inject IOwnersService _ownersService
+@inject IWalletsService _walletsService
+
+@inject NavigationManager _navigationManager
+
+<BaseModal @ref="BaseModal"
+           ModalTitle="@Title"
+           IsLoading="IsLoading"
+           OnSubmit="OnSubmitEditExchangetAsync">
+    <ChildContent>
+        <EditForm Model="Input" OnValidSubmit="OnSubmitEditExchangetAsync">
+            <DataAnnotationsValidator />
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>Select Exchange</label>
+                    <InputSelect @bind-Value="SelectedExchangeProvider" class="form-control chosen-select">
+                        @foreach (var exchange in Exchanges)
+                        {
+                            <option value="@exchange.ProviderID.ToString()">@exchange.Name</option>
+                        }
+                    </InputSelect>
+                </div>
+                <div class="form-group col-6">
+                    <label>Exchange Site URL</label>
+                    <InputText @bind-Value="SiteUrl" class="form-control" disabled />
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </EditForm>
+    </ChildContent>
+</BaseModal>

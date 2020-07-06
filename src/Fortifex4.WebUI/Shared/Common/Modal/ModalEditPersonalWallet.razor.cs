@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Blockchains.Queries.GetAllBlockchains;
-using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
 using Fortifex4.Shared.Wallets.Commands.UpdatePersonalWallet;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Fortifex4.WebUI.Shared.Common.Modal
 {

@@ -36,8 +36,20 @@ namespace Fortifex4.WebUI.Services
         public async Task<ApiResponse<GetAllTimeFramesResponse>> GetAllTimeFrames()
         {
             await SetHeader();
-            
-            return await _httpClient.GetJsonAsync<ApiResponse<GetAllTimeFramesResponse>>(Constants.URI.TimeFrames.GetAllTimeFrames);
+
+            ApiResponse<GetAllTimeFramesResponse> result = null;
+
+            try
+            {
+                result = await _httpClient.GetJsonAsync<ApiResponse<GetAllTimeFramesResponse>>(Constants.URI.TimeFrames.GetAllTimeFrames);
+            }
+            catch (HttpRequestException e)
+            {
+                // if unauthorized 401 then redirect to login page
+                System.Console.WriteLine($"HttpRequestException: {e.Message}");
+            }
+
+            return result;
         }
     }
 }

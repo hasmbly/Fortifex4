@@ -7,6 +7,7 @@ using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Wallets.Commands.CreateExternalTransfer;
 using Fortifex4.Shared.Wallets.Common;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
+using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using static Fortifex4.WebUI.Shared.Common.ToggleCheckbox;
@@ -77,7 +78,11 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         public IList<WalletSameCurrencyDTO> Wallets { get; set; } = new List<WalletSameCurrencyDTO>();
 
-        public ToggleCheckboxAttributes Attributes { get; set; } = new ToggleCheckboxAttributes("create-external-transfer-direction");
+        public ToggleCheckboxAttributes Attributes { get; set; } = new ToggleCheckboxAttributes
+            (new ToggleCheckboxAttributesValue 
+            { 
+                ElementID = "create-external-transfer-direction"
+            });
 
         protected async override Task OnInitializedAsync()
         {
@@ -140,18 +145,14 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         #region EventHandler
         private void OnChangeDirection(bool state)
         {
-            Console.WriteLine($"OnChangeDirection - state: {state}");
-
             if (state)
             {
-                LabelAmount = "Incoming Amount";
                 Input.TransferDirection = TransferDirection.IN;
 
                 StateHasChanged();
             }
             else
             {
-                LabelAmount = "Outgoing Amount";
                 Input.TransferDirection = TransferDirection.OUT;
 
                 StateHasChanged();
