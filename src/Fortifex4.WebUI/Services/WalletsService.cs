@@ -5,6 +5,7 @@ using Fortifex4.Shared.Common;
 using Fortifex4.Shared.Pockets.Queries.GetPocket;
 using Fortifex4.Shared.Sync.Commands.UpdateSync;
 using Fortifex4.Shared.Sync.Queries.GetSync;
+using Fortifex4.Shared.Wallets.Commands.CreateExchangeWallet;
 using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
 using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
 using Fortifex4.Shared.Wallets.Commands.SyncPersonalWallet;
@@ -24,6 +25,8 @@ namespace Fortifex4.WebUI.Services
         public Task<ApiResponse<GetWalletResponse>> GetWallet(int walletID);
         public Task<ApiResponse<GetPocketResponse>> GetPocket(int pocketID);
         public Task<ApiResponse<GetPersonalWalletsResponse>> GetPersonalWallets(string memberUsername);
+
+        public Task<ApiResponse<CreateExchangeWalletResponse>> CreateExchangeWallet(CreateExchangeWalletRequest request);
         public Task<ApiResponse<CreatePersonalWalletResponse>> CreatePersonalWallet(CreatePersonalWalletRequest request);
         public Task<ApiResponse<UpdatePersonalWalletResponse>> UpdatePersonalWallet(UpdatePersonalWalletRequest request);
         public Task<ApiResponse<DeleteWalletResponse>> DeleteWallet(DeleteWalletRequest request);
@@ -89,6 +92,15 @@ namespace Fortifex4.WebUI.Services
             var syncPersonalWalletResponse = await _httpClient.GetJsonAsync<ApiResponse<SyncPersonalWalletResponse>>($"{Constants.URI.Wallets.SyncPersonalWallet}/{walletID}");
 
             return syncPersonalWalletResponse;
+        }
+
+        public async Task<ApiResponse<CreateExchangeWalletResponse>> CreateExchangeWallet(CreateExchangeWalletRequest request)
+        {
+            await SetHeader();
+
+            var createExchangeWalletResponse = await _httpClient.PostJsonAsync<ApiResponse<CreateExchangeWalletResponse>>(Constants.URI.Wallets.CreateExchangeWallet, request);
+
+            return createExchangeWalletResponse;
         }
 
         public async Task<ApiResponse<CreatePersonalWalletResponse>> CreatePersonalWallet(CreatePersonalWalletRequest request)

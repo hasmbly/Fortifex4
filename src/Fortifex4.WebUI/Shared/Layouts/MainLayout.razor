@@ -1,5 +1,7 @@
 ﻿@namespace Fortifex4.WebUI.Shared.Layouts
 
+@inject IJSRuntime JsRuntime
+
 @inherits LayoutComponentBase
 
 <div class="outer">
@@ -16,3 +18,17 @@
         </main>
     </div>
 </div>
+
+@code
+{
+    // FINALLY.... after few days, this is the unpredictable SOLUTION for Bug: JsRuntime Won't Initialize ToggleCheckbox (@_@)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            System.Console.WriteLine($"JS-Details-MainLayout: firstRender");
+
+            await JsRuntime.InvokeVoidAsync("Toggle.init");
+        }
+    }
+}

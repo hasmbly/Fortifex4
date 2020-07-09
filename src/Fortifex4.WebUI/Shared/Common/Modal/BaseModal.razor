@@ -2,14 +2,15 @@
 @attribute [Authorize]
 
 <div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog @ModalSize" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">@ModalTitle 
-                @if (IsLoading)
-                {
-                    <i class="fas fa-circle-notch fa-spin"></i>
-                }
+                <h5 class="modal-title">
+                    @ModalTitle
+                    @if (IsLoading)
+                    {
+                        <i class="fas fa-circle-notch fa-spin"></i>
+                    }
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" @onclick="() => Close()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

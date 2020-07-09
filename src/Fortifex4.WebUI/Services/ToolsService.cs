@@ -5,7 +5,6 @@ using Fortifex4.Shared.Currencies.Queries.GetPriceConversion;
 using Fortifex4.Shared.Currencies.Queries.GetUnitPrice;
 using Fortifex4.Shared.Currencies.Queries.GetUnitPriceInUSD;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Fortifex4.WebUI.Services
 {
@@ -20,21 +19,21 @@ namespace Fortifex4.WebUI.Services
     {
         private readonly HttpClient _httpClient;
 
-        public ToolsService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider)
+        public ToolsService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
         public async Task<ApiResponse<GetPriceConversionResponse>> GetPriceConversion(string fromCurrencySymbol, string toCurrencySymbol, decimal amount)
         {
-            string queryParams = $"?fromCurrencySymbol={fromCurrencySymbol}?toCurrencySymbol={toCurrencySymbol}?amount={amount}";
+            string queryParams = $"?fromCurrencySymbol={fromCurrencySymbol}&toCurrencySymbol={toCurrencySymbol}&amount={amount}";
 
             return await _httpClient.GetJsonAsync<ApiResponse<GetPriceConversionResponse>>(Constants.URI.Tools.GetPriceConversion + queryParams);
         }
 
         public async Task<ApiResponse<GetUnitPriceResponse>> GetUnitPrice(string fromCurrencySymbol, string toCurrencySymbol)
         {
-            string queryParams = $"?fromCurrencySymbol={fromCurrencySymbol}?toCurrencySymbol={toCurrencySymbol}";
+            string queryParams = $"?fromCurrencySymbol={fromCurrencySymbol}&toCurrencySymbol={toCurrencySymbol}";
 
             return await _httpClient.GetJsonAsync<ApiResponse<GetUnitPriceResponse>>(Constants.URI.Tools.GetUnitPrice + queryParams);
         }

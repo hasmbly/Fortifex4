@@ -3,7 +3,6 @@ using Fortifex4.Domain.Exceptions;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Fortifex4.WebUI.Shared.Common.Modal;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace Fortifex4.WebUI.Pages.Wallets
 {
@@ -26,14 +25,6 @@ namespace Fortifex4.WebUI.Pages.Wallets
 
         protected async override Task OnInitializedAsync() => await InitAsync();
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                await JsRuntime.InvokeVoidAsync("Toggle.init");
-            }
-        }
-
         public async void SyncWallet()
         {
             IsLoading = true;
@@ -48,8 +39,6 @@ namespace Fortifex4.WebUI.Pages.Wallets
                 {
                     SyncMessage = "There's a problem in Synchronization process";
 
-                    System.Console.WriteLine($"IsError: {result.Status.Message}");
-
                     StateHasChanged();
                 }
                 else
@@ -59,24 +48,23 @@ namespace Fortifex4.WebUI.Pages.Wallets
                         await InitAsync();
                         SyncMessage = "Synchronization process completed successfully";
 
-                        StateHasChanged();
-
                         IsLoading = false;
+
+                        StateHasChanged();
                     }
                     else
                     {
                         SyncMessage = "There's a problem in Synchronization process";
 
-                        System.Console.WriteLine($"ErrorMessage: {result.Result.ErrorMessage}");
-
                         StateHasChanged();
                     }
                 }
-         
             }
             catch (InvalidWalletAddressException iwaex)
             {
                 SyncMessage = iwaex.Message;
+
+                StateHasChanged();
             }
         }
 

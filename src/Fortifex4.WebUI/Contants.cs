@@ -62,6 +62,7 @@
             public static class Currencies
             {
                 public static readonly string GetCurrency = $"{BaseAPI}/currencies/getCurrency";
+                public static readonly string GetAvailableCurrencies = $"{BaseAPI}/currencies/getAvailableCurrencies";
                 public static readonly string GetDestinationCurrenciesForMember = $"{BaseAPI}/currencies/getDestinationCurrenciesForMember";
                 public static readonly string GetAllCoinCurrencies = $"{BaseAPI}/currencies/getAllCoinCurrencies";
                 public static readonly string GetAllFiatCurrencies = $"{BaseAPI}/currencies/getAllFiatCurrencies";
@@ -73,6 +74,7 @@
                 public static readonly string GetPersonalWallets = $"{BaseAPI}/wallets/getPersonalWallets";
                 public static readonly string GetWallet = $"{BaseAPI}/wallets/getWallet";
                 public static readonly string GetPocket = $"{BaseAPI}/wallets/getPocket";
+                public static readonly string CreateExchangeWallet = $"{BaseAPI}/wallets/createExchangeWallet";
                 public static readonly string CreatePersonalWallet = $"{BaseAPI}/wallets/createPersonalWallet";
                 public static readonly string UpdatePersonalWallet = $"{BaseAPI}/wallets/updatePersonalWallet";
                 public static readonly string DeleteWallet = $"{BaseAPI}/wallets/deleteWallet";

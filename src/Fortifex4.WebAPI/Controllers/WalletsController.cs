@@ -5,6 +5,7 @@ using Fortifex4.Domain.Exceptions;
 using Fortifex4.Shared.Pockets.Queries.GetPocket;
 using Fortifex4.Shared.Sync.Commands.UpdateSync;
 using Fortifex4.Shared.Sync.Queries.GetSync;
+using Fortifex4.Shared.Wallets.Commands.CreateExchangeWallet;
 using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
 using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
 using Fortifex4.Shared.Wallets.Commands.SyncPersonalWallet;
@@ -63,6 +64,20 @@ namespace Fortifex4.WebAPI.Controllers
         [AllowAnonymous]
         [HttpPost("createPersonalWallet")]
         public async Task<ActionResult> CreatePersonalWallet(CreatePersonalWalletRequest request)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(request)));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("createExchangeWallet")]
+        public async Task<ActionResult> CreateExchangeWallet(CreateExchangeWalletRequest request)
         {
             try
             {

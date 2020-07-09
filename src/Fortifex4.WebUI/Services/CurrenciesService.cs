@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Fortifex4.Shared.Common;
 using Fortifex4.Shared.Currencies.Queries.GetAllCoinCurrencies;
 using Fortifex4.Shared.Currencies.Queries.GetAllFiatCurrencies;
+using Fortifex4.Shared.Currencies.Queries.GetAvailableCurrencies;
 using Fortifex4.Shared.Currencies.Queries.GetCurrency;
 using Fortifex4.Shared.Currencies.Queries.GetDestinationCurrenciesForMember;
 using Fortifex4.Shared.Currencies.Queries.GetPreferrableCoinCurrencies;
@@ -16,6 +17,7 @@ namespace Fortifex4.WebUI.Services
     public interface ICurrenciesService
     {
         public Task<ApiResponse<GetCurrencyResponse>> GetCurrency(int currencyID);
+        public Task<ApiResponse<GetAvailableCurrenciesResponse>> GetAvailableCurrencies(int ownerID);
         public Task<ApiResponse<GetDestinationCurrenciesForMemberResponse>> GetDestinationCurrenciesForMember(string memberUsername);
         public Task<ApiResponse<GetAllCoinCurrenciesResponse>> GetAllCoinCurrencies();
 
@@ -66,6 +68,13 @@ namespace Fortifex4.WebUI.Services
             await SetHeader();
 
             return await _httpClient.GetJsonAsync<ApiResponse<GetCurrencyResponse>>($"{Constants.URI.Currencies.GetCurrency}/{currencyID}");
+        }
+
+        public async Task<ApiResponse<GetAvailableCurrenciesResponse>> GetAvailableCurrencies(int ownerID)
+        {
+            await SetHeader();
+
+            return await _httpClient.GetJsonAsync<ApiResponse<GetAvailableCurrenciesResponse>>($"{Constants.URI.Currencies.GetAvailableCurrencies}/{ownerID}");
         }
 
         public async Task<ApiResponse<GetDestinationCurrenciesForMemberResponse>> GetDestinationCurrenciesForMember(string memberUsername)

@@ -1,5 +1,45 @@
-﻿<h3>ModalCreateExchangeWallet</h3>
+﻿@namespace Fortifex4.WebUI.Shared.Common.Modal
+@attribute [Authorize]
 
-@code {
+@inject ICurrenciesService _currenciesService
+@inject IOwnersService _ownersService
+@inject IWalletsService _walletsService
 
-}
+@inject NavigationManager _navigationManager
+
+<BaseModal @ref="BaseModal"
+           ModalTitle="@Title"
+           ModalSize=""
+           IsLoading="IsLoading"
+           OnSubmit="OnSubmitPersonalWalletAsync">
+    <ChildContent>
+        <EditForm Model="Input" OnValidSubmit="OnSubmitPersonalWalletAsync">
+            <DataAnnotationsValidator />
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>Exchange</label>
+                    <InputText @bind-Value="OwnerProviderName" class="form-control" disabled/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>Currency</label>
+                    <InputSelect @bind-Value="SelectedCurrency" class="form-control chosen-select">
+                        @foreach (var currency in Currencies)
+                        {
+                            <option value="@currency.CurrencyID.ToString()">@currency.NameWithSymbol</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>Starting Balance</label>
+                    <InputNumber @bind-Value="Input.StartingBalance" class="form-control" placeholder="Enter Starting Balance" />
+                    <ValidationMessage For="@(() => Input.StartingBalance)" />
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </EditForm>
+    </ChildContent>
+</BaseModal>

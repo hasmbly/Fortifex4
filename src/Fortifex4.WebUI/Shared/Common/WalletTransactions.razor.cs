@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Fortifex4.Shared.Pockets.Queries.GetPocket;
+﻿using Fortifex4.Shared.Pockets.Queries.GetPocket;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Fortifex4.WebUI.Shared.Common.Modal;
 using Microsoft.AspNetCore.Components;

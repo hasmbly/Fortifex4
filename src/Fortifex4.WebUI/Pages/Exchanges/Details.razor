@@ -3,7 +3,6 @@
 
 @inject IOwnersService _ownersService
 @inject NavigationManager _navigationManager
-@inject IJSRuntime JsRuntime
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -45,7 +44,7 @@
 
 <h2>Wallets</h2>
 <div class="text-right mb-3">
-    <button class="btn btn-primary">Add Wallet</button>
+    <button class="btn btn-primary" @onclick="() => ModalCreateExchangeWallet.BaseModal.Open()">Add Wallet</button>
 </div>
 <div class="container-body shadow-sm">
     <table class="table table-custom">
@@ -92,3 +91,4 @@
 <ModalDeleteExchange @ref="ModalDeleteExchange" OwnerID="OwnerID" />
 
 <ModalCreateTrade @ref="ModalCreateTrade" OwnerID="OwnerID" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalCreateExchangeWallet @ref="ModalCreateExchangeWallet" OwnerID="OwnerID" OnAfterSuccessful="UpdateStateHasChanged" />

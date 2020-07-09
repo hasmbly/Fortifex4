@@ -14,6 +14,9 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         public bool IsLoading { get; set; }
 
         [Parameter]
+        public string ModalSize { get; set; } = "modal-lg";
+
+        [Parameter]
         public EventCallback OnSubmit { get; set; }
 
         [Parameter]
@@ -33,7 +36,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         public string ModalDisplay { get; set; } = "none;";
 
         public string ModalClass { get; set; }
-        
+
         public void Open()
         {
             ModalDisplay = "block;";

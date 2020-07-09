@@ -17,30 +17,34 @@ namespace Fortifex4.WebUI.Shared.Common
 
         public DotNetObjectReference<ToggleCheckboxState> ToggleCheckboxState { get; set; }
 
+        public bool _shouldRender { get; set; }
+
+        protected override bool ShouldRender() => _shouldRender;
+
         protected override void OnInitialized()
         {
-            _toggleCheckboxState.SetDefaultIsChecked();
+            _toggleCheckboxState.SetDefaultState();
 
             _toggleCheckboxState.SetToggleChange += SetToggle;
             _toggleCheckboxState.ToggleHasChanged += ToggleHasChanged;
             _toggleCheckboxState.SetTogglePropChange += SetToggleProp;
-
-            _toggleCheckboxState.OnChange += StateHasChanged;
         }
 
         public void Dispose()
         {
-            _toggleCheckboxState.SetDefaultIsChecked();
+            _toggleCheckboxState.SetDefaultState();
 
             _toggleCheckboxState.SetToggleChange -= SetToggle;
             _toggleCheckboxState.ToggleHasChanged -= ToggleHasChanged;
             _toggleCheckboxState.SetTogglePropChange -= SetToggleProp;
 
-            _toggleCheckboxState.OnChange -= StateHasChanged;
+            ToggleCheckboxState?.Dispose();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            _shouldRender = false;
+
             if (firstRender)
             {
                 ToggleCheckboxState = DotNetObjectReference.Create(_toggleCheckboxState);
@@ -48,7 +52,7 @@ namespace Fortifex4.WebUI.Shared.Common
                 await JsRuntime.InvokeVoidAsync("Toggle.onChangeToggle", $"#{Attributes.Value.ElementID}", ToggleCheckboxState);
             }
         }
-
+        
         private async void ToggleHasChanged(string elementID)
         {
             await OnChangeChecked.InvokeAsync(elementID);

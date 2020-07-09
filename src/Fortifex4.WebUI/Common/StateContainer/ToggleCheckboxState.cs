@@ -17,7 +17,7 @@ namespace Fortifex4.WebUI.Common.StateContainer
 
         public event Action<string, string, bool> SetTogglePropChange;
 
-         [JSInvokable]
+        [JSInvokable]
         public void SetIsChecked(string elementID, bool isChecked)
         {
             if (isChecked)
@@ -32,7 +32,7 @@ namespace Fortifex4.WebUI.Common.StateContainer
             NotifyStateChanged();
         }
 
-        public void SetDefaultIsChecked()
+        public void SetDefaultState()
         {
             IsChecked = true;
             LabelAmount = "Incoming Amount";

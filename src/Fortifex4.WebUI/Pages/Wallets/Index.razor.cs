@@ -4,6 +4,7 @@ using Fortifex4.Shared.Wallets.Queries.GetPersonalWallets;
 using Fortifex4.WebUI.Shared.Common.Modal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.JSInterop;
 
 namespace Fortifex4.WebUI.Pages.Wallets
 {

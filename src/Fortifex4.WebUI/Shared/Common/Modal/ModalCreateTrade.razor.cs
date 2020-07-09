@@ -75,10 +75,8 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             {
                 Input.FromCurrencyID = int.Parse(value);
 
-                GetUnitPriceInUSD();
-                GetUnitPrice();
-
-                CalculateAmount();
+                _ = GetUnitPriceInUSD();
+                _ = GetUnitPrice();
             }
         }
 
@@ -92,9 +90,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
                 // check CurrencyType to change toggle property
                 CheckPairCurrencyType(int.Parse(value));
 
-                GetUnitPrice();
-
-                CalculateAmount();
+                _ = GetUnitPrice();
             }
         }
 
@@ -181,8 +177,8 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             await LoadSelectFromCurrencies();
             await LoadSelectPairCurrency();
 
-            GetUnitPriceInUSD();
-            GetUnitPrice();
+            await GetUnitPriceInUSD();
+            await GetUnitPrice();
 
             CalculateAmount();
 
@@ -228,6 +224,8 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             PairCurrencies = getDestinationCurrenciesForMember.Result.Currencies.ToList();
 
             Input.ToCurrencyID = PairCurrencies.First().CurrencyID;
+
+            CheckPairCurrencyType(Input.ToCurrencyID);
         }
 
         private async Task SetFromCurencyID()
@@ -254,24 +252,14 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         }
 
         #region Event Callback Handler
-        private void OnChangeSelectCoinCurrencies(int walletID)
-        {
-        }
-
         private void OnChangeCheckedToggleState(string elementID)
         {
-            Console.WriteLine($"OnChangeCheckedToggleState - elementID: {elementID}");
-
             if (elementID == $"#{ToggleCheckboxTradeTypeElementID}")
             {
-                Console.WriteLine($"TradeType - state: {_toggleCheckboxState.IsChecked}");
-
                 OnChangeTradeType(_toggleCheckboxState.IsChecked);
             }
             else if (elementID == $"#{ToggleCheckboxWithHoldElementID}")
             {
-                Console.WriteLine($"WithHold - state: {_toggleCheckboxState.IsChecked}");
-
                 OnChangeWithHold(_toggleCheckboxState.IsChecked);
             }
         }
@@ -315,15 +303,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         }
         #endregion
 
-        private void CalculateAmount()
-        {
-            Total = Input.Amount * Input.UnitPrice;
-            TotalInUSD = Input.Amount * Input.UnitPriceInUSD;
-
-            StateHasChanged();
-        }
-
-        private async void GetUnitPriceInUSD()
+        private async Task GetUnitPriceInUSD()
         {
             string symbol = GetFromCurrencySymbol(Input.FromCurrencyID);
 
@@ -332,9 +312,11 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             Input.UnitPriceInUSD = ToFixed4(result.Result.UnitPriceInUSD);
 
             StateHasChanged();
+
+            CalculateAmount();
         }
 
-        private async void GetUnitPrice()
+        private async Task GetUnitPrice()
         {
             string fromCurrencySymbol = GetFromCurrencySymbol(Input.FromCurrencyID);
             string toCurrencySymbol = GetPairCurrencySymbol(Input.ToCurrencyID);
@@ -342,6 +324,16 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             var result = await _toolsService.GetUnitPrice(fromCurrencySymbol, toCurrencySymbol);
 
             Input.UnitPrice = ToFixed4(result.Result.UnitPrice);
+
+            StateHasChanged();
+
+            CalculateAmount();
+        }
+
+        private void CalculateAmount()
+        {
+            Total = Input.Amount * Input.UnitPrice;
+            TotalInUSD = Input.Amount * Input.UnitPriceInUSD;
 
             StateHasChanged();
         }
