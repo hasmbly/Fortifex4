@@ -21,7 +21,7 @@ namespace Fortifex4.Shared.Members.Queries.GetPortfolio
         public float PercentChange7d { get; set; }
         public float PercentChangeLifetime { get; set; }
 
-        public GetPortfolioResponse Portfolio { get; set; }
+        //public GetPortfolioResponse Portfolio { get; set; }
 
         public IList<TransactionDTO> Transactions { get; set; }
 
@@ -51,16 +51,18 @@ namespace Fortifex4.Shared.Members.Queries.GetPortfolio
 
         public decimal TotalPurchaseValueInUSD => this.IncomingTransactions.Sum(x => x.Amount * x.UnitPriceInUSD);
 
-        public decimal TotalPurchaseValueInPreferredFiatCurrency
-        {
-            get
-            {
-                if (this.Portfolio.MemberPreferredFiatCurrencyUnitPriceInUSD > 0)
-                    return this.TotalPurchaseValueInUSD / this.Portfolio.MemberPreferredFiatCurrencyUnitPriceInUSD;
-                else
-                    return 0m;
-            }
-        }
+        public decimal TotalPurchaseValueInPreferredFiatCurrency { get; set; }
+
+        //public decimal TotalPurchaseValueInPreferredFiatCurrency
+        //{
+        //    get
+        //    {
+        //        if (this.Portfolio.MemberPreferredFiatCurrencyUnitPriceInUSD > 0)
+        //            return this.TotalPurchaseValueInUSD / this.Portfolio.MemberPreferredFiatCurrencyUnitPriceInUSD;
+        //        else
+        //            return 0m;
+        //    }
+        //}
 
         public decimal AverageBuyPriceInPreferredFiatCurrency
         {
@@ -77,37 +79,41 @@ namespace Fortifex4.Shared.Members.Queries.GetPortfolio
 
         public decimal CurrentValueInPreferredFiatCurrency => this.TotalAmount * this.Price;
 
-        public decimal CurrentValueInPreferredCoinCurrency
-        {
-            get
-            {
-                if (this.CurrencyID == this.Portfolio.MemberPreferredCoinCurrencyID)
-                {
-                    return this.TotalAmount;
-                }
-                else
-                {
-                    if (this.Portfolio.MemberPreferredCoinCurrencyUnitPriceInUSD > 0)
-                        return this.TotalAmount * (this.UnitPriceInUSD / this.Portfolio.MemberPreferredCoinCurrencyUnitPriceInUSD);
-                    else
-                        return 0m;
-                }
-            }
-        }
+        public decimal CurrentValueInPreferredCoinCurrency { get; set; }
 
-        public float SelectedPercentChange
-        {
-            get
-            {
-                return this.Portfolio.MemberPreferredTimeFrameName switch
-                {
-                    TimeFrameName.OneHour => this.PercentChange1h,
-                    TimeFrameName.OneDay => this.PercentChange24h,
-                    TimeFrameName.OneWeek => this.PercentChange7d,
-                    _ => this.PercentChangeLifetime
-                };
-            }
-        }
+        //public decimal CurrentValueInPreferredCoinCurrency
+        //{
+        //    get
+        //    {
+        //        if (this.CurrencyID == this.Portfolio.MemberPreferredCoinCurrencyID)
+        //        {
+        //            return this.TotalAmount;
+        //        }
+        //        else
+        //        {
+        //            if (this.Portfolio.MemberPreferredCoinCurrencyUnitPriceInUSD > 0)
+        //                return this.TotalAmount * (this.UnitPriceInUSD / this.Portfolio.MemberPreferredCoinCurrencyUnitPriceInUSD);
+        //            else
+        //                return 0m;
+        //        }
+        //    }
+        //}
+
+        public float SelectedPercentChange { get; set; }
+
+        //public float SelectedPercentChange
+        //{
+        //    get
+        //    {
+        //        return this.Portfolio.MemberPreferredTimeFrameName switch
+        //        {
+        //            TimeFrameName.OneHour => this.PercentChange1h,
+        //            TimeFrameName.OneDay => this.PercentChange24h,
+        //            TimeFrameName.OneWeek => this.PercentChange7d,
+        //            _ => this.PercentChangeLifetime
+        //        };
+        //    }
+        //}
 
         public decimal ProfitLossInPreferredFiatCurrency => this.CurrentValueInPreferredFiatCurrency - this.TotalPurchaseValueInPreferredFiatCurrency;
 

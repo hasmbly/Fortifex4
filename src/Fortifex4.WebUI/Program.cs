@@ -45,6 +45,7 @@ namespace Fortifex4.WebUI
             builder.Services.AddHttpClient<IExternalTransfersService, ExternalTransfersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IOwnersService, OwnersService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<ITradesService, TradesService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<IPortfolioService, PortfolioService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
 
             var host = builder.Build();
 

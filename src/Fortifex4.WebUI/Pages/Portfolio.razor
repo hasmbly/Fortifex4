@@ -1,7 +1,156 @@
 ﻿@page "/portfolio"
 @attribute [Authorize]
 
+@inject IPortfolioService _portfolioService
+@inject IJSRuntime JsRuntime
+
 @inject NavigationManager _navigationManager
 
 <PageTitle Title="Portfolio" />
-<h1>Portfolio</h1>
+
+<h1>
+    Portfolio
+    @if (IsLoading)
+    {
+        <i class="fas fa-circle-notch fa-spin"></i>
+    }
+</h1>
+<div class="row mb-5">
+    <div class="col-md-6">
+        <div class="container-body shadow-sm p-3">
+            <div class="row mb-2">
+                <div class="col-md-12 text-center">Current Status</div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-4 text-center mt-3 border-right">
+                    <p id="tot-usd-val" class="mb-0 total-value up-portfolio">@_Portfolio.TotalCurrentValueInPreferredFiatCurrency.ToString2Decimals()</p>
+                    <p class="data-portfolio">Tot Val (@_Portfolio.MemberPreferredFiatCurrencySymbol)</p>
+                    <p id="pref-crypto-val" class="mb-0 total-value up-portfolio">@_Portfolio.TotalCurrentValueInPreferredCoinCurrency.ToString2Decimals()</p>
+                    <p class="data-portfolio" id="label-pref-crypto">Tot Val (@_Portfolio.MemberPreferredCoinCurrencySymbol)</p>
+                </div>
+                <div class="col-md-4 text-center mt-3">
+                    <div class="current-status-container">
+                        <div class="each-current-status">
+                            <p class="number-highlight up-portfolio" id="day-chg-percent-val">@_Portfolio.OneDayChangeRateInPreferredFiatCurrency.ToPercentage2Decimals()</p>
+                            <p class="data-portfolio">24h Chg %</p>
+                        </div>
+                    </div>
+                    <div class="current-status-container">
+                        <div class="each-current-status">
+                            <p class="number-highlight up-portfolio" id="chg-life-usd-percent">@_Portfolio.LifeTimeChangeRateInPreferredFiatCurrency.ToPercentage2Decimals()</p>
+                            <p class="data-portfolio">Life Time Chg %</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center mt-3">
+                    <div class="current-status-container">
+                        <div class="each-current-status">
+                            <p class="number-highlight up-portfolio" id="day-chg-usd-val">@_Portfolio.TotalValueChange24hInPreferredFiatCurrency.ToString2Decimals()</p>
+                            <p class="data-portfolio">24h Chg (@_Portfolio.MemberPreferredFiatCurrencySymbol)</p>
+                        </div>
+                    </div>
+                    <div class="current-status-container">
+                        <div class="each-current-status">
+                            <p class="number-highlight up-portfolio" id="chg-life-usd">@_Portfolio.LifeTimeChangeValueInPreferredFiatCurrency.ToString2Decimals()</p>
+                            <p class="data-portfolio">Life Time Chg (@_Portfolio.MemberPreferredFiatCurrencySymbol)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="container-body shadow-sm p-3">
+            <div class="row mb-2">
+                <div class="col-md-12 text-center">Today's Highlights</div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    @if (ValidCurrencies.Count > 0)
+                    {
+                        var highlightedCurrencies = ValidCurrencies.OrderByDescending(x => x.PercentChange24h).ToList();
+
+                        <table class="table table-custom">
+                            @{
+                                if (ValidCurrencies.Count < 5)
+                                {
+                                    TopCurrencies = highlightedCurrencies;
+                                }
+                                else
+                                {
+                                    TopCurrencies = highlightedCurrencies.Take(2).ToList();
+                                    BottomCurrencies = highlightedCurrencies.Skip(highlightedCurrencies.Count - 2).ToList();
+                                }
+
+                                foreach (var currency in TopCurrencies)
+                                {
+                                    <tr>
+                                        <td><p class="m-0 crypto-highlight up-portfolio">@currency.Name (@currency.Symbol)</p></td>
+                                        <td><p id="@currency.Name-day-percent-change" class="number-highlight m-0  up-portfolio">@currency.PercentChange24h.ToString2Decimals()%</p></td>
+                                        <td><p id="@currency.Name-day-usd-change" class="number-highlight m-0  up-portfolio">@currency.ValueChange24hInPreferredFiatCurrency.ToString4Decimals()</p></td>
+                                    </tr>
+                                }
+
+                                foreach (var currency in BottomCurrencies)
+                                {
+                                    <tr>
+                                        <td><p class="m-0 crypto-highlight up-portfolio">@currency.Name (@currency.Symbol)</p></td>
+                                        <td><p id="@currency.Name-day-percent-change" class="number-highlight m-0  up-portfolio">@currency.PercentChange24h.ToString2Decimals()%</p></td>
+                                        <td><p id="@currency.Name-day-usd-change" class="number-highlight m-0  up-portfolio">@currency.ValueChange24hInPreferredFiatCurrency.ToString4Decimals()</p></td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="text-center">Welcome to Fortifex!</div>
+                        <div class="text-center">Please add an <a asp-page="/Exchanges/Create">Exchange</a> or a <a asp-page="/Wallets/Create">Wallet</a> to your portfolio.  Afterward, you will see information about your holdings on this and other tabs.</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="container-body shadow-sm">
+            <table id="table-portfolio">
+                <thead>
+                    <tr>
+                        <th class="data-portfolio">Crypto</th>
+                        <th class="data-portfolio text-right">Qty Held</th>
+                        <th class="data-portfolio text-right">Avg Buy Price @_Portfolio.MemberPreferredFiatCurrencySymbol</th>
+                        <th class="data-portfolio text-right">Purch Val @_Portfolio.MemberPreferredFiatCurrencySymbol</th>
+                        <th class="data-portfolio text-right">Cur Price @_Portfolio.MemberPreferredFiatCurrencySymbol</th>
+                        <th class="data-portfolio text-right">Cur Val @_Portfolio.MemberPreferredFiatCurrencySymbol</th>
+                        <th class="data-portfolio text-right crypto-value">Cur Val @_Portfolio.MemberPreferredCoinCurrencySymbol</th>
+                        <th class="data-portfolio text-right portfolio-time-frame">@_Portfolio.MemberPreferredTimeFrameName &Delta;</th>
+                        <th class="data-portfolio text-right">P/L</th>
+                        <th class="data-portfolio text-right">Time Held</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var currency in ValidCurrencies)
+                    {
+                        <tr class="portfolio-items">
+                            <td class="data-portfolio">@currency.Name (@currency.Symbol)</td>
+                            <td class="data-portfolio text-right qty-held">@currency.TotalAmount.ToString4Decimals()</td>
+                            <td class="data-portfolio text-right">@currency.AverageBuyPriceInPreferredFiatCurrency.ToString4Decimals()</td>
+                            <td class="data-portfolio text-right" id="@currency.Name-purchase">@currency.TotalPurchaseValueInPreferredFiatCurrency.ToString4Decimals()</td>
+                            <td class="data-portfolio text-right current-price" id="@currency.Name">@currency.Price.ToString4Decimals()</td>
+                            <td class="data-portfolio text-right current-value" id="@currency.Name-val">@currency.CurrentValueInPreferredFiatCurrency.ToString4Decimals()</td>
+                            <td class="data-portfolio text-right pref-crypto" id="@currency.Name-crypto">@currency.CurrentValueInPreferredCoinCurrency.ToString4Decimals()</td>
+                            <td class="data-portfolio text-right time-frame" id="@currency.Name-time-frame">@currency.SelectedPercentChange.ToString4Decimals()%</td>
+                            <td class="data-portfolio text-right profit-loss" id="@currency.Name-profit-lost">@currency.ProfitLossInPreferredFiatCurrency.ToString4Decimals()</td>
+                            <td class="data-portfolio text-right time-held">@currency.TimeHeld.ToStringFriendly()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <input hidden id="tot-purch-val" value="TotalCurrentValue" />
+        </div>
+    </div>
+</div>

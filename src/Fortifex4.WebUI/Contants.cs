@@ -1,4 +1,6 @@
-﻿namespace Fortifex4.WebUI
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Fortifex4.WebUI
 {
     public static class Constants
     {
@@ -120,6 +122,11 @@
                 public static readonly string CreateTrade = $"{BaseAPI}/trades/createTrade";
                 public static readonly string UpdateTrade = $"{BaseAPI}/trades/updateTrade";
                 public static readonly string DeleteTrade = $"{BaseAPI}/trades/deleteTrade";
+            }
+
+            public static class Portfolio
+            {
+                public static readonly string GetPortfolio = $"{BaseAPI}/portfolio/getPortfolio";
             }
         }
 

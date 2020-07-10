@@ -14,10 +14,6 @@ namespace Fortifex4.WebUI.Pages.Account
         
         public CreateMemberRequest Input { get; set; } = new CreateMemberRequest();
 
-        protected override void OnInitialized()
-        {
-        }
-
         private async Task RegisterAsync()
         {
             IsLoading = true;

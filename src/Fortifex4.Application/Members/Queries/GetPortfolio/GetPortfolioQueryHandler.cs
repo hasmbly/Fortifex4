@@ -87,13 +87,43 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolio
 
                             currencyDTO = new CurrencyDTO
                             {
-                                Portfolio = result,
                                 CurrencyID = currency.CurrencyID,
                                 Symbol = currency.Symbol,
                                 Name = currency.Name,
                                 UnitPriceInUSD = currency.UnitPriceInUSD,
                                 CurrencyType = currency.CurrencyType
                             };
+
+                            #region TotalPurchaseValueInPreferredFiatCurrency
+                            if (result.MemberPreferredFiatCurrencyUnitPriceInUSD > 0)
+                                currencyDTO.TotalPurchaseValueInPreferredFiatCurrency = currencyDTO.TotalPurchaseValueInUSD / result.MemberPreferredFiatCurrencyUnitPriceInUSD;
+                            else
+                                currencyDTO.TotalPurchaseValueInPreferredFiatCurrency = 0m;
+                            #endregion
+
+                            #region CurrentValueInPreferredCoinCurrency
+                            if (currencyDTO.CurrencyID == result.MemberPreferredCoinCurrencyID)
+                            {
+                                currencyDTO.CurrentValueInPreferredCoinCurrency = currencyDTO.TotalAmount;
+                            }
+                            else
+                            {
+                                if (result.MemberPreferredCoinCurrencyUnitPriceInUSD > 0)
+                                    currencyDTO.CurrentValueInPreferredCoinCurrency = currencyDTO.TotalAmount * (currencyDTO.UnitPriceInUSD / result.MemberPreferredCoinCurrencyUnitPriceInUSD);
+                                else
+                                    currencyDTO.CurrentValueInPreferredCoinCurrency = 0m;
+                            }
+                            #endregion
+
+                            #region SelectedPercentChange
+                            currencyDTO.SelectedPercentChange = result.MemberPreferredTimeFrameName switch
+                            {
+                                TimeFrameName.OneHour => currencyDTO.PercentChange1h,
+                                TimeFrameName.OneDay => currencyDTO.PercentChange24h,
+                                TimeFrameName.OneWeek => currencyDTO.PercentChange7d,
+                                _ => currencyDTO.PercentChangeLifetime
+                            };
+                            #endregion
 
                             result.Currencies.Add(currencyDTO);
                         }
@@ -167,7 +197,8 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolio
                 }
                 else
                 {
-                    currencyDTO.Price = currencyDTO.UnitPriceInUSD / currencyDTO.Portfolio.MemberPreferredFiatCurrencyUnitPriceInUSD;
+                    //currencyDTO.Price = currencyDTO.UnitPriceInUSD / currencyDTO.Portfolio.MemberPreferredFiatCurrencyUnitPriceInUSD;
+                    currencyDTO.Price = currencyDTO.UnitPriceInUSD / result.MemberPreferredFiatCurrencyUnitPriceInUSD;
                 }
 
                 #region Hitung Percentage Lifetime
