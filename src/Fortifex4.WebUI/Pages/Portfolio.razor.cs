@@ -44,7 +44,6 @@ namespace Fortifex4.WebUI.Pages
                 System.Console.WriteLine($"OnAfterRender - First Stage Done");
 
                 // Finally, after so long.. the datables plugin from js can only be initialize after DOM element (with related id) was Ready
-
                 await JsRuntime.InvokeVoidAsync("Portfolio.init");
 
                 await JsRuntime.InvokeVoidAsync("Portfolio.setArrow");

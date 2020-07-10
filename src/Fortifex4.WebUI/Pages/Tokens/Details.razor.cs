@@ -10,6 +10,13 @@ namespace Fortifex4.WebUI.Pages.Tokens
         [Parameter]
         public int PocketID { get; set; }
 
+        [Inject]
+        public IJSRuntime JsRuntime { get; set; }
+
+        public bool FirstStage { get; set; }
+
+        public string TokensTableID { get; set; } = "data-table-tokens";
+
         public GetPocketResponse Pocket { get; set; } = new GetPocketResponse();
 
         public bool IsLoading { get; set; }
@@ -34,6 +41,22 @@ namespace Fortifex4.WebUI.Pages.Tokens
             IsLoading = false;
 
             StateHasChanged();
+
+            FirstStage = true;
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                System.Console.WriteLine($"OnAfterRender - This is First Render");
+            }
+            else if (FirstStage)
+            {
+                FirstStage = false;
+
+                await JsRuntime.InvokeVoidAsync("DataTable.init", $"#{TokensTableID}");
+            }
         }
     }
 }
