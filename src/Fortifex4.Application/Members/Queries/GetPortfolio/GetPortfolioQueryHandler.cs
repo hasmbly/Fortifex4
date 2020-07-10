@@ -94,37 +94,6 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolio
                                 CurrencyType = currency.CurrencyType
                             };
 
-                            #region TotalPurchaseValueInPreferredFiatCurrency
-                            if (result.MemberPreferredFiatCurrencyUnitPriceInUSD > 0)
-                                currencyDTO.TotalPurchaseValueInPreferredFiatCurrency = currencyDTO.TotalPurchaseValueInUSD / result.MemberPreferredFiatCurrencyUnitPriceInUSD;
-                            else
-                                currencyDTO.TotalPurchaseValueInPreferredFiatCurrency = 0m;
-                            #endregion
-
-                            #region CurrentValueInPreferredCoinCurrency
-                            if (currencyDTO.CurrencyID == result.MemberPreferredCoinCurrencyID)
-                            {
-                                currencyDTO.CurrentValueInPreferredCoinCurrency = currencyDTO.TotalAmount;
-                            }
-                            else
-                            {
-                                if (result.MemberPreferredCoinCurrencyUnitPriceInUSD > 0)
-                                    currencyDTO.CurrentValueInPreferredCoinCurrency = currencyDTO.TotalAmount * (currencyDTO.UnitPriceInUSD / result.MemberPreferredCoinCurrencyUnitPriceInUSD);
-                                else
-                                    currencyDTO.CurrentValueInPreferredCoinCurrency = 0m;
-                            }
-                            #endregion
-
-                            #region SelectedPercentChange
-                            currencyDTO.SelectedPercentChange = result.MemberPreferredTimeFrameName switch
-                            {
-                                TimeFrameName.OneHour => currencyDTO.PercentChange1h,
-                                TimeFrameName.OneDay => currencyDTO.PercentChange24h,
-                                TimeFrameName.OneWeek => currencyDTO.PercentChange7d,
-                                _ => currencyDTO.PercentChangeLifetime
-                            };
-                            #endregion
-
                             result.Currencies.Add(currencyDTO);
                         }
 
@@ -156,6 +125,37 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolio
 
                             currencyDTO.Transactions.Add(transactionDTO);
                         }
+
+                        #region TotalPurchaseValueInPreferredFiatCurrency
+                        if (result.MemberPreferredFiatCurrencyUnitPriceInUSD > 0)
+                            currencyDTO.TotalPurchaseValueInPreferredFiatCurrency = currencyDTO.TotalPurchaseValueInUSD / result.MemberPreferredFiatCurrencyUnitPriceInUSD;
+                        else
+                            currencyDTO.TotalPurchaseValueInPreferredFiatCurrency = 0m;
+                        #endregion
+
+                        #region CurrentValueInPreferredCoinCurrency
+                        if (currencyDTO.CurrencyID == result.MemberPreferredCoinCurrencyID)
+                        {
+                            currencyDTO.CurrentValueInPreferredCoinCurrency = currencyDTO.TotalAmount;
+                        }
+                        else
+                        {
+                            if (result.MemberPreferredCoinCurrencyUnitPriceInUSD > 0)
+                                currencyDTO.CurrentValueInPreferredCoinCurrency = currencyDTO.TotalAmount * (currencyDTO.UnitPriceInUSD / result.MemberPreferredCoinCurrencyUnitPriceInUSD);
+                            else
+                                currencyDTO.CurrentValueInPreferredCoinCurrency = 0m;
+                        }
+                        #endregion
+
+                        #region SelectedPercentChange
+                        currencyDTO.SelectedPercentChange = result.MemberPreferredTimeFrameName switch
+                        {
+                            TimeFrameName.OneHour => currencyDTO.PercentChange1h,
+                            TimeFrameName.OneDay => currencyDTO.PercentChange24h,
+                            TimeFrameName.OneWeek => currencyDTO.PercentChange7d,
+                            _ => currencyDTO.PercentChangeLifetime
+                        };
+                        #endregion
                     }
                 }
             }

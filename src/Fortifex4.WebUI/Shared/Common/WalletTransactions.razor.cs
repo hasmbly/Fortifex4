@@ -41,7 +41,7 @@ namespace Fortifex4.WebUI.Shared.Common
             FirstStage = true;
         }
 
-        private async void InvokeSuccessful()
+        private async void UpdateStateHasChanged()
         {
             await OnAfterSuccessful.InvokeAsync(true);
         }

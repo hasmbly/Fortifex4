@@ -26,7 +26,19 @@ namespace Fortifex4.WebUI.Pages
         public IList<CurrencyDTO> TopCurrencies { get; set; } = new List<CurrencyDTO>();
         public IList<CurrencyDTO> BottomCurrencies { get; set; } = new List<CurrencyDTO>();
 
-        protected override async Task OnInitializedAsync()
+        protected async override Task OnInitializedAsync()
+        {
+            globalState.ShouldRender += RefreshMe;
+
+            await InitAsync();
+        }
+
+        public void Dispose()
+        {
+            globalState.ShouldRender -= RefreshMe;
+        }
+
+        private async void RefreshMe()
         {
             await InitAsync();
         }
@@ -47,6 +59,10 @@ namespace Fortifex4.WebUI.Pages
                 await JsRuntime.InvokeVoidAsync("Portfolio.init");
 
                 await JsRuntime.InvokeVoidAsync("Portfolio.setArrow");
+
+                FirstStage = false;
+             
+                StateHasChanged();
             }
         }
 

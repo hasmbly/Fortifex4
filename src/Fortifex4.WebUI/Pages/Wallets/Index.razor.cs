@@ -23,6 +23,18 @@ namespace Fortifex4.WebUI.Pages.Wallets
 
         protected async override Task OnInitializedAsync()
         {
+            globalState.ShouldRender += RefreshMe;
+
+            await InitAsync();
+        }
+
+        public void Dispose()
+        {
+            globalState.ShouldRender -= RefreshMe;
+        }
+
+        private async void RefreshMe()
+        {
             await InitAsync();
         }
 

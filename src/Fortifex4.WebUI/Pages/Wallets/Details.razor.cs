@@ -23,7 +23,22 @@ namespace Fortifex4.WebUI.Pages.Wallets
         
         public bool IsLoading { get; set; }
 
-        protected async override Task OnInitializedAsync() => await InitAsync();
+        protected async override Task OnInitializedAsync()
+        {
+            globalState.ShouldRender += RefreshMe;
+
+            await InitAsync();
+        }
+
+        public void Dispose()
+        {
+            globalState.ShouldRender -= RefreshMe;
+        }
+
+        private async void RefreshMe()
+        {
+            await InitAsync();
+        }
 
         public async void SyncWallet()
         {

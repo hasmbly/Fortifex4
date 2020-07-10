@@ -27,6 +27,7 @@ namespace Fortifex4.WebUI
                 public static readonly string UpdatePreferredTimeFrame = $"{BaseAPI}/members/updatePreferredTimeFrame";
                 public static readonly string UpdatePreferredCoinCurrency = $"{BaseAPI}/members/updatePreferredCoinCurrency";
                 public static readonly string UpdatePreferredFiatCurrency = $"{BaseAPI}/members/updatePreferredFiatCurrency";
+                public static readonly string GetTransactionsByMemberUsername = $"{BaseAPI}/members/getTransactionsByMemberUsername";
             }
 
             public static class Tools

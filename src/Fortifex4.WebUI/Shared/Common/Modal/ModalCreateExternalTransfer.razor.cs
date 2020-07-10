@@ -138,8 +138,9 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             var getAllWalletsWithSameCurrency = await _walletsService.GetAllWalletsWithSameCurrency(User.Identity.Name);
             Wallets = getAllWalletsWithSameCurrency.Result.Wallets.ToList();
 
-            // default value for select option -> SelectedWallet
             Input.WalletID = Wallets.First().WalletID;
+
+            OnChangeSelectWallet(Input.WalletID);
         }
 
         #region EventHandler
@@ -163,14 +164,16 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         {
             IsLoading = true;
 
-            Wallet.Name = Wallets.Where(x => x.WalletID == walletID).First().Name;
+            Wallet.MainPocket.CurrencyName = Wallets.Where(x => x.WalletID == walletID).First().CurrencyName;
 
             string symbol = Wallets.Where(x => x.WalletID == walletID).First().CurrencySymbol;
+            
             await ConvertPrice(symbol);
 
             CalculateAmount();
 
             IsLoading = false;
+
             StateHasChanged();
         }
 

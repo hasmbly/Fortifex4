@@ -82,7 +82,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
                 Input.FromPocketID = Wallet.MainPocket.PocketID;
 
-                await LoadSelectOptionToWallet();
+                await LoadSelectOptionToWallet(WalletID.Value);
             }
             else
             {
@@ -96,9 +96,9 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             DistinctFromAndToCurrency();
         }
 
-        private async Task LoadSelectOptionToWallet()
+        private async Task LoadSelectOptionToWallet(int walletID)
         {
-            var getWalletsWithSameCurrency = await _walletsService.GetWalletsWithSameCurrency(WalletID.Value);
+            var getWalletsWithSameCurrency = await _walletsService.GetWalletsWithSameCurrency(walletID);
             ListToWallets = getWalletsWithSameCurrency.Result.Wallets.ToList();
 
             // default value for select option -> SelectedToWallet
@@ -112,6 +112,10 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
             // default value for select option -> SelectedToWallet
             Input.FromPocketID = ListFromWallets.First().PocketID;
+
+            SetCurrencyName(Input.FromPocketID);
+
+            await LoadSelectOptionToWallet(ListFromWallets.First().WalletID);
         }
 
         #region EventHandler
@@ -122,7 +126,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             SetCurrencyName(pocketID);
 
             int walletID = ListFromWallets.Where(x => x.PocketID == pocketID).First().WalletID;
-            await LoadSelectOptionToWallet();
+            await LoadSelectOptionToWallet(walletID);
 
             DistinctFromAndToCurrency();
 

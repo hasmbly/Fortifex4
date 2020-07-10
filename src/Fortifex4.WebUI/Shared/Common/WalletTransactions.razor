@@ -130,11 +130,11 @@
     </table>
 </div>
 
-<ModalEditTrade @ref="ModalEditTrade" OnAfterSuccessful="InvokeSuccessful" />
-<ModalEditImportBalance @ref="ModalEditImportBalance" OnAfterSuccessful="InvokeSuccessful" />
-<ModalEditExternalTransfer @ref="ModalEditExternalTransfer" OnAfterSuccessful="InvokeSuccessful" />
-<ModalEditInternalTransfer @ref="ModalEditInternalTransfer" OnAfterSuccessful="InvokeSuccessful" />
+<ModalEditTrade @ref="ModalEditTrade" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditImportBalance @ref="ModalEditImportBalance" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditExternalTransfer @ref="ModalEditExternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditInternalTransfer @ref="ModalEditInternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
 
-<ModalDeleteTrade @ref="ModalDeleteTrade" OnAfterSuccessful="InvokeSuccessful" />
-<ModalDeleteInternalTransfer @ref="ModalDeleteInternalTransfer" OnAfterSuccessful="InvokeSuccessful" />
-<ModalDeleteExternalTransfer @ref="ModalDeleteExternalTransfer" OnAfterSuccessful="InvokeSuccessful" />
+<ModalDeleteTrade @ref="ModalDeleteTrade" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalDeleteInternalTransfer @ref="ModalDeleteInternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalDeleteExternalTransfer @ref="ModalDeleteExternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />

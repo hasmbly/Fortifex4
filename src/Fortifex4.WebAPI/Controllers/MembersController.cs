@@ -8,6 +8,7 @@ using Fortifex4.Shared.Members.Commands.UpdatePreferredCoinCurrency;
 using Fortifex4.Shared.Members.Commands.UpdatePreferredFiatCurrency;
 using Fortifex4.Shared.Members.Commands.UpdatePreferredTimeFrame;
 using Fortifex4.Shared.Members.Queries.GetPreferences;
+using Fortifex4.Shared.Transactions.Queries.GetTransactionsByMemberUsername;
 using Fortifex4.WebAPI.Common.ApiEnvelopes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -109,6 +110,25 @@ namespace Fortifex4.WebAPI.Controllers
             try
             {
                 var request = new GetPreferencesRequest()
+                {
+                    MemberUsername = memberUsername
+                };
+
+                return Ok(new Success(await Mediator.Send(request)));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getTransactionsByMemberUsername/{memberUsername}")]
+        public async Task<IActionResult> GetTransactionsByMemberUsername(string memberUsername)
+        {
+            try
+            {
+                var request = new GetTransactionsByMemberUsernameRequest()
                 {
                     MemberUsername = memberUsername
                 };

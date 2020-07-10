@@ -8,6 +8,7 @@ using Fortifex4.Shared.Members.Commands.UpdatePreferredFiatCurrency;
 using Fortifex4.Shared.Members.Commands.UpdatePreferredTimeFrame;
 using Fortifex4.Shared.Members.Queries.GetMember;
 using Fortifex4.Shared.Members.Queries.GetPreferences;
+using Fortifex4.Shared.Transactions.Queries.GetTransactionsByMemberUsername;
 using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -22,6 +23,7 @@ namespace Fortifex4.WebUI.Services
         public Task<ApiResponse<UpdatePreferredTimeFrameResponse>> UpdatePreferredTimeFrame(UpdatePreferredTimeFrameRequest request);
         public Task<ApiResponse<UpdatePreferredCoinCurrencyResponse>> UpdatePreferredCoinCurrency(UpdatePreferredCoinCurrencyRequest request);
         public Task<ApiResponse<UpdatePreferredFiatCurrencyResponse>> UpdatePreferredFiatCurrency(UpdatePreferredFiatCurrencyRequest request);
+        public Task<ApiResponse<GetTransactionsByMemberUsernameResponse>> GetTransactionsByMemberUsername(string memberUsername);
     }
 
     public class MembersService : IMembersService
@@ -95,6 +97,13 @@ namespace Fortifex4.WebUI.Services
             var updatePreferredFiatCurrencyResponse = await _httpClient.PutJsonAsync<ApiResponse<UpdatePreferredFiatCurrencyResponse>>(Constants.URI.Members.UpdatePreferredFiatCurrency, request);
 
             return updatePreferredFiatCurrencyResponse;
+        }
+
+        public async Task<ApiResponse<GetTransactionsByMemberUsernameResponse>> GetTransactionsByMemberUsername(string memberUsername)
+        {
+            await SetHeader();
+
+            return await _httpClient.GetJsonAsync<ApiResponse<GetTransactionsByMemberUsernameResponse>>($"{Constants.URI.Members.GetTransactionsByMemberUsername}/{memberUsername}");
         }
     }
 }

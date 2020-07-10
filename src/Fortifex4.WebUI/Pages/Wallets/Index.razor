@@ -4,9 +4,14 @@
 @inject IWalletsService _walletsService
 @inject NavigationManager _navigationManager
 
+@inject GlobalState globalState
+
+@implements IDisposable
+
 <PageTitle Title="Wallets" />
 
-<h1>Wallets 
+<h1>
+    Wallets
     @if (IsLoading)
     {
         <i class="fas fa-circle-notch fa-spin"></i>

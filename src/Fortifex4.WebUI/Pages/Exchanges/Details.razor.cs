@@ -12,15 +12,30 @@ namespace Fortifex4.WebUI.Pages.Exchanges
 
         public GetOwnerResponse Owner { get; set; } = new GetOwnerResponse();
 
+        private ModalCreateTrade ModalCreateTrade { get; set; }
         private ModalCreateExchangeWallet ModalCreateExchangeWallet { get; set; }
+
         private ModalEditExchange ModalEditExchange { get; set; }
         private ModalDeleteExchange ModalDeleteExchange { get; set; }
 
-        private ModalCreateTrade ModalCreateTrade { get; set; }
-
         public bool IsLoading { get; set; }
-        
-        protected async override Task OnInitializedAsync() => await InitAsync();
+
+        protected async override Task OnInitializedAsync()
+        {
+            globalState.ShouldRender += RefreshMe;
+
+            await InitAsync();
+        }
+
+        public void Dispose()
+        {
+            globalState.ShouldRender -= RefreshMe;
+        }
+
+        private async void RefreshMe()
+        {
+            await InitAsync();
+        }
 
         private async void UpdateStateHasChanged(bool IsSuccessful)
         {
@@ -30,8 +45,6 @@ namespace Fortifex4.WebUI.Pages.Exchanges
 
         private async Task InitAsync()
         {
-            System.Console.WriteLine($"Exchange-Details: Inittialize");
-
             IsLoading = true;
 
             var result = await _ownersService.GetOwner(OwnerID);

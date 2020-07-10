@@ -1,5 +1,134 @@
-﻿<h3>Transactions</h3>
+﻿@page "/transactions"
+@attribute [Authorize]
 
-@code {
+@inject IMembersService _membersService
 
-}
+@inject NavigationManager _navigationManager
+
+@inject GlobalState globalState
+
+@implements IDisposable
+
+@using Fortifex4.Domain.Enums
+
+<PageTitle Title="Transactions" />
+
+<h1>
+    Transactions
+    @if (IsLoading)
+    {
+        <i class="fas fa-circle-notch fa-spin"></i>
+    }
+</h1>
+<div class="text-right mb-3">
+    <div class="btn-group">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Add Transactions
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+            <h6 class="dropdown-header">-- Choose Transactions --</h6>
+
+            <button class="dropdown-item" @onclick="() => ModalCreateTrade.BaseModal.Open()">Add Trade</button>
+            <button class="dropdown-item" @onclick="() => ModalCreateExternalTransfer.BaseModal.Open()">Add External Transfer</button>
+            <button class="dropdown-item" @onclick="() => ModalCreateInternalTransfer.BaseModal.Open()">Add Internal Transfer</button>
+        </div>
+    </div>
+</div>
+
+<div class="container-body shadow-sm">
+    <div class="table-responsive">
+        <table id="data-table-transactions" class="table">
+            <thead>
+                <tr>
+                    <th class="trans text-center">No</th>
+                    <th class="trans">Type</th>
+                    <th class="trans">Exchange/Wallet</th>
+                    <th class="trans">Currency</th>
+                    <th class="trans text-right">Quantity</th>
+                    <th class="trans text-right">Unit Price</th>
+                    <th class="trans text-right">Total Price</th>
+                    <th class="trans">Pair Exchange/Wallet</th>
+                    <th class="trans">Pair Currency</th>
+                    <th class="trans">Date</th>
+                    <th class="trans">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int index = 1; }
+
+                @foreach (var transaction in _Transactions.Transactions)
+                {
+                    <tr>
+                        <td class="trans text-center">@index</td>
+                        <td class="trans">@transaction.TransactionTypeDisplayText</td>
+                        <td class="trans">@transaction.SourceProviderName</td>
+                        <td class="trans">@transaction.SourceCurrencySymbol</td>
+                        <td class="trans text-right">@transaction.AmountDisplayText</td>
+                        <td class="trans text-right">@transaction.UnitPriceDisplayText</td>
+                        <td class="trans text-right">@transaction.TotalPriceDisplayText</td>
+                        <td class="trans">
+                            @if ((transaction.TransactionType == TransactionType.SyncTransactionIN || transaction.TransactionType == TransactionType.SyncTransactionOUT) && string.IsNullOrEmpty(transaction.DestinationProviderName))
+                            {
+                                <span class="text-danger">@WarningMessage.PleaseCompleteTransactionDetails</span>
+                            }
+                            else
+                            {
+                                @transaction.DestinationProviderName
+                            }
+                        </td>
+                        <td class="trans">@transaction.DestinationCurrencySymbol</td>
+                        <td class="trans">@transaction.TransactionDateTime.ToLocalDisplayText()</td>
+
+                        <td class="trans text-center">
+                            @if (transaction.TransactionType == TransactionType.StartingBalance)
+                            {
+                                <a href="#" title="Edit" class="starting-balance-edit-id" data-toggle="modal" data-target="#modal-edit-starting-balance-id" data-id="@transaction.TransactionID"><i class="fas fa-edit"></i></a>
+                            }
+                            else if (transaction.TransactionType == TransactionType.SyncBalanceImport)
+                            {
+                                <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditImportBalance.BaseModal.OpenWithID(transaction.TransactionID); }"><i class="fas fa-edit"></i></a>
+                            }
+                            else if (transaction.TransactionType == TransactionType.SyncTransactionIN || transaction.TransactionType == TransactionType.SyncTransactionOUT)
+                            {
+                                <a href="#" title="Edit" class="sync-edit-id" data-toggle="modal" data-target="#modal-edit-sync" data-id="@transaction.TransactionID"><i class="fas fa-edit"></i></a>
+                            }
+                            else if (transaction.TransactionType == TransactionType.ExternalTransferIN || transaction.TransactionType == TransactionType.ExternalTransferOUT)
+                            {
+                                <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditExternalTransfer.BaseModal.OpenWithID(transaction.TransactionID); }"><i class="fas fa-edit"></i></a>
+
+                                <a href="" title="Delete" @onclick:preventDefault @onclick="() => { ModalDeleteExternalTransfer.BaseModal.OpenWithID(transaction.TransactionID); }"><i class="fas fa-trash-alt"></i></a>
+                            }
+                            else if (transaction.InternalTransferID.HasValue)
+                            {
+                                <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditInternalTransfer.BaseModal.OpenWithID(transaction.InternalTransferID.Value); }"><i class="fas fa-edit"></i></a>
+
+                                <a href="" title="Delete" @onclick:preventDefault @onclick="() => { ModalDeleteInternalTransfer.BaseModal.OpenWithID(transaction.InternalTransferID.Value); }"><i class="fas fa-trash-alt"></i></a>
+                            }
+                            else if (transaction.TradeID.HasValue)
+                            {
+                                <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditTrade.BaseModal.OpenWithID(transaction.TradeID.Value); }"><i class="fas fa-edit"></i></a>
+
+                                <a href="" title="Delete" @onclick:preventDefault @onclick="() => { ModalDeleteTrade.BaseModal.OpenWithID(transaction.TradeID.Value); }"><i class="fas fa-trash-alt"></i></a>
+                            }
+                        </td>
+                    </tr>
+
+                    index++;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ModalCreateTrade @ref="ModalCreateTrade" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalCreateInternalTransfer @ref="ModalCreateInternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalCreateExternalTransfer @ref="ModalCreateExternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
+
+<ModalEditTrade @ref="ModalEditTrade" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditImportBalance @ref="ModalEditImportBalance" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditExternalTransfer @ref="ModalEditExternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditInternalTransfer @ref="ModalEditInternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
+
+<ModalDeleteTrade @ref="ModalDeleteTrade" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalDeleteInternalTransfer @ref="ModalDeleteInternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalDeleteExternalTransfer @ref="ModalDeleteExternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />

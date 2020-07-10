@@ -124,7 +124,7 @@ namespace Fortifex4.WebUI.Shared.Common
             if (result.Result.IsSuccessful)
             {
                 IsLoading = false;
-                StateHasChanged();
+                UpdateStateHasChanged();
             }
         }
 
@@ -139,7 +139,7 @@ namespace Fortifex4.WebUI.Shared.Common
             if (result.Result.IsSuccessful)
             {
                 IsLoading = false;
-                StateHasChanged();
+                UpdateStateHasChanged();
             }
         }
 
@@ -154,10 +154,17 @@ namespace Fortifex4.WebUI.Shared.Common
             if (result.Result.IsSuccessful)
             {
                 IsLoading = false;
-                StateHasChanged();
+                UpdateStateHasChanged();
             }
         }
         #endregion
+
+        private void UpdateStateHasChanged()
+        {
+            _globalState.NotifyStateChanged();
+            
+            StateHasChanged();
+        }
 
         #region LogoutAsync
         private async Task LogoutAsync()
