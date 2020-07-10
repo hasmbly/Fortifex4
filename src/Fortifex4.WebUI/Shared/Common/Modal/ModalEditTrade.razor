@@ -1,0 +1,79 @@
+﻿@namespace Fortifex4.WebUI.Shared.Common.Modal
+@attribute [Authorize]
+
+@inject ITradesService _tradesService
+@inject IOwnersService _ownersService
+@inject ICurrenciesService _currenciesService
+
+@inject NavigationManager _navigationManager
+
+<BaseModal @ref="BaseModal"
+           ModalTitle="@Title"
+           IsLoading="IsLoading"
+           OnSubmit="OnSubmitAsync"
+           IsOpenWithID="LoadDataAsync">
+    <ChildContent>
+        <EditForm Model="Input" OnValidSubmit="OnSubmitAsync">
+            <DataAnnotationsValidator />
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>Exchange</label>
+                    <InputText @bind-Value="OwnerProviderName" class="form-control" disabled />
+                </div>
+                <div class="form-group col-3">
+                    <label>Trade Type</label>
+                    <InputText @bind-Value="TypeOfTrade" class="form-control" disabled />
+                </div>
+                <div class="form-group col-3">
+                    <label>Withholding</label>
+                    <InputText @bind-Value="Withholding" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>@LabelAmount</label>
+                    <InputNumber @bind-Value="Amount" @oninput="@(e => Amount = !string.IsNullOrEmpty(e.Value.ToString()) ? Convert.ToDecimal(e.Value) : 0)" class="form-control" />
+                    <ValidationMessage For="@(() => Input.Amount)" />
+                </div>
+                <div class="form-group col-6">
+                    <label>Date & Time</label>
+                    <input @bind="Input.TransactionDateTime" class="form-control" type="datetime-local" step="1" />
+                    <ValidationMessage For="@(() => Input.TransactionDateTime)" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>Currency</label>
+                    <InputText @bind-Value="SourceCurrencySymbol" class="form-control" disabled />
+                </div>
+                <div class="form-group col-6">
+                    <label>Pair Currency</label>
+                    <InputText @bind-Value="DestinationCurrencySymbol" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>@LabelUnitPrice</label>
+                    <InputNumber @bind-Value="UnitPrice" @oninput="@(e => UnitPrice = !string.IsNullOrEmpty(e.Value.ToString()) ? Convert.ToDecimal(e.Value) : 0)" class="form-control" />
+                    <ValidationMessage For="@(() => Input.UnitPrice)" />
+                </div>
+                <div class="form-group col-6">
+                    <label>Total</label>
+                    <InputNumber @bind-Value="Total" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>USD Unit Price</label>
+                    <InputNumber @bind-Value="UnitPriceInUSD" @oninput="@(e => UnitPriceInUSD = !string.IsNullOrEmpty(e.Value.ToString()) ? Convert.ToDecimal(e.Value) : 0)" class="form-control" />
+                    <ValidationMessage For="@(() => Input.UnitPriceInUSD)" />
+                </div>
+                <div class="form-group col-6">
+                    <label>USD Total</label>
+                    <InputNumber @bind-Value="TotalInUSD" class="form-control" disabled />
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </EditForm>
+    </ChildContent>
+</BaseModal>

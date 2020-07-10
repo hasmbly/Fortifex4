@@ -80,8 +80,9 @@
                             }
                             else if (transaction.TradeID.HasValue)
                             {
-                                <a href="#" title="Edit" class="trade-edit-id" data-toggle="modal" data-target="#modal-edit-trade" data-id="@transaction.TradeID"><i class="fas fa-edit"></i></a>
-                                <a href="#" title="Delete" class="trade-delete-id" data-toggle="modal" data-target="#modal-delete-trade" data-id="@transaction.TradeID"><i class="fas fa-trash-alt"></i></a>
+                                <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditTrade.BaseModal.OpenWithID(transaction.TradeID.Value); }"><i class="fas fa-edit"></i></a>
+
+                                <a href="" title="Delete" @onclick:preventDefault @onclick="() => { ModalDeleteTrade.BaseModal.OpenWithID(transaction.TradeID.Value); }"><i class="fas fa-trash-alt"></i></a>
                             }
                         </td>
                     </tr>
@@ -129,9 +130,11 @@
     </table>
 </div>
 
+<ModalEditTrade @ref="ModalEditTrade" OnAfterSuccessful="InvokeSuccessful" />
 <ModalEditImportBalance @ref="ModalEditImportBalance" OnAfterSuccessful="InvokeSuccessful" />
 <ModalEditExternalTransfer @ref="ModalEditExternalTransfer" OnAfterSuccessful="InvokeSuccessful" />
 <ModalEditInternalTransfer @ref="ModalEditInternalTransfer" OnAfterSuccessful="InvokeSuccessful" />
 
+<ModalDeleteTrade @ref="ModalDeleteTrade" OnAfterSuccessful="InvokeSuccessful" />
 <ModalDeleteInternalTransfer @ref="ModalDeleteInternalTransfer" OnAfterSuccessful="InvokeSuccessful" />
 <ModalDeleteExternalTransfer @ref="ModalDeleteExternalTransfer" OnAfterSuccessful="InvokeSuccessful" />
