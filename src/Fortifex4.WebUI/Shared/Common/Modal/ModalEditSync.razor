@@ -1,5 +1,67 @@
-﻿<h3>ModalEditSync</h3>
+﻿@namespace Fortifex4.WebUI.Shared.Common.Modal
+@attribute [Authorize]
 
-@code {
+@inject IWalletsService _walletsService
+@inject NavigationManager _navigationManager
+@inject ToggleCheckboxState _toggleCheckboxState
 
-}
+@implements IDisposable
+
+<BaseModal @ref="BaseModal"
+           ModalTitle="@Title"
+           IsLoading="IsLoading"
+           OnSubmit="OnSubmitInternalTransferAsync"
+           IsOpenWithID="LoadDataAsync">
+    <ChildContent>
+        <EditForm Model="Input" OnValidSubmit="OnSubmitInternalTransferAsync">
+            <DataAnnotationsValidator />
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>Wallet</label>
+                    <InputText @bind-Value="Wallet.WalletName" class="form-control" disabled />
+                </div>
+                <div class="form-group col-6">
+                    <label>Currency</label>
+                    <InputText @bind-Value="Wallet.WalletMainPocketCurrencyName" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-3">
+                    <label>Direction</label>
+                    <ToggleCheckbox Attributes="@Attributes" />
+                </div>
+                <div class="form-group col-3">
+                    <label>@_toggleCheckboxState.LabelAmount</label>
+                    <InputNumber @bind-Value="Amount" @oninput="@(e => Amount = !string.IsNullOrEmpty(e.Value.ToString()) ? Convert.ToDecimal(e.Value) : 0)" class="form-control" disabled />
+                </div>
+                <div class="form-group col-6">
+                    <label>Date & Time</label>
+                    <input @bind="TransactionDateTime" class="form-control" type="datetime-local" step="1" disabled />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>USD Unit Price</label>
+                    <InputNumber @bind-Value="UnitPriceInUSD" @oninput="@(e => UnitPriceInUSD = !string.IsNullOrEmpty(e.Value.ToString()) ? Convert.ToDecimal(e.Value) : 0)" class="form-control" />
+                    <ValidationMessage For="@(() => Input.UnitPriceInUSD)" />
+                </div>
+                <div class="form-group col-6">
+                    <label>USD Total</label>
+                    <InputNumber @bind-Value="Total" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label>Pair Wallet Name</label>
+                    <InputText @bind-Value="Input.PairWalletName" class="form-control" />
+                    <ValidationMessage For="@(() => Input.PairWalletName)" />
+                </div>
+                <div class="form-group col-6">
+                    <label>Pair Wallet Address</label>
+                    <InputText @bind-Value="PairWalletAddress" class="form-control" disabled />
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </EditForm>
+    </ChildContent>
+</BaseModal>

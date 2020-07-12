@@ -30,6 +30,9 @@ namespace Fortifex4.WebUI.Pages
         private ModalEditTrade ModalEditTrade { get; set; }
         private ModalDeleteTrade ModalDeleteTrade { get; set; }
 
+        private ModalEditSync ModalEditSync { get; set; }
+        private ModalEditStartingBalance ModalEditStartingBalance { get; set; }
+
         private ModalCreateExternalTransfer ModalCreateExternalTransfer { get; set; }
         private ModalEditExternalTransfer ModalEditExternalTransfer { get; set; }
         private ModalDeleteExternalTransfer ModalDeleteExternalTransfer { get; set; }

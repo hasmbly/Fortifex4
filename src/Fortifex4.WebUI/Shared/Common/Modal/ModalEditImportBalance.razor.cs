@@ -50,7 +50,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         {
             IsLoading = true;
 
-            var getWallet = await _walletsService.GetDetailsSyncPersonalWallet(transactionID);
+            var getWallet = await _walletsService.GetSyncPersonalWallet(transactionID);
             Wallet = getWallet.Result;
 
             Input.TransactionID = transactionID;

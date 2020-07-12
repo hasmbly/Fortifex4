@@ -3,6 +3,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Fortifex4.Domain.Exceptions;
 using Fortifex4.Shared.Pockets.Queries.GetPocket;
+using Fortifex4.Shared.StartingBalance.Commands.UpdateStartingBalance;
+using Fortifex4.Shared.StartingBalance.Queries.GetStartingBalance;
 using Fortifex4.Shared.Sync.Commands.UpdateSync;
 using Fortifex4.Shared.Sync.Queries.GetSync;
 using Fortifex4.Shared.Wallets.Commands.CreateExchangeWallet;
@@ -117,6 +119,7 @@ namespace Fortifex4.WebAPI.Controllers
             }
         }
 
+        #region Sync
         [Authorize]
         [HttpGet("syncPersonalWallet/{walletID}")]
         public async Task<IActionResult> SyncPersonalWallet(int walletID)
@@ -166,5 +169,36 @@ namespace Fortifex4.WebAPI.Controllers
                 return Ok(new InternalServerError(exception));
             }
         }
+        #endregion
+
+        #region Starting Balance
+        [Authorize]
+        [HttpGet("getStartingBalance/{transactionID}")]
+        public async Task<IActionResult> GetStartingBalance(int transactionID)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetStartingBalanceRequest() { TransactionID = transactionID })));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpPut("updateStartingBalance")]
+        public async Task<IActionResult> UpdateStartingBalance(UpdateStartingBalanceRequest request)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(request)));
+            }
+            catch (Exception exception)
+            {
+                return Ok(new InternalServerError(exception));
+            }
+        }
+        #endregion
     }
 }

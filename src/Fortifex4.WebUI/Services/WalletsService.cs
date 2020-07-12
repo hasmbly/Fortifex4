@@ -3,6 +3,8 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Common;
 using Fortifex4.Shared.Pockets.Queries.GetPocket;
+using Fortifex4.Shared.StartingBalance.Commands.UpdateStartingBalance;
+using Fortifex4.Shared.StartingBalance.Queries.GetStartingBalance;
 using Fortifex4.Shared.Sync.Commands.UpdateSync;
 using Fortifex4.Shared.Sync.Queries.GetSync;
 using Fortifex4.Shared.Wallets.Commands.CreateExchangeWallet;
@@ -35,8 +37,11 @@ namespace Fortifex4.WebUI.Services
         public Task<ApiResponse<GetAllWalletsBySameUsernameAndBlockchainResponse>> GetAllWalletsWithSameCurrency(string memberUsername);
 
         public Task<ApiResponse<SyncPersonalWalletResponse>> SyncPersonalWallet(int walletID);
-        public Task<ApiResponse<GetSyncResponse>> GetDetailsSyncPersonalWallet(int transactionID);
+        public Task<ApiResponse<GetSyncResponse>> GetSyncPersonalWallet(int transactionID);
         public Task<ApiResponse<UpdateSyncResponse>> UpdateDetailsSyncPersonalWallet(UpdateSyncRequest request);
+
+        public Task<ApiResponse<GetStartingBalanceResponse>> GetStartingBalance(int transactionID);
+        public Task<ApiResponse<UpdateStartingBalanceResponse>> UpdateStartingBalance(UpdateStartingBalanceRequest request);
     }
 
     public class WalletsService : IWalletsService
@@ -116,9 +121,7 @@ namespace Fortifex4.WebUI.Services
         {
             await SetHeader();
 
-            var updatePersonalWalletResponse = await _httpClient.PutJsonAsync<ApiResponse<UpdatePersonalWalletResponse>>(Constants.URI.Wallets.UpdatePersonalWallet, request);
-
-            return updatePersonalWalletResponse;
+            return await _httpClient.PutJsonAsync<ApiResponse<UpdatePersonalWalletResponse>>(Constants.URI.Wallets.UpdatePersonalWallet, request);
         }
 
         public async Task<ApiResponse<DeleteWalletResponse>> DeleteWallet(DeleteWalletRequest request)
@@ -144,11 +147,11 @@ namespace Fortifex4.WebUI.Services
             return await _httpClient.GetJsonAsync<ApiResponse<GetAllWalletsBySameUsernameAndBlockchainResponse>>($"{Constants.URI.InternalTransfers.GetAllWalletsWithSameCurrency}/{memberUsername}");
         }
 
-        public async Task<ApiResponse<GetSyncResponse>> GetDetailsSyncPersonalWallet(int transactionID)
+        public async Task<ApiResponse<GetSyncResponse>> GetSyncPersonalWallet(int transactionID)
         {
             await SetHeader();
 
-            return await _httpClient.GetJsonAsync<ApiResponse<GetSyncResponse>>($"{Constants.URI.Wallets.GetDetailsSyncPersonalWallet}/{transactionID}");
+            return await _httpClient.GetJsonAsync<ApiResponse<GetSyncResponse>>($"{Constants.URI.Wallets.GetSyncPersonalWallet}/{transactionID}");
         }
 
         public async Task<ApiResponse<UpdateSyncResponse>> UpdateDetailsSyncPersonalWallet(UpdateSyncRequest request)
@@ -156,6 +159,20 @@ namespace Fortifex4.WebUI.Services
             await SetHeader();
 
             return await _httpClient.PutJsonAsync<ApiResponse<UpdateSyncResponse>>(Constants.URI.Wallets.UpdateDetailsSyncPersonalWallet, request);
+        }
+
+        public async Task<ApiResponse<GetStartingBalanceResponse>> GetStartingBalance(int transactionID)
+        {
+            await SetHeader();
+
+            return await _httpClient.GetJsonAsync<ApiResponse<GetStartingBalanceResponse>>($"{Constants.URI.Wallets.GetStartingBalance}/{transactionID}");
+        }
+
+        public async Task<ApiResponse<UpdateStartingBalanceResponse>> UpdateStartingBalance(UpdateStartingBalanceRequest request)
+        {
+            await SetHeader();
+
+            return await _httpClient.PutJsonAsync<ApiResponse<UpdateStartingBalanceResponse>>(Constants.URI.Wallets.UpdateStartingBalance, request);
         }
     }
 }

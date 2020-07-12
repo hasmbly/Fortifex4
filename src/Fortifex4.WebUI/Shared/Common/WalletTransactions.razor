@@ -56,7 +56,7 @@
                             }
                             else if (transaction.TransactionType == TransactionType.StartingBalance)
                             {
-                                <a href="#" title="Edit" class="starting-balance-edit-id" data-toggle="modal" data-target="#modal-edit-starting-balance-id" data-id="@transaction.TransactionID"><i class="fas fa-edit"></i></a>
+                                <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditStartingBalance.BaseModal.OpenWithID(transaction.TransactionID); }"><i class="fas fa-edit"></i></a>
                             }
                             else if (transaction.TransactionType == TransactionType.SyncBalanceImport)
                             {
@@ -64,7 +64,7 @@
                             }
                             else if (transaction.TransactionType == TransactionType.SyncTransactionIN || transaction.TransactionType == TransactionType.SyncTransactionOUT)
                             {
-                                <a href="#" title="Edit" class="sync-edit-id" data-toggle="modal" data-target="#modal-edit-sync" data-id="@transaction.TransactionID"><i class="fas fa-edit"></i></a>
+                                <a href="" title="Edit" @onclick:preventDefault @onclick="() => { ModalEditSync.BaseModal.OpenWithID(transaction.TransactionID); }"><i class="fas fa-edit"></i></a>
                             }
                             else if (transaction.TransactionType == TransactionType.ExternalTransferIN || transaction.TransactionType == TransactionType.ExternalTransferOUT)
                             {
@@ -131,6 +131,8 @@
 </div>
 
 <ModalEditTrade @ref="ModalEditTrade" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditSync @ref="ModalEditSync" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditStartingBalance @ref="ModalEditStartingBalance" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalEditImportBalance @ref="ModalEditImportBalance" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalEditExternalTransfer @ref="ModalEditExternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalEditInternalTransfer @ref="ModalEditInternalTransfer" OnAfterSuccessful="UpdateStateHasChanged" />

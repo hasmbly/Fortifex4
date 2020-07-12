@@ -20,6 +20,8 @@ namespace Fortifex4.Infrastructure.Persistence
         public DbSet<Member> Members { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectDocument> ProjectDocuments { get; set; }
+        public DbSet<ProjectStatusLog> ProjectStatusLogs { get; set; }
         public DbSet<Pocket> Pockets { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<Region> Regions { get; set; }

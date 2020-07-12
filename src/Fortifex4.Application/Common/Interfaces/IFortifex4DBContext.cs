@@ -20,6 +20,8 @@ namespace Fortifex4.Application.Common.Interfaces
         DbSet<Region> Regions { get; set; }
         DbSet<TimeFrame> TimeFrames { get; set; }
         DbSet<Project> Projects { get; set; }
+        DbSet<ProjectDocument> ProjectDocuments { get; set; }
+        DbSet<ProjectStatusLog> ProjectStatusLogs { get; set; }
         DbSet<Trade> Trades { get; set; }
         DbSet<Transaction> Transactions { get; set; }
         DbSet<Wallet> Wallets { get; set; }

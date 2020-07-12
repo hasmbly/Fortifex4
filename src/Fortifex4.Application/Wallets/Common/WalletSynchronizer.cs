@@ -139,17 +139,37 @@ namespace Fortifex4.Application.Wallets.Common
             return walletDTO;
         }
 
-        public static async Task ImportTransactions(IFortifex4DBContext _context, IEthereumService _ethereumService, Pocket pocket, CancellationToken cancellationToken)
+        public static async Task<WalletDTO> ImportEthereumTransactions(IFortifex4DBContext _context, IEthereumService _ethereumService, Wallet wallet, CancellationToken cancellationToken)
         {
-            var currency = await _context.Currencies
-                .Where(x => x.CurrencyID == pocket.CurrencyID)
+            WalletDTO walletDTO = new WalletDTO
+            {
+                WalletID = wallet.WalletID,
+                BlockchainID = wallet.BlockchainID,
+                Name = wallet.Name,
+                Address = wallet.Address,
+                Balance = 0m,
+                BlockchainSymbol = wallet.Blockchain.Symbol,
+                BlockchainName = wallet.Blockchain.Name,
+            };
+
+            var pockets = await _context.Pockets
+                        .Where(x => x.WalletID == wallet.WalletID)
+                            .Include(a => a.Transactions)
+                         .AsNoTracking()
+                        .ToListAsync(cancellationToken);
+
+            #region Main Pocket
+            var mainPocket = pockets.Single(x => x.IsMain);
+
+            var mainPocketCurrency = await _context.Currencies
+                .Where(x => x.CurrencyID == mainPocket.CurrencyID)
                 .SingleAsync(cancellationToken);
 
-            decimal unitPriceInUSD = currency.UnitPriceInUSD;
+            decimal unitPriceInUSD = mainPocketCurrency.UnitPriceInUSD;
 
-            var transactionCollection = await _ethereumService.GetEthereumTransactionCollectionAsync(pocket.Address);
+            var transactionCollection = await _ethereumService.GetEthereumTransactionCollectionAsync(mainPocket.Address);
 
-            var lastTransactionDateTime = pocket.Transactions
+            var lastTransactionDateTime = mainPocket.Transactions
                 .OrderByDescending(x => x.TransactionDateTime)
                 .Select(x => x.TransactionDateTime)
                 .First();
@@ -167,7 +187,7 @@ namespace Fortifex4.Application.Wallets.Common
                 decimal amount = transaction.Amount;
                 string pairWalletAddress = transaction.FromAddress;
 
-                if (transaction.FromAddress == pocket.Address)
+                if (transaction.FromAddress == mainPocket.Address)
                 {
                     transactionType = TransactionType.SyncTransactionOUT;
                     amount = -transaction.Amount;
@@ -176,7 +196,7 @@ namespace Fortifex4.Application.Wallets.Common
 
                 _context.Transactions.Add(new Transaction
                 {
-                    PocketID = pocket.PocketID,
+                    PocketID = mainPocket.PocketID,
                     TransactionHash = transaction.Hash,
                     PairWalletAddress = pairWalletAddress,
                     Amount = amount,
@@ -187,7 +207,18 @@ namespace Fortifex4.Application.Wallets.Common
             }
 
             await _context.SaveChangesAsync(cancellationToken);
-        }
+            #endregion
 
+            #region Token Pockets
+            #endregion
+
+            decimal mainPocketBalance = _context.Transactions
+                .Where(x => x.PocketID == mainPocket.PocketID)
+                .Sum(x => x.Amount);
+
+            walletDTO.Balance = mainPocketBalance;
+
+            return walletDTO;
+        }
     }
 }

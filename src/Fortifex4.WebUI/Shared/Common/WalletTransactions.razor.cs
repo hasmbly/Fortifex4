@@ -26,6 +26,8 @@ namespace Fortifex4.WebUI.Shared.Common
         public string TransactionsTableID { get; set; } = "data-table-transactions";
 
         private ModalEditTrade ModalEditTrade { get; set; }
+        private ModalEditSync ModalEditSync { get; set; }
+        private ModalEditStartingBalance ModalEditStartingBalance { get; set; }
         private ModalEditImportBalance ModalEditImportBalance { get; set; }
         private ModalEditExternalTransfer ModalEditExternalTransfer { get; set; }
         private ModalEditInternalTransfer ModalEditInternalTransfer { get; set; }

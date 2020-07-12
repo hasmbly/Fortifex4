@@ -116,7 +116,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         public decimal UnitPrice
         {
-            get => Input.UnitPrice;
+            get => ToFixed4(Input.UnitPrice);
             set
             {
                 Input.UnitPrice = ToFixed4(value);
@@ -127,7 +127,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         public decimal UnitPriceInUSD
         {
-            get => Input.UnitPriceInUSD;
+            get => ToFixed4(Input.UnitPriceInUSD);
             set
             {
                 Input.UnitPriceInUSD = ToFixed4(value);

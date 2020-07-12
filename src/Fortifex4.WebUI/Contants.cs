@@ -82,9 +82,12 @@ namespace Fortifex4.WebUI
                 public static readonly string UpdatePersonalWallet = $"{BaseAPI}/wallets/updatePersonalWallet";
                 public static readonly string DeleteWallet = $"{BaseAPI}/wallets/deleteWallet";
 
-                public static readonly string GetDetailsSyncPersonalWallet = $"{BaseAPI}/wallets/sync/details";
+                public static readonly string GetSyncPersonalWallet = $"{BaseAPI}/wallets/sync/details";
                 public static readonly string SyncPersonalWallet = $"{BaseAPI}/wallets/syncPersonalWallet";
                 public static readonly string UpdateDetailsSyncPersonalWallet = $"{BaseAPI}/wallets/sync/edit";
+                
+                public static readonly string GetStartingBalance = $"{BaseAPI}/wallets/getStartingBalance";
+                public static readonly string UpdateStartingBalance = $"{BaseAPI}/wallets/updateStartingBalance";
             }
 
             public static class InternalTransfers
@@ -128,6 +131,12 @@ namespace Fortifex4.WebUI
             public static class Portfolio
             {
                 public static readonly string GetPortfolio = $"{BaseAPI}/portfolio/getPortfolio";
+            }
+
+            public static class StartingBalance
+            {
+                public static readonly string GetStartingBalance = $"{BaseAPI}/startingBalance/getStartingBalance";
+                public static readonly string UpdateStartingBalance = $"{BaseAPI}/startingBalance/updateStartingBalance";
             }
         }
 

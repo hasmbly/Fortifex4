@@ -59,30 +59,43 @@ namespace Fortifex4.Application.Wallets.Commands.SyncPersonalWallet
                 throw new NotFoundException(nameof(Wallet), request.WalletID);
 
             var cryptoWallet = new CryptoWallet();
+            var walletDTO = new WalletDTO();
 
             if (wallet.Blockchain.Symbol == CurrencySymbol.BTC)
             {
                 cryptoWallet = await _bitcoinService.GetBitcoinWalletAsync(wallet.Address);
+                walletDTO = await WalletSynchronizer.ImportBalance(_context, _dateTimeOffset.Now, wallet, cryptoWallet, cancellationToken);
             }
             else if (wallet.Blockchain.Symbol == CurrencySymbol.ETH)
             {
-                cryptoWallet = await _ethereumService.GetEthereumWalletAsync(wallet.Address);
+                if (wallet.IsSynchronized)
+                {
+                    walletDTO = await WalletSynchronizer.ImportEthereumTransactions(_context, _ethereumService, wallet, cancellationToken);
+                }
+                else
+                {
+                    cryptoWallet = await _ethereumService.GetEthereumWalletAsync(wallet.Address);
+                    walletDTO = await WalletSynchronizer.ImportBalance(_context, _dateTimeOffset.Now, wallet, cryptoWallet, cancellationToken);
+                }
             }
             else if (wallet.Blockchain.Symbol == CurrencySymbol.DOGE)
             {
                 cryptoWallet = await _dogecoinService.GetDogecoinWalletAsync(wallet.Address);
+                walletDTO = await WalletSynchronizer.ImportBalance(_context, _dateTimeOffset.Now, wallet, cryptoWallet, cancellationToken);
             }
             else if (wallet.Blockchain.Symbol == CurrencySymbol.STEEM)
             {
                 cryptoWallet = await _steemService.GetSteemWalletAsync(wallet.Address);
+                walletDTO = await WalletSynchronizer.ImportBalance(_context, _dateTimeOffset.Now, wallet, cryptoWallet, cancellationToken);
             }
             else if (wallet.Blockchain.Symbol == CurrencySymbol.HIVE)
             {
                 cryptoWallet = await _hiveService.GetHiveWalletAsync(wallet.Address);
+                walletDTO = await WalletSynchronizer.ImportBalance(_context, _dateTimeOffset.Now, wallet, cryptoWallet, cancellationToken);
             }
 
             result.IsSuccessful = true;
-            result.Wallet = await WalletSynchronizer.ImportBalance(_context, _dateTimeOffset.Now, wallet, cryptoWallet, cancellationToken);
+            result.Wallet = walletDTO;
 
             return result;
         }
