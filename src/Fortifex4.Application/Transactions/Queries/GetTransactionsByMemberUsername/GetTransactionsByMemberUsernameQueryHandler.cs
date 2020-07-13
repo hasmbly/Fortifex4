@@ -206,7 +206,7 @@ namespace Fortifex4.Application.Transactions.Queries.GetTransactionsByMemberUser
                                     {
                                         transactionDTO.DestinationProviderName = owner.Provider.Name;
                                         transactionDTO.DestinationWalletName = tradeBuy.FromTransaction.Pocket.Wallet.Name;
-                                        transactionDTO.UnitPrice = ((tradeBuy.FromTransaction.Amount == 0) ? 0 : tradeBuy.FromTransaction.Amount) / ((transactionDTO.Amount == 0) ? 0 : transactionDTO.Amount);
+                                        transactionDTO.UnitPrice = Math.Abs(tradeBuy.FromTransaction.Amount / transactionDTO.Amount);
                                         transactionDTO.DestinationCurrencySymbol = tradeBuy.FromTransaction.Pocket.Currency.Symbol;
                                         transactionDTO.DestinationCurrencyName = tradeBuy.FromTransaction.Pocket.Currency.Name;
                                         transactionDTO.TradeID = tradeBuy.TradeID;
@@ -276,7 +276,8 @@ namespace Fortifex4.Application.Transactions.Queries.GetTransactionsByMemberUser
 
             var result = new GetTransactionsByMemberUsernameResponse
             {
-                Transactions = transactions.OrderByDescending(x => x.TransactionDateTime).ToList()
+                Transactions = transactions.OrderByDescending(x => x.TransactionDateTime).ToList(),
+                IsSuccessful = true
             };
 
             return result;
