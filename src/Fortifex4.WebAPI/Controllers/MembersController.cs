@@ -137,7 +137,9 @@ namespace Fortifex4.WebAPI.Controllers
             }
             catch (Exception exception)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+                return Ok(new InternalServerError(exception));
+
+                //return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
             }
         }
     }
