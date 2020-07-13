@@ -1,26 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Fortifex4.Domain.Enums;
-using Fortifex4.Shared.Currencies.Queries.GetAllCoinCurrencies;
-using Fortifex4.Shared.Currencies.Queries.GetDestinationCurrenciesForMember;
-using Fortifex4.Shared.Lookup.Queries.GetOwners;
-using Fortifex4.Shared.Owners.Queries.GetOwner;
-using Fortifex4.Shared.Trades.Commands.CreateTrade;
 using Fortifex4.Shared.Trades.Commands.UpdateTrade;
 using Fortifex4.Shared.Trades.Queries.GetTrade;
-using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using static Fortifex4.WebUI.Shared.Common.ToggleCheckbox;
 
 namespace Fortifex4.WebUI.Shared.Common.Modal
 {
     public partial class ModalEditTrade
     {
-        public string Title { get; set; } = "Add Trade";
+        public string Title { get; set; } = "Edit Trade";
 
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }

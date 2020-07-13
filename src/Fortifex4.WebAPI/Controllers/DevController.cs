@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Fortifex4.Shared;
 using Fortifex4.Shared.Currencies.Commands.UpdateCryptoCurrencies;
 using Fortifex4.Shared.Currencies.Commands.UpdateFiatCurrencies;
 using Fortifex4.Shared.Currencies.Commands.UpdateFiatCurrencyCoinMarketCapIDs;
@@ -35,6 +36,20 @@ namespace Fortifex4.WebAPI.Controllers
             sb.AppendLine($"ConnectionString FortifexDatabase: {_configuration.GetSection("ConnectionStrings")["FortifexDatabase"]}");
 
             return Content(sb.ToString());
+        }
+
+        [AllowAnonymous]
+        [HttpGet("getFortifexOption/{subSection}")]
+        public async Task<ActionResult> GetFortifexOption(string subSection)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(_configuration.GetSection(FortifexOptions.RootSection)[subSection])));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
         }
 
         [AllowAnonymous]

@@ -6,15 +6,12 @@ using Fortifex4.Shared.Contributors.Commands.CreateContributors;
 using Fortifex4.Shared.Contributors.Commands.DeleteContributor;
 using Fortifex4.Shared.Contributors.Commands.RejectInvitation;
 using Fortifex4.Shared.Contributors.Commands.UpdateContributorInvitationStatus;
-using Fortifex4.Shared.InternalTransfers.Commands.CreateInternalTransfer;
-using Fortifex4.Shared.InternalTransfers.Commands.DeleteInternalTransfer;
-using Fortifex4.Shared.InternalTransfers.Commands.UpdateInternalTransfer;
-using Fortifex4.Shared.InternalTransfers.Queries.GetInternalTransfer;
+using Fortifex4.Shared.Contributors.Queries.GetContributorsByMemberUsername;
 using Fortifex4.Shared.Projects.Commands.CreateProjects;
 using Fortifex4.Shared.Projects.Commands.UpdateProjects;
 using Fortifex4.Shared.Projects.Commands.UpdateProjectStatus;
-using Fortifex4.Shared.Wallets.Queries.GetAllWalletsBySameUsernameAndBlockchain;
-using Fortifex4.Shared.Wallets.Queries.GetWalletsBySameUsernameAndBlockchain;
+using Fortifex4.Shared.Projects.Queries.GetMyProjects;
+using Fortifex4.Shared.Projects.Queries.GetProjectsConfirmation;
 using Fortifex4.WebAPI.Common.ApiEnvelopes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,20 +20,6 @@ namespace Fortifex4.WebAPI.Controllers
 {
     public class ProjectsController : ApiController
     {
-        [Authorize]
-        [HttpGet("getInternalTransfer/{internalTransferID}")]
-        public async Task<IActionResult> GetInternalTransfer(int internalTransferID)
-        {
-            try
-            {
-                return Ok(new Success(await Mediator.Send(new GetInternalTransferRequest() { InternalTransferID = internalTransferID })));
-            }
-            catch (Exception exception)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
-            }
-        }
-
         [AllowAnonymous]
         [HttpPost("createProject")]
         public async Task<ActionResult> CreateProject(CreateProjectsRequest request)
@@ -142,6 +125,48 @@ namespace Fortifex4.WebAPI.Controllers
             try
             {
                 return Ok(new Success(await Mediator.Send(new RejectInvitationRequest() { InvitationCode = invitationCode })));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getMyProjects/{memberUsername}")]
+        public async Task<IActionResult> GetMyProjects(string memberUsername)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetMyProjectsRequest() { MemberUsername = memberUsername })));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getContributorsByMemberUsername/{memberUsername}")]
+        public async Task<IActionResult> GetContributorsByMemberUsername(string memberUsername)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetContributorsByMemberUsernameRequest() { MemberUsername = memberUsername })));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getProjectsConfirmation")]
+        public async Task<IActionResult> GetProjectsConfirmation()
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetProjectsConfirmationRequest() { } )));
             }
             catch (Exception exception)
             {

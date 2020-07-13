@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Fortifex4.WebUI
+﻿namespace Fortifex4.WebUI
 {
     public static class Constants
     {
@@ -9,6 +7,11 @@ namespace Fortifex4.WebUI
         public static class URI
         {
             public const string BaseAPI = "api";
+
+            public static class Dev
+            {
+                public static readonly string GetFortifexOption = $"{BaseAPI}/dev/getFortifexOption";
+            }
 
             public static class Account
             {
@@ -126,6 +129,22 @@ namespace Fortifex4.WebUI
                 public static readonly string CreateTrade = $"{BaseAPI}/trades/createTrade";
                 public static readonly string UpdateTrade = $"{BaseAPI}/trades/updateTrade";
                 public static readonly string DeleteTrade = $"{BaseAPI}/trades/deleteTrade";
+            }
+
+            public static class Projects
+            {
+                public static readonly string CreateProject = $"{BaseAPI}/projects/createProject";
+                public static readonly string UpdateProject = $"{BaseAPI}/projects/updateProject";
+                public static readonly string DeleteContributors = $"{BaseAPI}/projects/deleteContributors";
+                public static readonly string InviteMembers = $"{BaseAPI}/projects/inviteMembers";
+                public static readonly string UpdateInvitation = $"{BaseAPI}/projects/updateInvitation";
+                public static readonly string UpdateProjectStatus = $"{BaseAPI}/projects/updateProjectStatus";
+                public static readonly string AcceptProjectInvitation = $"{BaseAPI}/projects/acceptProjectInvitation";
+                public static readonly string RejectProjectInvitation = $"{BaseAPI}/projects/rejectProjectInvitation";
+
+                public static readonly string GetMyProjects = $"{BaseAPI}/projects/getMyProjects";
+                public static readonly string GetContributorsByMemberUsername = $"{BaseAPI}/projects/getContributorsByMemberUsername";
+                public static readonly string GetProjectsConfirmation = $"{BaseAPI}/projects/getProjectsConfirmation";
             }
 
             public static class Portfolio

@@ -30,6 +30,8 @@ namespace Fortifex4.WebUI.Services
     {
         private readonly HttpClient _httpClient;
 
+        private ApiResponse<GetTransactionsByMemberUsernameResponse> getTransactionsByMemberUsernameResponse = new ApiResponse<GetTransactionsByMemberUsernameResponse>();
+
         private readonly AuthenticationStateProvider _authenticationStateProvider;
 
         public MembersService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider)
@@ -103,7 +105,17 @@ namespace Fortifex4.WebUI.Services
         {
             await SetHeader();
 
-            return await _httpClient.GetJsonAsync<ApiResponse<GetTransactionsByMemberUsernameResponse>>($"{Constants.URI.Members.GetTransactionsByMemberUsername}/{memberUsername}");
+            try
+            {
+                getTransactionsByMemberUsernameResponse = 
+                    await _httpClient.GetJsonAsync<ApiResponse<GetTransactionsByMemberUsernameResponse>>($"{Constants.URI.Members.GetTransactionsByMemberUsername}/{memberUsername}");
+            }
+            catch (HttpRequestException e)
+            {
+                System.Console.WriteLine($"this is GetTransactionsByMemberUsername - exception: {e.Message}");
+            }
+
+            return getTransactionsByMemberUsernameResponse;
         }
     }
 }

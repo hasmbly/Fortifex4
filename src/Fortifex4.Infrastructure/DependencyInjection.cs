@@ -1,5 +1,4 @@
-﻿using Fortifex4.Application;
-using Fortifex4.Application.Common.Interfaces;
+﻿using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Bitcoin;
 using Fortifex4.Application.Common.Interfaces.Crypto;
 using Fortifex4.Application.Common.Interfaces.Dogecoin;
@@ -7,12 +6,14 @@ using Fortifex4.Application.Common.Interfaces.Email;
 using Fortifex4.Application.Common.Interfaces.Ethereum;
 using Fortifex4.Application.Common.Interfaces.Fiat;
 using Fortifex4.Application.Common.Interfaces.File;
-using Fortifex4.Infrastructure.Constants;
+using Fortifex4.Application.Common.Interfaces.Hive;
+using Fortifex4.Application.Common.Interfaces.Steem;
 using Fortifex4.Infrastructure.Bitcoin.BitcoinChain;
 using Fortifex4.Infrastructure.Bitcoin.BlockExplorer;
 using Fortifex4.Infrastructure.Bitcoin.FakeChain;
 using Fortifex4.Infrastructure.Bitcoin.SoChain;
 using Fortifex4.Infrastructure.Bitocin.Fake;
+using Fortifex4.Infrastructure.Constants;
 using Fortifex4.Infrastructure.Crypto.CoinMarketCap;
 using Fortifex4.Infrastructure.Crypto.Fake;
 using Fortifex4.Infrastructure.Dogecoin.DogeChain;
@@ -25,17 +26,16 @@ using Fortifex4.Infrastructure.Ethereum.FakeChain;
 using Fortifex4.Infrastructure.Fiat.Fake;
 using Fortifex4.Infrastructure.Fiat.Fixer;
 using Fortifex4.Infrastructure.File.Default;
+using Fortifex4.Infrastructure.Hive.Fake;
+using Fortifex4.Infrastructure.Hive.OpenHive;
+using Fortifex4.Infrastructure.Persistence;
 using Fortifex4.Infrastructure.Services;
+using Fortifex4.Infrastructure.Steem.Fake;
+using Fortifex4.Infrastructure.Steem.Steemit;
+using Fortifex4.Shared;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Fortifex4.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Fortifex4.Application.Common.Interfaces.Steem;
-using Fortifex4.Infrastructure.Steem.Steemit;
-using Fortifex4.Infrastructure.Steem.Fake;
-using Fortifex4.Application.Common.Interfaces.Hive;
-using Fortifex4.Infrastructure.Hive.OpenHive;
-using Fortifex4.Infrastructure.Hive.Fake;
 
 namespace Fortifex4.Infrastructure
 {
