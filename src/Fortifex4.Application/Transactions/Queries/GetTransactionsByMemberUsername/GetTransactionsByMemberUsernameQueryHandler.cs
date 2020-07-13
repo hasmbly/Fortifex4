@@ -210,8 +210,7 @@ namespace Fortifex4.Application.Transactions.Queries.GetTransactionsByMemberUser
                                         {
                                             transactionDTO.DestinationProviderName = owner.Provider.Name;
                                             transactionDTO.DestinationWalletName = tradeBuy.FromTransaction.Pocket.Wallet.Name;
-                                            //transactionDTO.UnitPrice = tradeBuy.FromTransaction.Amount / transactionDTO.Amount;
-                                            transactionDTO.UnitPrice = tradeBuy.FromTransaction.Amount;
+                                            transactionDTO.UnitPrice = tradeBuy.FromTransaction.Amount / transactionDTO.Amount;
                                             transactionDTO.DestinationCurrencySymbol = tradeBuy.FromTransaction.Pocket.Currency.Symbol;
                                             transactionDTO.DestinationCurrencyName = tradeBuy.FromTransaction.Pocket.Currency.Name;
                                             transactionDTO.TradeID = tradeBuy.TradeID;
