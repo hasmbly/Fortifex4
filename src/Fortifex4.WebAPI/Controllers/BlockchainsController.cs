@@ -10,7 +10,7 @@ namespace Fortifex4.WebAPI.Controllers
 {
     public class BlockchainsController : ApiController
     {
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("getAllBlockchains")]
         public async Task<IActionResult> GetAllBlockchains()
         {

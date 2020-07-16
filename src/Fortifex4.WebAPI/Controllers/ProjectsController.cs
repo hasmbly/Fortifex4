@@ -11,6 +11,7 @@ using Fortifex4.Shared.Projects.Commands.CreateProjects;
 using Fortifex4.Shared.Projects.Commands.UpdateProjects;
 using Fortifex4.Shared.Projects.Commands.UpdateProjectStatus;
 using Fortifex4.Shared.Projects.Queries.GetMyProjects;
+using Fortifex4.Shared.Projects.Queries.GetProject;
 using Fortifex4.Shared.Projects.Queries.GetProjectsConfirmation;
 using Fortifex4.WebAPI.Common.ApiEnvelopes;
 using Microsoft.AspNetCore.Authorization;
@@ -139,6 +140,37 @@ namespace Fortifex4.WebAPI.Controllers
             try
             {
                 return Ok(new Success(await Mediator.Send(new GetMyProjectsRequest() { MemberUsername = memberUsername })));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getProjectIsExist/{isExistProjectByMemberUsername}")]
+        public async Task<IActionResult> GetProjectIsExist(string isExistProjectByMemberUsername)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetProjectRequest()
+                {
+                    IsExistProjectByMemberUsername = isExistProjectByMemberUsername 
+                })));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getProject/{projectID}")]
+        public async Task<IActionResult> GetProjectIsExist(int projectID)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetProjectRequest() { ProjectID = projectID })));
             }
             catch (Exception exception)
             {

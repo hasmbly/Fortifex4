@@ -86,7 +86,11 @@ namespace Fortifex4.Application.Transactions.Queries.GetTransactionsByMemberUser
 
                                     if (transaction.TransactionType == TransactionType.StartingBalance)
                                     {
-                                        transactionDTO.SourceProviderName = wallet.Name;
+                                        if (wallet.ProviderType == ProviderType.Personal)
+                                            transactionDTO.SourceProviderName = wallet.Name;
+                                        else
+                                            transactionDTO.SourceProviderName = $"{owner.Provider.Name} - {wallet.Name}";
+
                                         transactionDTO.DestinationProviderName = transaction.PairWalletName;
                                         transactionDTO.DestinationWalletName = transaction.PairWalletName;
                                         transactionDTO.DestinationCurrencySymbol = pocket.Currency.Symbol;

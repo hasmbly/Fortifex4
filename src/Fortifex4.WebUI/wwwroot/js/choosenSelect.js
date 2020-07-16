@@ -1,6 +1,26 @@
-﻿window.choosenSelect = () =>
+﻿window.ChoosenSelect =
 {
-    console.log("choosenSelect from JS - Started");
+    init: function (elementID)
+    {
+        $(elementID).chosen();
+    },
 
-    $('.chosen-select').chosen();
-}
+    initWithOnChange: function (elementID, dotnetObject)
+    {
+        ChoosenSelect.init(elementID);
+
+        ChoosenSelect.OnChange(elementID, dotnetObject);
+    },
+
+    OnChange: function (elementID, dotnetObject)
+    {
+        $(elementID).change(function ()
+        {
+            var blockchainID = $(this).val();
+
+            console.log("JS: chosen - eventListener: " + blockchainID);
+
+            dotnetObject.invokeMethodAsync('SetBlockchainID', blockchainID);
+        });
+    }
+};

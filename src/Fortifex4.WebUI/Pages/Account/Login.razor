@@ -3,32 +3,12 @@
 
 @inject IAuthenticationService _authenticationService
 @inject NavigationManager _navigationManager
-@inject ActivateMemberState activateMemberState
 
 <PageTitle Title="Login" />
 <div class="row no-gutters h-100">
     <div class="col">
         <div class="login-area">
-            <EditForm Model="Input" OnValidSubmit="LoginAsync">
-                <DataAnnotationsValidator />
-                <h1 class="mb-5">Log In</h1>
-                <ActivationSucceed MemberUsername="@activateMemberState.Member.MemberUsername" />
-                
-                <div class="form-group">
-                    <InputText @bind-Value="Input.MemberUsername" class="form-control-login" placeholder="Email address" />
-                    <ValidationMessage For="@(() => Input.MemberUsername)" />
-                </div>
-                <div class="form-group">
-                    <InputText @bind-Value="Input.Password" type="password" class="form-control-login" placeholder="Password" />
-                    <ValidationMessage For="@(() => Input.Password)" />
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn-login">@if (IsLoading) { <i class="fas fa-circle-notch fa-spin"></i> } LOGIN</button>
-                    <div class="text-danger">
-                        @Message
-                    </div>
-                </div>
-            </EditForm>
+            <SignIn OnAfterSuccessful="UpdateStateHasChanged" />
             <div class="external-providers">
                 <a class="btn btn-icon" href="">
                     <span class="icon icon-google"></span>

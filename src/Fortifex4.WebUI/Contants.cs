@@ -143,6 +143,8 @@
                 public static readonly string RejectProjectInvitation = $"{BaseAPI}/projects/rejectProjectInvitation";
 
                 public static readonly string GetMyProjects = $"{BaseAPI}/projects/getMyProjects";
+                public static readonly string GetProject = $"{BaseAPI}/projects/getProject";
+                public static readonly string GetProjectIsExist = $"{BaseAPI}/projects/getProjectIsExist";
                 public static readonly string GetContributorsByMemberUsername = $"{BaseAPI}/projects/getContributorsByMemberUsername";
                 public static readonly string GetProjectsConfirmation = $"{BaseAPI}/projects/getProjectsConfirmation";
             }

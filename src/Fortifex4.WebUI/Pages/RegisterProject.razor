@@ -1,5 +1,71 @@
-﻿<h3>RegisterProjects</h3>
+﻿@layout AnonymousLayout
+@page "/RegisterProject"
 
-@code {
+@inject IAuthenticationService _authenticationService
+@inject IProjectsServices _projectsServices
+@inject IBlockchainsService _blockchainsService
 
-}
+@inject NavigationManager _navigationManager
+@inject ProjectState _projectState
+
+@implements IDisposable
+
+<PageTitle Title="Register Project" />
+
+<div class="row no-gutters h-100">
+    <div class="col-md-6">
+        <div class="centered-position">
+            <h1>
+                Register Project
+                @if (_projectState.IsLoading)
+                {
+                    <i class="fas fa-circle-notch fa-spin"></i>
+                }
+            </h1>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-danger error-msg">
+                        <p class="text-primary">@_projectState.Message</p>
+
+                        @if (_projectState.IsUserHasProject)
+                        {
+                            <br />
+                            <div class="text-danger error-msg">
+                                <a href="/projects/details/@_projectState.ProjectID.Value">View your Project</a>
+                            </div>
+                        }
+                    </div>
+
+                    @if (!_projectState.IsUserHasProject)
+                    {
+                        @if (!User.Identity.IsAuthenticated && !_projectState.IsAuthenticated)
+                        {
+                            <p>Project Creator</p>
+
+                            if (String.IsNullOrEmpty(_projectState.ExistMemberUsername))
+                            {
+                                <SignUp IsRegisterProjectState="true" />
+                            }
+                            else
+                            {
+                                <SignIn IsRegisterProjectState="true" />
+                            }
+                        }
+                        else
+                        {
+                            <p>Project Detail</p>
+
+                            <CreateProject OnAfterSuccessful="OnSubmitRegisterProject" />
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="dark-side">
+            <img class="logo-image" src="images/fortifex-logo-link-black.jpg" />
+            <img src="images/fortifex-logo-link-black.jpg" />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@namespace Fortifex4.WebUI.Shared.Common
+@attribute [Authorize]
+
+@inject IAuthenticationService _authenticationService
+@inject IProjectsServices _projectsServices
+@inject IBlockchainsService _blockchainsService
+@inject ProjectState _projectState
+
+@implements IDisposable
+
+<EditForm Model="Input" OnValidSubmit="SubmitAsync">
+    <DataAnnotationsValidator />
+
+    <div class="form-row">
+        <div class="form-group col-12">
+            <InputText @bind-Value="Input.Name" class="form-control-login" placeholder="Project Name" />
+            <span class="text-danger">
+                <ValidationMessage For="@(() => Input.Name)" />
+            </span>
+        </div>
+        <div class="form-group col-3"></div>
+        <div class="form-group col-6">
+            @if (Blockchains.Count > 0)
+            {
+                <InputSelect @bind-Value="SelectedBlockchains" class="form-control chosen-select" id="select-blockchain-project" data-placeholder="Project Blockhain">
+                    @foreach (var blockchain in Blockchains)
+                    {
+                        <option value="@blockchain.BlockchainID.ToString()">@blockchain.NameWithSymbol</option>
+                    }
+                </InputSelect>
+            }
+            <span class="text-danger">
+                <ValidationMessage For="@(() => Input.BlockchainID)" />
+            </span>
+        </div>
+        <div class="form-group col-3"></div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-12">
+            <InputText @bind-Value="Input.WalletAddress" class="form-control-login" placeholder="Wallet Address" />
+            <span class="text-danger">
+                <ValidationMessage For="@(() => Input.WalletAddress)" />
+            </span>
+        </div>
+        <div class="form-group col-12">
+            <InputText @bind-Value="Input.Description" class="form-control-login" placeholder="Project Description" />
+            <span class="text-danger">
+                <ValidationMessage For="@(() => Input.Description)" />
+            </span>
+        </div>
+    </div>
+    <button type="submit" class="btn-login">
+        @if (IsLoading)
+        {
+            <i class="fas fa-circle-notch fa-spin"></i>
+        } SAVE
+    </button>
+</EditForm>

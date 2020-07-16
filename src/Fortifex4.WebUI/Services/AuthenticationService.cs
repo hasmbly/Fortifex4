@@ -5,6 +5,7 @@ using Fortifex4.Shared.Common;
 using Fortifex4.Shared.Members.Commands.ActivateMember;
 using Fortifex4.Shared.Members.Commands.CreateMember;
 using Fortifex4.Shared.Members.Queries.Login;
+using Fortifex4.Shared.Members.Queries.MemberUsernameAlreadyExists;
 using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -16,6 +17,7 @@ namespace Fortifex4.WebUI.Services
         public Task<ApiResponse<LoginResponse>> Login(LoginRequest request);
         public Task<ApiResponse<CreateMemberResponse>> Register(CreateMemberRequest request);
         public Task<ApiResponse<ActivateMemberResponse>> ActivateMember(Guid ActivationCode);
+        public Task<ApiResponse<MemberUsernameAlreadyExistsResponse>> CheckUsername(string memberUsername);
         public Task Logout();
     }
 
@@ -58,6 +60,11 @@ namespace Fortifex4.WebUI.Services
         public async Task Logout()
         {
             await ((ServerAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOutAsync();
+        }
+
+        public async Task<ApiResponse<MemberUsernameAlreadyExistsResponse>> CheckUsername(string memberUsername)
+        {
+            return await _httpClient.GetJsonAsync<ApiResponse<MemberUsernameAlreadyExistsResponse>>($"{Constants.URI.Account.CheckUsername}/{memberUsername}");
         }
     }
 }

@@ -41,6 +41,8 @@ namespace Fortifex4.Application.Projects.Queries.GetMyProjects
                 result.Projects.Add(projectDTO);
             }
 
+            result.IsSuccessful = true;
+
             return result;
         }
     }

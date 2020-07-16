@@ -15,12 +15,12 @@ namespace Fortifex4.WebAPI.Controllers
     public class AccountController : ApiController
     {
         [AllowAnonymous]
-        [HttpPost("checkUsername")]
-        public async Task<ActionResult> CheckUsernameAsync(MemberUsernameAlreadyExistsRequest request)
+        [HttpGet("checkUsername/{memberUsername}")]
+        public async Task<ActionResult> CheckUsername(string memberUsername)
         {
             try
             {
-                return Ok(new Success(await Mediator.Send(request)));
+                return Ok(new Success(await Mediator.Send(new MemberUsernameAlreadyExistsRequest() { MemberUsername = memberUsername })));
             }
             catch (Exception exception)
             {

@@ -110,12 +110,15 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             var getAllWalletsWithSameCurrency = await _walletsService.GetAllWalletsWithSameCurrency(User.Identity.Name);
             ListFromWallets = getAllWalletsWithSameCurrency.Result.Wallets.ToList();
 
-            // default value for select option -> SelectedToWallet
-            Input.FromPocketID = ListFromWallets.First().PocketID;
+            if (ListFromWallets.Count > 0)
+            {
+                // default value for select option -> SelectedToWallet
+                Input.FromPocketID = ListFromWallets.First().PocketID;
 
-            SetCurrencyName(Input.FromPocketID);
+                SetCurrencyName(Input.FromPocketID);
 
-            await LoadSelectOptionToWallet(ListFromWallets.First().WalletID);
+                await LoadSelectOptionToWallet(ListFromWallets.First().WalletID);
+            }
         }
 
         #region EventHandler

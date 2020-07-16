@@ -38,8 +38,6 @@ namespace Fortifex4.WebUI.Shared.Common
 
         protected override void OnInitialized()
         {
-            System.Console.WriteLine($"WalletTransactions - OnInitialized");
-
             FirstStage = true;
         }
 
@@ -50,8 +48,6 @@ namespace Fortifex4.WebUI.Shared.Common
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            System.Console.WriteLine($"WalletTransactions - OnAfterRender");
-
             if (firstRender)
             {
                 System.Console.WriteLine($"WalletTransactions - OnAfterRender - firstRender");

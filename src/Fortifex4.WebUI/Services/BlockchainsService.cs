@@ -35,11 +35,7 @@ namespace Fortifex4.WebUI.Services
 
         public async Task<ApiResponse<GetAllBlockchainsResponse>> GetAllBlockchains()
         {
-            await SetHeader();
-
-            var getAllBlockchainsResponse = await _httpClient.GetJsonAsync<ApiResponse<GetAllBlockchainsResponse>>(Constants.URI.Blockchains.GetAllBlockchains);
-
-            return getAllBlockchainsResponse;
+            return await _httpClient.GetJsonAsync<ApiResponse<GetAllBlockchainsResponse>>(Constants.URI.Blockchains.GetAllBlockchains);
         }
     }
 }

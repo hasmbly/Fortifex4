@@ -40,11 +40,11 @@ namespace Fortifex4.WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpGet("getFortifexOption/{subSection}")]
-        public async Task<ActionResult> GetFortifexOption(string subSection)
+        public ActionResult GetFortifexOption(string subSection)
         {
             try
             {
-                return Ok(new Success(await Mediator.Send(_configuration.GetSection(FortifexOptions.RootSection)[subSection])));
+                return Ok(new Success(_configuration.GetSection(FortifexOptions.RootSection)[subSection]));
             }
             catch (Exception exception)
             {

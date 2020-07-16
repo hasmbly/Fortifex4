@@ -146,16 +146,6 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolio
                                 currencyDTO.CurrentValueInPreferredCoinCurrency = 0m;
                         }
                         #endregion
-
-                        #region SelectedPercentChange
-                        currencyDTO.SelectedPercentChange = result.MemberPreferredTimeFrameName switch
-                        {
-                            TimeFrameName.OneHour => currencyDTO.PercentChange1h,
-                            TimeFrameName.OneDay => currencyDTO.PercentChange24h,
-                            TimeFrameName.OneWeek => currencyDTO.PercentChange7d,
-                            _ => currencyDTO.PercentChangeLifetime
-                        };
-                        #endregion
                     }
                 }
             }
@@ -174,6 +164,16 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolio
                     currencyDTO.PercentChange1h = latestQuotesResult.PercentChange1h;
                     currencyDTO.PercentChange24h = latestQuotesResult.PercentChange24h;
                     currencyDTO.PercentChange7d = latestQuotesResult.PercentChange7d;
+
+                    #region SelectedPercentChange
+                    currencyDTO.SelectedPercentChange = result.MemberPreferredTimeFrameName switch
+                    {
+                        TimeFrameName.OneHour => currencyDTO.PercentChange1h,
+                        TimeFrameName.OneDay => currencyDTO.PercentChange24h,
+                        TimeFrameName.OneWeek => currencyDTO.PercentChange7d,
+                        _ => currencyDTO.PercentChangeLifetime
+                    };
+                    #endregion
 
                     // Sekalian update Currency kalau MemberPreferredFiatCurrencySymbol adalah USD
                     if (result.MemberPreferredFiatCurrencySymbol == CurrencySymbol.USD)

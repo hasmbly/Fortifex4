@@ -15,10 +15,12 @@ namespace Fortifex4.Shared.Projects.Queries.GetProject
         public bool IsExistProjectByMemberUsernameResult { get; set; }
 
         public IList<ContributorDTO> Contributors { get; set; }
+        public IList<ProjectDocumentDTO> ProjectDocuments { get; set; }
 
         public GetProjectResponse()
         {
             this.Contributors = new List<ContributorDTO>();
+            this.ProjectDocuments = new List<ProjectDocumentDTO>();
         }
     }
 }

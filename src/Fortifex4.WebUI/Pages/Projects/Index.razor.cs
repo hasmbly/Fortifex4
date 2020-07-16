@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using Fortifex4.Shared;
 using Fortifex4.Shared.Contributors.Queries.GetContributorsByMemberUsername;
 using Fortifex4.Shared.Projects.Queries.GetMyProjects;
 using Fortifex4.Shared.Projects.Queries.GetProjectsConfirmation;
@@ -24,7 +23,6 @@ namespace Fortifex4.WebUI.Pages.Projects
 
         public bool IsAdministrator { get; set; }
 
-        public FortifexOptions FortifexOptions { get; set; } = new FortifexOptions();
         public GetMyProjectsResponse MyProjects { get; set; } = new GetMyProjectsResponse();
         public GetContributorsByMemberUsernameResponse ContributorsResult { get; set; } = new GetContributorsByMemberUsernameResponse();
         public GetProjectsConfirmationResponse ProjectsConfirmation { get; set; } = new GetProjectsConfirmationResponse();
@@ -64,7 +62,7 @@ namespace Fortifex4.WebUI.Pages.Projects
 
             ProjectsConfirmation = Task.FromResult(await _projectsServices.GetProjectsConfirmation()).Result.Result;
 
-            IsAdministrator = Task.FromResult(await _devService.GetFortifexOption(FortifexOptions.FortifexAdministrator)).Result.Result == User.Identity.Name;
+            IsAdministrator = Task.FromResult(await _devService.GetFortifexOption("FortifexAdministrator")).Result.Result == User.Identity.Name;
 
             IsLoading = false;
 

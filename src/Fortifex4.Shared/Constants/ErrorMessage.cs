@@ -3,6 +3,7 @@
     public static class ErrorMessage
     {
         public const string MemberUsernameNotFound = "Sorry, Username Not Found";
+        public const string MemberUsernameAlreadyTaken = "Username already taken";
         public const string InactiveAccount = "Sorry, Your Account is inactive";
         public const string OwnerNotFound = "Sorry, Owner Not Found";
         public const string WalletNotFound = "Sorry, Wallet Not Found";
@@ -19,6 +20,5 @@
         public const string FiatCurrenciesNotFound = "Sorry, Fiat Currencies Not Found";
         public const string InvalidPassword = "Sorry, Invalid Password";
         public const string PasswordDoNotMatch = "The password and confirmation password do not match.";
-        public const string MemberCreated = "Member Created successfully";
     }
 }

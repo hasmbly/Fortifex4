@@ -2,10 +2,10 @@
 @page "/account/register"
 
 @inject IAuthenticationService _authenticationService
-@inject NavigationManager _navigationManager
 @inject ActivateMemberState activateMemberState
 
-<link href="css/account/register.css" rel="stylesheet" />
+@implements IDisposable
+
 <PageTitle Title="Register" />
 <div class="row no-gutters h-100">
     <div class="col">
@@ -16,27 +16,8 @@
             }
             else
             {
-                <EditForm Model="Input" OnValidSubmit="RegisterAsync">
-                    <DataAnnotationsValidator />
-                    <h1 class="mb-5">Register</h1>
-                    <div class="form-group">
-                        <InputText @bind-Value="Input.MemberUsername" class="form-control-login" placeholder="Email address" />
-                        <ValidationMessage For="@(() => Input.MemberUsername)" />
-                    </div>
-                    <div class="form-group">
-                        <InputText @bind-Value="Input.Password" type="password" class="form-control-login" placeholder="Password" />
-                        <ValidationMessage For="@(() => Input.Password)" />
-                    </div>
-                    <div class="form-group">
-                        <input type="password" @bind="@ConfirmPassword" class="form-control-login" placeholder="Confirm Password" />
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn-login">@if (IsLoading) { <i class="fas fa-circle-notch fa-spin"></i> } REGISTER</button>
-                        <div class="text-danger">
-                            @Message
-                        </div>
-                    </div>
-                </EditForm>
+                <SignUp />
+
                 <div class="external-providers">
                     <a class="btn btn-icon" href="">
                         <span class="icon icon-google"></span>
@@ -58,4 +39,4 @@
             <img src="images/fortifex-logo-link-black.jpg" />
         </div>
     </div>
-</div>erdfc
+</div>

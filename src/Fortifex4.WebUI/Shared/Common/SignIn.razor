@@ -1,0 +1,40 @@
+﻿@namespace Fortifex4.WebUI.Shared.Common
+@attribute [Authorize]
+
+@inject IAuthenticationService _authenticationService
+@inject ActivateMemberState activateMemberState
+@inject ProjectState _projectState
+
+<EditForm Model="Input" OnValidSubmit="LoginAsync">
+    <DataAnnotationsValidator />
+
+    @if (!IsRegisterProjectState)
+    {
+        <h1 class="mb-5">Log In</h1>
+        <ActivationSucceed MemberUsername="@activateMemberState.Member.MemberUsername" />
+    }
+
+    <div class="form-group col-12">
+        <InputText @bind-Value="MemberUsername" class="form-control-login" placeholder="Email address" />
+        <ValidationMessage For="@(() => Input.MemberUsername)" />
+    </div>
+    <div class="form-group col-12">
+        <InputText @bind-Value="Input.Password" type="password" class="form-control-login" placeholder="Password" />
+        <ValidationMessage For="@(() => Input.Password)" />
+    </div>
+    <div class="form-group col-12">
+        <button type="submit" class="btn-login">
+            @if (IsLoading)
+            {
+                <i class="fas fa-circle-notch fa-spin"></i>
+            } LOGIN
+        </button>
+
+        @if (!IsRegisterProjectState)
+        {
+            <div class="text-danger">
+                @Message
+            </div>
+        }
+    </div>
+</EditForm>

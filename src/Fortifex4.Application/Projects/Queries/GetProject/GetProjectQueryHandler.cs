@@ -34,6 +34,7 @@ namespace Fortifex4.Application.Projects.Queries.GetProject
 
                 if (isExistProject != null)
                 {
+                    result.IsSuccessful = true;
                     result.IsExistProjectByMemberUsernameResult = true;
                     result.ProjectID = isExistProject.ProjectID;
                 }
@@ -48,8 +49,13 @@ namespace Fortifex4.Application.Projects.Queries.GetProject
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (project == null)
-                throw new NotFoundException(nameof(Project), query.ProjectID);
+            {
+                result.IsSuccessful = false;
 
+                throw new NotFoundException(nameof(Project), query.ProjectID);
+            }
+
+            result.IsSuccessful = true;
             result.ProjectID = query.ProjectID;
             result.MemberUsername = project.MemberUsername;
             result.Name = project.Name;
@@ -58,6 +64,7 @@ namespace Fortifex4.Application.Projects.Queries.GetProject
             result.Description = project.WalletAddress;
             result.WalletAddress = project.WalletAddress;
             result.Contributors = new List<ContributorDTO>();
+            result.ProjectDocuments = new List<ProjectDocumentDTO>();
 
             foreach (var contributor in project.Contributors)
             {
@@ -70,6 +77,19 @@ namespace Fortifex4.Application.Projects.Queries.GetProject
                 };
 
                 result.Contributors.Add(contributorDTO);
+            }
+
+            foreach (var projectDocument in project.ProjectDocuments)
+            {
+                var projectDocumentDTO = new ProjectDocumentDTO()
+                {
+                    ProjectDocumentID = projectDocument.ProjectDocumentID,
+                    DocumentID = projectDocument.DocumentID,
+                    Title = projectDocument.Title,
+                    OriginalFileName = projectDocument.OriginalFileName
+                };
+
+                result.ProjectDocuments.Add(projectDocumentDTO);
             }
 
             return result;

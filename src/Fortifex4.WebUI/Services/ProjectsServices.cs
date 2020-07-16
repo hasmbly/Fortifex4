@@ -12,6 +12,7 @@ using Fortifex4.Shared.Projects.Commands.CreateProjects;
 using Fortifex4.Shared.Projects.Commands.UpdateProjects;
 using Fortifex4.Shared.Projects.Commands.UpdateProjectStatus;
 using Fortifex4.Shared.Projects.Queries.GetMyProjects;
+using Fortifex4.Shared.Projects.Queries.GetProject;
 using Fortifex4.Shared.Projects.Queries.GetProjectsConfirmation;
 using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;
@@ -32,6 +33,8 @@ namespace Fortifex4.WebUI.Services
         public Task<ApiResponse<RejectInvitationResponse>> RejectProjectInvitation(string invitationCode);
 
         public Task<ApiResponse<GetMyProjectsResponse>> GetMyProjects(string memberUsername);
+        public Task<ApiResponse<GetProjectResponse>> GetProject(int projectID);
+        public Task<ApiResponse<GetProjectResponse>> GetProjectIsExist(string memberUsername);
         public Task<ApiResponse<GetContributorsByMemberUsernameResponse>> GetContributorsByMemberUsername(string memberUsername);
         public Task<ApiResponse<GetProjectsConfirmationResponse>> GetProjectsConfirmation();
     }
@@ -130,6 +133,20 @@ namespace Fortifex4.WebUI.Services
             await SetHeader();
 
             return await _httpClient.GetJsonAsync<ApiResponse<GetProjectsConfirmationResponse>>(Constants.URI.Projects.GetProjectsConfirmation);
+        }
+
+        public async Task<ApiResponse<GetProjectResponse>> GetProject(int projectID)
+        {
+            await SetHeader();
+
+            return await _httpClient.GetJsonAsync<ApiResponse<GetProjectResponse>>($"{Constants.URI.Projects.GetProject}/{projectID}");
+        }
+
+        public async Task<ApiResponse<GetProjectResponse>> GetProjectIsExist(string memberUsername)
+        {
+            await SetHeader();
+
+            return await _httpClient.GetJsonAsync<ApiResponse<GetProjectResponse>>($"{Constants.URI.Projects.GetProjectIsExist}/{memberUsername}");
         }
     }
 }
