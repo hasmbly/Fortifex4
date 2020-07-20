@@ -1,0 +1,67 @@
+﻿@namespace Fortifex4.WebUI.Shared.Common.Modal
+@attribute [Authorize]
+
+@inject IAuthenticationService _authenticationService
+@inject IProjectsServices _projectsServices
+@inject IBlockchainsService _blockchainsService
+@inject ProjectState _projectState
+
+@implements IDisposable
+
+@inject NavigationManager _navigationManager
+
+<BaseModal @ref="BaseModal"
+           ModalTitle="@Title"
+           IsLoading="IsLoading"
+           OnSubmit="SubmitAsync">
+    <ChildContent>
+        <EditForm Model="Input" OnValidSubmit="SubmitAsync">
+            <DataAnnotationsValidator />
+
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label class="col-form-label">Project Name</label>
+                    <InputText @bind-Value="Input.ProjectName" class="form-control" placeholder="Project Name" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => Input.ProjectName)" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label class="col-form-label">Blockchains</label>
+                    @if (Blockchains.Count > 0)
+                    {
+                        <InputSelect @bind-Value="SelectedBlockchains" class="form-control chosen-select" id="@ElementID" data-placeholder="Project Blockhain">
+                            @foreach (var blockchain in Blockchains)
+                                {
+                                <option value="@blockchain.BlockchainID.ToString()">@blockchain.NameWithSymbol</option>
+                                }
+                        </InputSelect>
+                    }
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => Input.ProjectBlockchainID)" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label class="col-form-label">Wallet Address</label>
+                    <InputText @bind-Value="Input.ProjectWalletAddress" class="form-control" placeholder="Wallet Address" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => Input.ProjectWalletAddress)" />
+                    </span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label class="col-form-label">Project Description</label>
+                    <InputText @bind-Value="Input.ProjectDescription" class="form-control" placeholder="Project Description" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => Input.ProjectDescription)" />
+                    </span>
+                </div>
+            </div>
+        </EditForm>
+    </ChildContent>
+</BaseModal>

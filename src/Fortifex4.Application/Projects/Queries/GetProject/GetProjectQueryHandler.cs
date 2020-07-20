@@ -61,8 +61,9 @@ namespace Fortifex4.Application.Projects.Queries.GetProject
             result.Name = project.Name;
             result.BlockchainID = project.Blockchain.BlockchainID;
             result.BlockchainName = project.Blockchain.Name;
-            result.Description = project.WalletAddress;
+            result.Description = project.Description;
             result.WalletAddress = project.WalletAddress;
+            result.ProjectStatus = project.ProjectStatus;
             result.Contributors = new List<ContributorDTO>();
             result.ProjectDocuments = new List<ProjectDocumentDTO>();
 

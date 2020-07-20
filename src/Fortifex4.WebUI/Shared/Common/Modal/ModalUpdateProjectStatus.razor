@@ -1,0 +1,32 @@
+﻿@namespace Fortifex4.WebUI.Shared.Common.Modal
+@attribute [Authorize]
+
+@inject IAuthenticationService _authenticationService
+@inject IProjectsServices _projectsServices
+@inject IBlockchainsService _blockchainsService
+@inject ProjectState _projectState
+
+@inject NavigationManager _navigationManager
+
+<BaseModal @ref="BaseModal"
+           ModalTitle="@Title"
+           IsLoading="IsLoading"
+           OnSubmit="SubmitAsync"
+           IsOpenWithProjectStatus="SetProjectStatus">
+    <ChildContent>
+        <EditForm Model="Input" OnValidSubmit="SubmitAsync">
+            <DataAnnotationsValidator />
+
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label class="col-form-label">Comment</label>
+                    <InputTextArea @bind-Value="Input.Comment" class="form-control" rows="3" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => Input.Comment)" />
+                    </span>
+                </div>
+            </div>
+
+        </EditForm>
+    </ChildContent>
+</BaseModal>

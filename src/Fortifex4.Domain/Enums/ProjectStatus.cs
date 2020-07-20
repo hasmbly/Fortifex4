@@ -2,7 +2,7 @@
 {
     public enum ProjectStatus
     {
-        Created = 0,
+        Draft = 0,
         SubmittedForApproval = 1,
         Approved = 2,
         Returned = -1,

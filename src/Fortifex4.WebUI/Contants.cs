@@ -130,7 +130,7 @@
                 public static readonly string UpdateTrade = $"{BaseAPI}/trades/updateTrade";
                 public static readonly string DeleteTrade = $"{BaseAPI}/trades/deleteTrade";
             }
-
+            
             public static class Projects
             {
                 public static readonly string CreateProject = $"{BaseAPI}/projects/createProject";
@@ -147,6 +147,17 @@
                 public static readonly string GetProjectIsExist = $"{BaseAPI}/projects/getProjectIsExist";
                 public static readonly string GetContributorsByMemberUsername = $"{BaseAPI}/projects/getContributorsByMemberUsername";
                 public static readonly string GetProjectsConfirmation = $"{BaseAPI}/projects/getProjectsConfirmation";
+                public static readonly string GetProjectStatusLogsByProjectID = $"{BaseAPI}/projects/getProjectStatusLogsByProjectID";
+                public static readonly string CheckIsContributor = $"{BaseAPI}/projects/checkIsContributor";
+            }
+
+            public static class ProjectsDocument
+            {
+                public static readonly string CreateProjectDocument = $"{BaseAPI}/projectsDocument/createProjectDocument";
+                public static readonly string GetProjectDocument = $"{BaseAPI}/projectsDocument/getProjectDocument";
+                public static readonly string GetProjectDocumentDownload = $"{BaseAPI}/projectsDocument/getProjectDocument/download";
+                public static readonly string UpdateProjectDocument = $"{BaseAPI}/projectsDocument/updateProjectDocument";
+                public static readonly string DeleteProjectDocument = $"{BaseAPI}/projectsDocument/deleteProjectDocument";
             }
 
             public static class Portfolio

@@ -1,5 +1,31 @@
-﻿<h3>ModalInviteProjectContributor</h3>
+﻿@namespace Fortifex4.WebUI.Shared.Common.Modal
+@attribute [Authorize]
 
-@code {
+@inject IAuthenticationService _authenticationService
+@inject IProjectsServices _projectsServices
 
-}
+<BaseModal @ref="BaseModal"
+           ModalTitle="@Title"
+           IsLoading="IsLoading"
+           OnSubmit="SubmitAsync">
+    <ChildContent>
+        <EditForm Model="Input" OnValidSubmit="SubmitAsync">
+            <DataAnnotationsValidator />
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label class="col-form-label">Project Name</label>
+                    <InputText @bind-Value="ProjectName" class="form-control" disabled />
+                </div>
+                <div class="form-group col-6">
+                    <label class="col-form-label">Contributors' E-mail</label>
+                    <input class="form-control" id="@ElementID" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => Input.MemberUsername)" />
+                    </span>
+                </div>
+            </div>
+
+        </EditForm>
+    </ChildContent>
+</BaseModal>

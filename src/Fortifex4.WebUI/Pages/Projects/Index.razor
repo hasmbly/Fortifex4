@@ -10,7 +10,7 @@
 
 @using Fortifex4.Domain.Enums
 
-<PageTitle Title="Exchanges" />
+<PageTitle Title="Projects" />
 
 @if (!IsAdministrator)
 {
@@ -33,7 +33,7 @@
                             <td class="trans">@project.Name</td>
                             <td class="trans">@project.BlockchainName</td>
                             <td class="trans text-center">
-                                <a href="#" class="details-project-id btn-sm btn-primary" title="Details" data-id="@project.ProjectID">Details</a>
+                                <a href="/projects/details/@project.ProjectID" class="details-project-id btn-sm btn-primary" title="Details">Details</a>
                             </td>
                         </tr>
                     }
@@ -92,14 +92,14 @@
                                 @if (contributor.InvitationStatus == InvitationStatus.Invited)
                                 {
                                     <td class="trans text-center">
-                                        <a href="#" class="accept-project-id btn-sm btn-primary" title="Accept" data-id="@contributor.ContributorID">Accept</a>
-                                        <a href="#" class="reject-project-id btn-sm btn-danger" title="Reject" data-id="@contributor.ContributorID">Reject</a>
+                                        <button type="button" class="btn btn-sm btn-primary" title="Accept" @onclick="() => SetInvitationStatus(InvitationStatus.Accepted, contributor.ContributorID)">Accept</button>
+                                        <button type="button" class="btn btn-sm btn-danger" title="Reject" @onclick="() => SetInvitationStatus(InvitationStatus.Rejected, contributor.ContributorID)">Reject</button>
                                     </td>
                                 }
                                 else if (contributor.InvitationStatus == InvitationStatus.Accepted)
                                 {
                                     <td class="trans text-center">
-                                        <a href="#" class="details-project-id btn-sm btn-primary" title="Details" data-id="@contributor.ProjectID">Details</a>
+                                        <a href="/projects/details/@contributor.ProjectID" class="btn-sm btn-primary" title="Details">Details</a>
                                     </td>
                                 }
                                 else if (contributor.InvitationStatus == InvitationStatus.Rejected)

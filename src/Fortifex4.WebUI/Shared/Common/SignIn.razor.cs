@@ -61,7 +61,7 @@ namespace Fortifex4.WebUI.Shared.Common
                     if (IsRegisterProjectState)
                     {
                         _projectState.SetIsAuthenticated(true);
-                        _projectState.SetMessage($"Signed as {Input.MemberUsername}");
+                        _projectState.SetMessage("primary", $"Signed as {Input.MemberUsername}");
                     }
 
                     await OnAfterSuccessful.InvokeAsync(true);

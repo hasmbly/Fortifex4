@@ -15,7 +15,7 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4")
+                .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -409,7 +409,7 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("ProjectDocument");
+                    b.ToTable("ProjectDocuments");
                 });
 
             modelBuilder.Entity("Fortifex4.Domain.Entities.ProjectStatusLog", b =>
@@ -438,7 +438,7 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("ProjectStatusLog");
+                    b.ToTable("ProjectStatusLogs");
                 });
 
             modelBuilder.Entity("Fortifex4.Domain.Entities.Provider", b =>

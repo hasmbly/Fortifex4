@@ -27,7 +27,7 @@ namespace Fortifex4.Application.Contributors.Queries.GetContributorsByMemberUser
                 .Include(a => a.Project).ThenInclude(a => a.Blockchain)
                 .ToListAsync(cancellationToken);
 
-            if (contributors.Count != 0)
+            if (contributors.Count == 0)
             {
                 result.IsSuccessful = false;
                 result.ErrorMessage = ErrorMessage.ContributorNotFound;

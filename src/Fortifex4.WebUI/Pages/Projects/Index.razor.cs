@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Contributors.Commands.UpdateContributorInvitationStatus;
 using Fortifex4.Shared.Contributors.Queries.GetContributorsByMemberUsername;
 using Fortifex4.Shared.Projects.Queries.GetMyProjects;
 using Fortifex4.Shared.Projects.Queries.GetProjectsConfirmation;
@@ -44,9 +46,15 @@ namespace Fortifex4.WebUI.Pages.Projects
             await InitAsync();
         }
 
-        private async void UpdateStateHasChanged(bool IsSuccessful)
+        private async void SetInvitationStatus(InvitationStatus invitationStatus, int contributorID)
         {
-            if (IsSuccessful)
+            var result = Task.FromResult(await _projectsServices.UpdateInvitation(new UpdateContributorInvitationStatusRequest()
+            {
+                ContributorID = contributorID,
+                InvitationStatus = invitationStatus
+            })).Result.Result;
+
+            if (result.IsSuccessful)
                 await InitAsync();
         }
 

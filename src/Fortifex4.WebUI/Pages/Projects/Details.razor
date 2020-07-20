@@ -1,5 +1,295 @@
-﻿<h3>Details</h3>
+﻿@page "/projects/details/{projectID:int}"
+@attribute [Authorize]
 
-@code {
+@inject IProjectsServices _projectsServices
+@inject IDevService _devService
+@inject NavigationManager _navigationManager
+@inject GlobalState globalState
+@inject ProjectState _projectState
 
+@implements IDisposable
+
+@using Fortifex4.Domain.Enums
+
+<PageTitle Title="Project's Detail" />
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="projects">Projects</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Project.Name</li>
+    </ol>
+</nav>
+
+<h1 class="mb-3">
+    Projects Details
+    @if (IsLoading)
+    {
+        <i class="fas fa-circle-notch fa-spin"></i>
+    }
+</h1>
+<div class="container-body shadow p-3 mb-5 bg-white rounded">
+    <div class="row">
+        <div class="col-8">
+            <dl class="row">
+                <dt class="col-4">Name</dt>
+                <dd class="col-8">@Project.Name</dd>
+                <dt class="col-4">Wallet Address</dt>
+                <dd class="col-8">@Project.WalletAddress</dd>
+                <dt class="col-4">Blockchain</dt>
+                <dd class="col-8">@Project.BlockchainName</dd>
+                <dt class="col-4">Description</dt>
+                <dd class="col-8">@Project.Description</dd>
+                <dt class="col-4">Status</dt>
+                @if (Project.ProjectStatus == ProjectStatus.Draft)
+                {
+                    <dd class="col-8">Draft</dd>
+                }
+                else if (Project.ProjectStatus == ProjectStatus.SubmittedForApproval)
+                {
+                    <dd class="col-8">Submitted for Approval</dd>
+                }
+                else if (Project.ProjectStatus == ProjectStatus.Approved)
+                {
+                    <dd class="col-8">Approved</dd>
+                }
+                else if (Project.ProjectStatus == ProjectStatus.Rejected)
+                {
+                    <dd class="col-8">Rejected</dd>
+                }
+                else if (Project.ProjectStatus == ProjectStatus.Returned)
+                {
+                    <dd class="col-8">Returned</dd>
+                }
+            </dl>
+        </div>
+        <div class="col-4 text-right">
+            @if (IsAdministrator && Project.ProjectStatus == ProjectStatus.SubmittedForApproval)
+            {
+                <button class="btn btn-warning" @onclick="() => ModalUpdateProjectStatus.BaseModal.OpenWithProjectStatus(ProjectStatus.Returned)">Return</button>
+                <button class="btn btn-success" @onclick="() => ModalUpdateProjectStatus.BaseModal.OpenWithProjectStatus(ProjectStatus.Approved)">Approve</button>
+                <button class="btn btn-danger" @onclick="() => ModalUpdateProjectStatus.BaseModal.OpenWithProjectStatus(ProjectStatus.Rejected)">Reject</button>
+            }
+
+            @if (Project.ProjectStatus == ProjectStatus.Draft || Project.ProjectStatus == ProjectStatus.Returned)
+            {
+                @if (IsCreator)
+                {
+                    <button class="btn btn-primary" @onclick="() => ModalEditProject.BaseModal.Open()">Edit</button>
+                    <button class="btn btn-danger" @onclick="() => ModalUpdateProjectStatus.BaseModal.OpenWithProjectStatus(ProjectStatus.SubmittedForApproval)">Request for approval</button>
+                }
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            @if (!string.IsNullOrEmpty(_projectState.Message))
+            {
+                <div class="alert alert-@_projectState.ColorMessage">
+                    @_projectState.Message
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@if (ProjectStatusLogs != null)
+{
+    <div class="d-flex justify-content-between">
+        <h2>Approval Logs</h2>
+    </div>
+    <div class="container-body shadow p-3 mb-5 bg-white rounded">
+        <div class="table-responsive">
+            <table id="data-table-project-documents" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="trans text-center">No</th>
+                        <th class="trans text">Time Stamp</th>
+                        <th class="trans text">Status</th>
+                        <th class="trans text">Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int indexProjectApprovalLogs = 1;}
+                    @foreach (var projectStatusLog in ProjectStatusLogs.ProjectStatusLogs)
+                    {
+                        <tr>
+                            <td class="trans text-center">@indexProjectApprovalLogs</td>
+                            <td class="trans text">@projectStatusLog.LastModified.ToLocalDisplayText()</td>
+                            <td class="trans text">@projectStatusLog.ProjectStatusDisplayText</td>
+                            <td class="trans text">@projectStatusLog.Comment</td>
+                        </tr>
+                        indexProjectApprovalLogs++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
+
+<div class="d-flex justify-content-between">
+    <h2>Documents</h2>
+    @if (Project.ProjectStatus == ProjectStatus.Draft || Project.ProjectStatus == ProjectStatus.Returned)
+    {
+        @if (IsCreator && Project.ProjectDocuments.Count < ProjectDocumentsLimit)
+        {
+            <div class="mb-1">
+                <button class="btn btn-primary">Add Document</button>
+            </div>
+        }
+    }
+</div>
+<div class="container-body shadow p-3 mb-5 bg-white rounded">
+    <div class="table-responsive">
+        @if (!string.IsNullOrEmpty(Message))
+        {
+            <div class="alert alert-danger">
+                @Message
+            </div>
+        }
+        @if (Project.ProjectDocuments.Count == 0)
+        {
+            <div class="alert alert-warning" role="alert">
+                You don't have any Document yet
+            </div>
+        }
+        else
+        {
+            <table id="data-table-project-documents" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="trans text-center">No</th>
+                        <th class="trans text">Title</th>
+                        <th class="trans text" colspan="2">File</th>
+                        @if (Project.ProjectStatus == ProjectStatus.Draft || Project.ProjectStatus == ProjectStatus.Returned)
+                        {
+                            <th class="trans text">Action</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int indexProjectDocument = 1;}
+                    @foreach (var projectDocument in Project.ProjectDocuments)
+                    {
+                        <tr>
+                            <td class="trans text-center">@indexProjectDocument</td>
+                            <td class="trans text">@projectDocument.Title</td>
+                            <td class="trans text">
+                                <a asp-controller="ProjectDocuments" asp-action="Download" asp-route-id="@projectDocument.ProjectDocumentID">@projectDocument.OriginalFileName <i class="fas fa-download"></i></a>
+                            </td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" asp-controller="ProjectDocuments" asp-action="Download" asp-route-id="@projectDocument.ProjectDocumentID">Download</a>
+                            </td>
+                            <td>
+                                @if (Project.ProjectStatus == ProjectStatus.Draft || Project.ProjectStatus == ProjectStatus.Returned)
+                                {
+                                    <button class="btn btn-secondary btn-sm edit-modal-project-document" data-toggle="modal" data-target="#modal-edit-project-document" data-id="@projectDocument.ProjectDocumentID">Edit</button>
+                                    <button class="btn btn-danger btn-sm delete-modal-project-document" data-toggle="modal" data-target="#modal-delete-project-document" data-id="@projectDocument.ProjectDocumentID">Delete</button>
+                                }
+                            </td>
+                        </tr>
+                        indexProjectDocument++;
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+<div class="d-flex justify-content-between">
+    <h2>Contributors</h2>
+    @if (Project.ProjectStatus == ProjectStatus.Approved)
+    {
+        @if (IsCreator)
+        {
+            <div class="mb-1">
+                <button class="btn btn-primary" @onclick="() => ModalInviteProjectContributor.BaseModal.Open()">Add Contributor</button>
+            </div>
+        }
+    }
+</div>
+<div class="container-body shadow p-3 mb-5 bg-white rounded">
+    <div class="table-responsive">
+        @if (Project.ProjectStatus == ProjectStatus.Approved)
+        {
+            @if (Project.Contributors.Count == 0)
+            {
+                <div class="alert alert-warning" role="alert">
+                    You don't have any Contributor yet
+                </div>
+            }
+            else
+            {
+                <table id="data-table-contributors" class="table table-hover data-table">
+                    <thead>
+                        <tr>
+                            <th class="trans text-center">No</th>
+                            <th class="trans text">Name</th>
+                            <th class="trans text-center">Invitation Status</th>
+                            <th class="trans text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int indexContributor = 1;}
+                        @foreach (var contributor in Project.Contributors)
+                        {
+                            <tr>
+                                <td class="trans text-center">@indexContributor</td>
+                                <td class="trans text">@contributor.MemberUsername</td>
+                                <td class="trans text-center">
+                                    @if (contributor.InvitationStatus == InvitationStatus.Invited)
+                                    {
+                                        <div class="alert-warning">@contributor.InvitationStatusDisplayText</div>
+                                    }
+                                    else if (contributor.InvitationStatus == InvitationStatus.Accepted)
+                                    {
+                                        <div class="alert-success">@contributor.InvitationStatusDisplayText</div>
+                                    }
+                                    else if (contributor.InvitationStatus == InvitationStatus.Rejected)
+                                    {
+                                        <div class="alert-danger">@contributor.InvitationStatusDisplayText</div>
+                                    }
+                                </td>
+                                <td class="trans text-center">
+                                    @if (IsCreator)
+                                    {
+                                        <a href="" class="btn btn-sm btn-primary" title="Delete" @onclick:preventDefault @onclick="() => { ModalDeleteProjectContributors.BaseModal.OpenWithID(contributor.ContributorID); }">Delete</a>
+                                    }
+                                </td>
+                            </tr>
+                            indexContributor++;
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+        else if (IsCreator)
+        {
+            <div class="alert alert-warning" role="alert">
+                You can invite contributors after your Project is approved by Fortifex
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                The Project creator can only invite contributors after this Project is approved.
+            </div>
+        }
+    </div>
+</div>
+
+<ModalEditProject @ref="ModalEditProject" ProjectID="ProjectID" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalUpdateProjectStatus @ref="ModalUpdateProjectStatus" ProjectID="ProjectID" OnAfterSuccessful="UpdateStateHasChanged" />
+
+<ModalInviteProjectContributor @ref="ModalInviteProjectContributor" ProjectID="ProjectID" ProjectName="@Project.Name" OnAfterSuccessful="UpdateStateHasChanged" />
+
+<ModalDeleteProjectContributors @ref="ModalDeleteProjectContributors" OnAfterSuccessful="UpdateStateHasChanged" />
+
+@*<ModalCreateProjectDocument @ref="ModalCreateProjectDocument" ProjectID="ProjectID" OnAfterSuccessful="UpdateStateHasChanged" />*@
+
+@*
+    @await Component.InvokeAsync(nameof(ModalInviteProjectContributors), new { projectID=Project.ProjectID, projectName=Project.Name })
+    @await Component.InvokeAsync(nameof(ModalDeleteProjectContributors))
+    @await Component.InvokeAsync(nameof(ModalCreateProjectDocument), new { projectID=Project.ProjectID })
+    @await Component.InvokeAsync(nameof(ModalEditProjectDocument))
+    @await Component.InvokeAsync(nameof(ModalDeleteProjectDocument))
+*@

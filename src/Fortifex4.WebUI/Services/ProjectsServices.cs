@@ -7,6 +7,7 @@ using Fortifex4.Shared.Contributors.Commands.CreateContributors;
 using Fortifex4.Shared.Contributors.Commands.DeleteContributor;
 using Fortifex4.Shared.Contributors.Commands.RejectInvitation;
 using Fortifex4.Shared.Contributors.Commands.UpdateContributorInvitationStatus;
+using Fortifex4.Shared.Contributors.Queries.CheckIsContributor;
 using Fortifex4.Shared.Contributors.Queries.GetContributorsByMemberUsername;
 using Fortifex4.Shared.Projects.Commands.CreateProjects;
 using Fortifex4.Shared.Projects.Commands.UpdateProjects;
@@ -14,6 +15,7 @@ using Fortifex4.Shared.Projects.Commands.UpdateProjectStatus;
 using Fortifex4.Shared.Projects.Queries.GetMyProjects;
 using Fortifex4.Shared.Projects.Queries.GetProject;
 using Fortifex4.Shared.Projects.Queries.GetProjectsConfirmation;
+using Fortifex4.Shared.ProjectStatusLogs.Queries.GetProjectStatusLogsByProjectID;
 using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -37,6 +39,8 @@ namespace Fortifex4.WebUI.Services
         public Task<ApiResponse<GetProjectResponse>> GetProjectIsExist(string memberUsername);
         public Task<ApiResponse<GetContributorsByMemberUsernameResponse>> GetContributorsByMemberUsername(string memberUsername);
         public Task<ApiResponse<GetProjectsConfirmationResponse>> GetProjectsConfirmation();
+        public Task<ApiResponse<GetProjectStatusLogsByProjectIDResponse>> GetProjectStatusLogsByProjectID(int projectID);
+        public Task<ApiResponse<CheckIsContributorResponse>> CheckIsContributor(int projectID, string memberUsername);
     }
 
     public class ProjectsServices : IProjectsServices
@@ -147,6 +151,22 @@ namespace Fortifex4.WebUI.Services
             await SetHeader();
 
             return await _httpClient.GetJsonAsync<ApiResponse<GetProjectResponse>>($"{Constants.URI.Projects.GetProjectIsExist}/{memberUsername}");
+        }
+
+        public async Task<ApiResponse<GetProjectStatusLogsByProjectIDResponse>> GetProjectStatusLogsByProjectID(int projectID)
+        {
+            await SetHeader();
+
+            return await _httpClient.GetJsonAsync<ApiResponse<GetProjectStatusLogsByProjectIDResponse>>($"{Constants.URI.Projects.GetProjectStatusLogsByProjectID}/{projectID}");
+        }
+
+        public async Task<ApiResponse<CheckIsContributorResponse>> CheckIsContributor(int projectID, string memberUsername)
+        {
+            await SetHeader();
+
+            string queryParams = $"?projectID={projectID}&memberUsername={memberUsername}";
+
+            return await _httpClient.GetJsonAsync<ApiResponse<CheckIsContributorResponse>>(Constants.URI.Projects.CheckIsContributor + queryParams);
         }
     }
 }

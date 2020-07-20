@@ -22,7 +22,7 @@
         <div class="form-group col-6">
             @if (Blockchains.Count > 0)
             {
-                <InputSelect @bind-Value="SelectedBlockchains" class="form-control chosen-select" id="select-blockchain-project" data-placeholder="Project Blockhain">
+                <InputSelect @bind-Value="SelectedBlockchains" class="form-control chosen-select" id="@ElementID" data-placeholder="Project Blockhain">
                     @foreach (var blockchain in Blockchains)
                     {
                         <option value="@blockchain.BlockchainID.ToString()">@blockchain.NameWithSymbol</option>

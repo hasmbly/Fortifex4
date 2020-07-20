@@ -46,12 +46,22 @@ namespace Fortifex4.Application.Projects.Commands.CreateProjects
                 Name = request.Name,
                 Description = request.Description,
                 WalletAddress = request.WalletAddress,
-                ProjectStatus = ProjectStatus.Created
+                ProjectStatus = ProjectStatus.Draft
             };
 
             await _context.Projects.AddAsync(project);
             await _context.SaveChangesAsync(cancellationToken);
             #endregion
+
+            var projectStatusLog = new ProjectStatusLog
+            {
+                ProjectID = project.ProjectID,
+                ProjectStatus = ProjectStatus.Draft,
+                Comment = "Project has been created"
+            };
+
+            await _context.ProjectStatusLogs.AddAsync(projectStatusLog);
+            await _context.SaveChangesAsync(cancellationToken);
 
             result.IsSuccessful = true;
             result.ProjectID = project.ProjectID;

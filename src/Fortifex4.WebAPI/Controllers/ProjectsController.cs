@@ -6,6 +6,7 @@ using Fortifex4.Shared.Contributors.Commands.CreateContributors;
 using Fortifex4.Shared.Contributors.Commands.DeleteContributor;
 using Fortifex4.Shared.Contributors.Commands.RejectInvitation;
 using Fortifex4.Shared.Contributors.Commands.UpdateContributorInvitationStatus;
+using Fortifex4.Shared.Contributors.Queries.CheckIsContributor;
 using Fortifex4.Shared.Contributors.Queries.GetContributorsByMemberUsername;
 using Fortifex4.Shared.Projects.Commands.CreateProjects;
 using Fortifex4.Shared.Projects.Commands.UpdateProjects;
@@ -13,6 +14,7 @@ using Fortifex4.Shared.Projects.Commands.UpdateProjectStatus;
 using Fortifex4.Shared.Projects.Queries.GetMyProjects;
 using Fortifex4.Shared.Projects.Queries.GetProject;
 using Fortifex4.Shared.Projects.Queries.GetProjectsConfirmation;
+using Fortifex4.Shared.ProjectStatusLogs.Queries.GetProjectStatusLogsByProjectID;
 using Fortifex4.WebAPI.Common.ApiEnvelopes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -199,6 +201,34 @@ namespace Fortifex4.WebAPI.Controllers
             try
             {
                 return Ok(new Success(await Mediator.Send(new GetProjectsConfirmationRequest() { } )));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getProjectStatusLogsByProjectID/{projectID}")]
+        public async Task<IActionResult> GetProjectStatusLogsByProjectID(int projectID)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetProjectStatusLogsByProjectIDRequest() { ProjectID = projectID })));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("checkIsContributor")]
+        public async Task<IActionResult> CheckIsContributor(int projectID, string memberUsername)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new CheckIsContributorRequest() { ProjectID = projectID, MemberUsername = memberUsername })));
             }
             catch (Exception exception)
             {

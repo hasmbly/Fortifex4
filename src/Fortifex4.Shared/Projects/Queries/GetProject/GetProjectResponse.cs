@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Common;
 
 namespace Fortifex4.Shared.Projects.Queries.GetProject
@@ -12,6 +13,7 @@ namespace Fortifex4.Shared.Projects.Queries.GetProject
         public string Name { get; set; }
         public string Description { get; set; }
         public string WalletAddress { get; set; }
+        public ProjectStatus ProjectStatus { get; set; }
         public bool IsExistProjectByMemberUsernameResult { get; set; }
 
         public IList<ContributorDTO> Contributors { get; set; }

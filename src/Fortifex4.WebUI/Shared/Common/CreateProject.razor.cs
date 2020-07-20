@@ -62,7 +62,7 @@ namespace Fortifex4.WebUI.Shared.Common
         { 
             _projectState.OnChangeBlockchainID -= SetBlockchainID;
 
-            ProjectState.Dispose();
+            ProjectState?.Dispose();
         }
 
         private async Task InitAsync()
@@ -80,7 +80,7 @@ namespace Fortifex4.WebUI.Shared.Common
                 if (getProjectIsExist.Result.IsExistProjectByMemberUsernameResult)
                 {
                     _projectState.SetIsUserHasProject(true, getProjectIsExist.Result.ProjectID);
-                    _projectState.SetMessage("Sorry, you already have a Project");
+                    _projectState.SetMessage("danger", "Sorry, you already have a Project");
                 }
             }
 
@@ -131,18 +131,19 @@ namespace Fortifex4.WebUI.Shared.Common
 
             if (result.Status.IsError)
             {
-                System.Console.WriteLine($"IsError: {result.Status.Message}");
+                Console.WriteLine($"IsError: {result.Status.Message}");
             }
             else
             {
                 if (result.Result.IsSuccessful)
                 {
+                    _projectState.SetProjectID(result.Result.ProjectID);
                     await OnAfterSuccessful.InvokeAsync(true);
                     IsLoading = false;
                 }
                 else
                 {
-                    System.Console.WriteLine($"ErrorMessage: {result.Result.ErrorMessage}");
+                    Console.WriteLine($"ErrorMessage: {result.Result.ErrorMessage}");
                 }
             }
         }

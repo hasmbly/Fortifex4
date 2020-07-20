@@ -7,6 +7,8 @@ namespace Fortifex4.WebUI.Common.StateContainer
     {
         public string Message { get; private set; }
 
+        public string ColorMessage { get; private set; }
+
         public string ExistMemberUsername { get; private set; }
 
         public bool IsUserHasProject { get; private set; }
@@ -36,6 +38,13 @@ namespace Fortifex4.WebUI.Common.StateContainer
             NotifyStateChanged();
         }
 
+        public void SetProjectID(int? projectID)
+        {
+            ProjectID = projectID.Value;
+
+            NotifyStateChanged();
+        }
+
         public void SetIsAuthenticated(bool isAuthenticated)
         {
             IsAuthenticated = isAuthenticated;
@@ -43,9 +52,10 @@ namespace Fortifex4.WebUI.Common.StateContainer
             NotifyStateChanged();
         }
 
-        public void SetMessage(string message)
+        public void SetMessage(string colorMessage, string message)
         {
             Message = message;
+            ColorMessage = colorMessage;
 
             NotifyStateChanged();
         }
