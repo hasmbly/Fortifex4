@@ -6,6 +6,7 @@ using Fortifex4.Shared.Currencies.Queries.GetAllFiatCurrencies;
 using Fortifex4.Shared.Currencies.Queries.GetAvailableCurrencies;
 using Fortifex4.Shared.Currencies.Queries.GetCurrency;
 using Fortifex4.Shared.Currencies.Queries.GetDestinationCurrenciesForMember;
+using Fortifex4.Shared.Currencies.Queries.GetDistinctCurrenciesByMemberID;
 using Fortifex4.Shared.Currencies.Queries.GetPreferrableCoinCurrencies;
 using Fortifex4.WebAPI.Common.ApiEnvelopes;
 using Microsoft.AspNetCore.Authorization;
@@ -92,6 +93,20 @@ namespace Fortifex4.WebAPI.Controllers
             try
             {
                 return Ok(new Success(await Mediator.Send(new GetPreferableCoinCurrenciesRequest())));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getDistinctCurrenciesByMemberID/{memberUsername}")]
+        public async Task<IActionResult> GetDistinctCurrenciesByMemberID(string memberUsername)
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetDistinctCurrenciesByMemberIDRequest() { MemberUsername = memberUsername })));
             }
             catch (Exception exception)
             {

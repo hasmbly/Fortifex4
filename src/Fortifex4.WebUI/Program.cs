@@ -52,6 +52,7 @@ namespace Fortifex4.WebUI
             builder.Services.AddHttpClient<IProjectsServices, ProjectsServices>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IProjectsDocumentService, ProjectsDocumentService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IDevService, DevService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
+            builder.Services.AddHttpClient<IChartsService, ChartsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
 
             var host = builder.Build();
 

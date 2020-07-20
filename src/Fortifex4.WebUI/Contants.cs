@@ -73,6 +73,7 @@
                 public static readonly string GetAllCoinCurrencies = $"{BaseAPI}/currencies/getAllCoinCurrencies";
                 public static readonly string GetAllFiatCurrencies = $"{BaseAPI}/currencies/getAllFiatCurrencies";
                 public static readonly string GetPreferableCoinCurrencies = $"{BaseAPI}/currencies/getPreferableCoinCurrencies";
+                public static readonly string GetDistinctCurrenciesByMemberID = $"{BaseAPI}/currencies/getDistinctCurrenciesByMemberID";
             }
 
             public static class Wallets
@@ -164,11 +165,18 @@
             {
                 public static readonly string GetPortfolio = $"{BaseAPI}/portfolio/getPortfolio";
             }
-
+            
             public static class StartingBalance
             {
                 public static readonly string GetStartingBalance = $"{BaseAPI}/startingBalance/getStartingBalance";
                 public static readonly string UpdateStartingBalance = $"{BaseAPI}/startingBalance/updateStartingBalance";
+            }
+
+            public static class Charts
+            {
+                public static readonly string GetPortfolioByCoinsV2 = $"{BaseAPI}/charts/getPortfolioByCoinsV2";
+                public static readonly string GetPortfolioByExchanges = $"{BaseAPI}/charts/getPortfolioByExchanges";
+                public static readonly string GetCoinByExchanges = $"{BaseAPI}/charts/getCoinByExchanges";
             }
         }
 

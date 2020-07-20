@@ -1,5 +1,57 @@
-﻿<h3>PieCharts</h3>
+﻿@page "/piecharts"
+@attribute [Authorize]
 
-@code {
+@inject IPortfolioService _portfolioService
+@inject GlobalState globalState
 
-}
+@implements IDisposable
+
+@using Fortifex4.Domain.Enums
+
+<PageTitle Title="Pie Charts" />
+
+<h1 class="mb-3">
+    Pie Charts
+    @if (IsLoading)
+    {
+        <i class="fas fa-circle-notch fa-spin"></i>
+    }
+</h1>
+
+<div class="d-inline-flex mb-3">
+    <p class="m-0">Chart Type:</p>
+    <select class="form-control-sm select-filtering" id="dropdown-pie" asp-items="DropdownOptions"></select>
+    <select class="select-filtering" id="coin-by-exchange"></select>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="container-body shadow-sm text-center">
+            <div id="isLoading"></div>
+
+            <div class="container-chart">
+                <canvas id="myChart" width="500" height="500"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="container-body shadow-sm">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Current Status</h3>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-6 text-center border-right">
+                    <h4 id="total-value-infoX">@Portfolio.TotalCurrentValueInPreferredFiatCurrency.ToString2Decimals()</h4>
+                    <p>Value (@Portfolio.MemberPreferredFiatCurrencySymbol)</p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <h4 id="total-value-crypto-idX">@Portfolio.TotalCurrentValueInPreferredCoinCurrency.ToString2Decimals()</h4>
+                    <p>Value (@Portfolio.MemberPreferredCoinCurrencySymbol)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
