@@ -1,9 +1,19 @@
 ﻿window.Portfolio =
 {
+    elementID: '#table-portfolio',
+
     init: function ()
     {
-        $('#table-portfolio').DataTable({
-            "order": [[7, "desc"]]
+        Portfolio.removeArrow();
+        Portfolio.initDataTable();
+        Portfolio.setArrow();
+    },
+
+    initDataTable: function ()
+    {
+        $(Portfolio.elementID).DataTable({
+            "order": [[7, "desc"]],
+            destroy: true
         });
     },
 
@@ -24,7 +34,8 @@
             {
                 $(this).addClass("minus-value");
                 $(this).prepend("<img class='arrow-value' src='/images/downarrow.png' />");
-            } else
+            }
+            else
             {
                 $(this).removeClass("positive-value");
                 $(this).removeClass("minus-value");
@@ -72,6 +83,28 @@
                 $(this).removeClass("positive-value");
                 $(this).removeClass("minus-value");
             }
+        });
+    },
+
+    removeArrow: function ()
+    {
+        $(".number-highlight").each(function ()
+        {
+            $(this).removeClass("positive-value");
+            $(this).removeClass("minus-value");
+            $(this).find(".arrow-value").remove();
+        });
+
+        $(".time-frame").each(function ()
+        {
+            $(this).removeClass("positive-value");
+            $(this).removeClass("minus-value");
+        });
+
+        $(".profit-loss").each(function ()
+        {
+            $(this).removeClass("positive-value");
+            $(this).removeClass("minus-value");
         });
     },
 };

@@ -41,7 +41,7 @@ namespace Fortifex4.WebUI.Pages.Projects
 
         protected async override Task OnInitializedAsync()
         {
-            globalState.ShouldRender += RefreshMe;
+            _globalState.ShouldRender += RefreshMe;
             
             _projectState.OnChange += StateHasChanged;
 
@@ -50,7 +50,7 @@ namespace Fortifex4.WebUI.Pages.Projects
 
         public void Dispose()
         {
-            globalState.ShouldRender -= RefreshMe;
+            _globalState.ShouldRender -= RefreshMe;
 
             _projectState.OnChange -= StateHasChanged;
 

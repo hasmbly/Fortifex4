@@ -2,7 +2,9 @@
 {
     init: function (elementID)
     {
-        $(elementID).dataTable();
+        $(elementID).DataTable({
+            destroy: true
+        });
     },
 
     destroy: function (elementID)

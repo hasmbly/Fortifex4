@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Fortifex4.Shared.Pockets.Queries.GetPocket;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Fortifex4.WebUI.Shared.Common.Modal;
@@ -50,15 +51,18 @@ namespace Fortifex4.WebUI.Shared.Common
         {
             if (firstRender)
             {
-                System.Console.WriteLine($"WalletTransactions - OnAfterRender - firstRender");
+                Console.WriteLine($"WalletTransactions - OnAfterRender - firstRender");
             }
             else if (FirstStage)
             {
-                FirstStage = false;
 
-                System.Console.WriteLine($"WalletTransactions - OnAfterRender - init DataTable");
+                Console.WriteLine($"WalletTransactions - OnAfterRender - init DataTable");
 
                 await JsRuntime.InvokeVoidAsync("DataTable.init", $"#{TransactionsTableID}");
+
+                FirstStage = false;
+
+                StateHasChanged();
             }
         }
     }

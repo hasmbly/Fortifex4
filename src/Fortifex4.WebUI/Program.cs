@@ -32,6 +32,7 @@ namespace Fortifex4.WebUI
             builder.Services.AddScoped<ToggleCheckboxState>();
             builder.Services.AddScoped<GlobalState>();
             builder.Services.AddScoped<ProjectState>();
+            builder.Services.AddScoped<WalletTransactionsState>();
 
             builder.Services.AddHttpClient<IAuthenticationService, AuthenticationService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
             builder.Services.AddHttpClient<IToolsService, ToolsService>(x => { x.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); });
