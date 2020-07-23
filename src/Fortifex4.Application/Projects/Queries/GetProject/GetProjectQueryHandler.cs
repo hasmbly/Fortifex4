@@ -46,6 +46,7 @@ namespace Fortifex4.Application.Projects.Queries.GetProject
                 .Where(x => x.ProjectID == query.ProjectID)
                 .Include(a => a.Blockchain)
                 .Include(a => a.Contributors)
+                .Include(a => a.ProjectDocuments)
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (project == null)

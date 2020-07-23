@@ -23,9 +23,9 @@ namespace Fortifex4.WebAPI.Controllers
             _fileProvider = fileProvider;
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpPost("createProjectDocument")]
-        public async Task<ActionResult> CreateProjectDocument(CreateProjectDocumentRequest request)
+        public async Task<ActionResult> CreateProjectDocument([FromForm]CreateProjectDocumentRequest request)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace Fortifex4.WebAPI.Controllers
             }
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("getProjectDocument/download/{projectDocumentID}")]
         public async Task<IActionResult> GetProjectDocumentDownload(int projectDocumentID)
         {
@@ -66,7 +66,7 @@ namespace Fortifex4.WebAPI.Controllers
                 var fileInfo = _fileProvider.GetFileInfo(Path.Combine(result.ProjectID.ToString(), fileName));
                 string contentType = MimeTypeMap.GetMimeType(fileExtension);
 
-                return Ok(new Success(result));
+                return PhysicalFile(fileInfo.PhysicalPath, contentType, result.OriginalFileName);
             }
             catch (Exception exception)
             {
@@ -76,7 +76,7 @@ namespace Fortifex4.WebAPI.Controllers
 
         [Authorize]
         [HttpPut("updateProjectDocument")]
-        public async Task<IActionResult> UpdateProjectDocument(UpdateProjectDocumentRequest request)
+        public async Task<ActionResult> UpdateProjectDocument([FromForm]UpdateProjectDocumentRequest request)
         {
             try
             {

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Fortifex4.Domain.Enums;
@@ -35,7 +36,11 @@ namespace Fortifex4.WebUI.Pages.Projects
 
         private ModalEditProject ModalEditProject { get; set; }
         private ModalUpdateProjectStatus ModalUpdateProjectStatus { get; set; }
+
         private ModalCreateProjectDocument ModalCreateProjectDocument { get; set; }
+        private ModalEditProjectDocument ModalEditProjectDocument { get; set; }
+        private ModalDeleteProjectDocument ModalDeleteProjectDocument { get; set; }
+
         private ModalInviteProjectContributor ModalInviteProjectContributor { get; set; }
         public ModalDeleteProjectContributors ModalDeleteProjectContributors { get; set; }
 

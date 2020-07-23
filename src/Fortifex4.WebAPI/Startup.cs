@@ -2,6 +2,7 @@ using System.Text;
 using Fortifex4.Application;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Infrastructure;
+using Fortifex4.Shared;
 using Fortifex4.WebAPI.Common;
 using Fortifex4.WebAPI.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
@@ -52,6 +54,9 @@ namespace Fortifex4.WebAPI
                     ValidateAudience = false
                 };
             });
+
+            var physicalProvider = new PhysicalFileProvider(Configuration.GetSection(FortifexOptions.RootSection).Get<FortifexOptions>().ProjectDocumentsRootFolderPath);
+            services.AddSingleton<IFileProvider>(physicalProvider);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -2,7 +2,6 @@
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Common;
-using Fortifex4.Shared.ProjectDocuments.Commands.CreateProjectDocument;
 using Fortifex4.Shared.ProjectDocuments.Commands.DeleteProjectDocument;
 using Fortifex4.Shared.ProjectDocuments.Commands.UpdateProjectDocument;
 using Fortifex4.Shared.ProjectDocuments.Queries.GetProjectDocument;
@@ -15,9 +14,9 @@ namespace Fortifex4.WebUI.Services
     public interface IProjectsDocumentService
     {
         public Task<ApiResponse<GetProjectDocumentResponse>> GetProjectDocument(int projectDocumentID);
-        public Task<ApiResponse<GetProjectDocumentResponse>> GetProjectDocumentDownload(int projectDocumentID);
-        public Task<ApiResponse<CreateProjectDocumentResponse>> CreateProjectDocument(CreateProjectDocumentRequest request);
-        public Task<ApiResponse<UpdateProjectDocumentResponse>> UpdateProjectDocument(UpdateProjectDocumentRequest request);
+        public Task<HttpResponseMessage> GetProjectDocumentDownload(int projectDocumentID);
+        public Task<HttpResponseMessage> CreateProjectDocument(HttpContent request);
+        public Task<HttpResponseMessage> UpdateProjectDocument(HttpContent request);
         public Task<ApiResponse<DeleteProjectDocumentResponse>> DeleteProjectDocument(DeleteProjectDocumentRequest request);
     }
 
@@ -47,25 +46,25 @@ namespace Fortifex4.WebUI.Services
             return await _httpClient.GetJsonAsync<ApiResponse<GetProjectDocumentResponse>>($"{Constants.URI.ProjectsDocument.GetProjectDocument}/{projectDocumentID}");
         }
 
-        public async Task<ApiResponse<GetProjectDocumentResponse>> GetProjectDocumentDownload(int projectDocumentID)
+        public async Task<HttpResponseMessage> GetProjectDocumentDownload(int projectDocumentID)
         {
             await SetHeader();
 
-            return await _httpClient.GetJsonAsync<ApiResponse<GetProjectDocumentResponse>>($"{Constants.URI.ProjectsDocument.GetProjectDocumentDownload}/{projectDocumentID}");
+            return await _httpClient.GetAsync($"{Constants.URI.ProjectsDocument.GetProjectDocumentDownload}/{projectDocumentID}");
         }
 
-        public async Task<ApiResponse<CreateProjectDocumentResponse>> CreateProjectDocument(CreateProjectDocumentRequest request)
+        public async Task<HttpResponseMessage> CreateProjectDocument(HttpContent request)
         {
             await SetHeader();
 
-            return await _httpClient.PostJsonAsync<ApiResponse<CreateProjectDocumentResponse>>(Constants.URI.ProjectsDocument.CreateProjectDocument, request);
+            return await _httpClient.PostAsync(Constants.URI.ProjectsDocument.CreateProjectDocument, request);
         }
 
-        public async Task<ApiResponse<UpdateProjectDocumentResponse>> UpdateProjectDocument(UpdateProjectDocumentRequest request)
+        public async Task<HttpResponseMessage> UpdateProjectDocument(HttpContent request)
         {
             await SetHeader();
 
-            return await _httpClient.PutJsonAsync<ApiResponse<UpdateProjectDocumentResponse>>(Constants.URI.ProjectsDocument.UpdateProjectDocument, request);
+            return await _httpClient.PutAsync(Constants.URI.ProjectsDocument.UpdateProjectDocument, request);
         }
 
         public async Task<ApiResponse<DeleteProjectDocumentResponse>> DeleteProjectDocument(DeleteProjectDocumentRequest request)

@@ -1,5 +1,43 @@
-﻿<h3>ModalEditProjectDocument</h3>
+﻿@namespace Fortifex4.WebUI.Shared.Common.Modal
+@attribute [Authorize]
 
-@code {
+@inject IAuthenticationService _authenticationService
+@inject IBlockchainsService _blockchainsService
+@inject IProjectsDocumentService _projectsDocumentService
 
-}
+<BaseModal @ref="BaseModal"
+           ModalTitle="@Title"
+           IsLoading="IsLoading"
+           OnSubmit="SubmitAsync"
+           IsOpenWithID="SetProjectDocumentID">
+    <ChildContent>
+        <EditForm Model="Input" OnValidSubmit="SubmitAsync">
+            <DataAnnotationsValidator />
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label class="col-form-label">Title</label>
+                    <InputText @bind-Value="Input.Title" class="form-control" placeholder="Title" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => Input.Title)" />
+                    </span>
+                </div>
+                <div class="form-group col-6">
+                    <label class="col-form-label">Upload File Document Project</label>
+                    <InputFile OnChange="HandleFileSelected" />
+                    <span class="text-danger">
+                        <ValidationMessage For="@(() => Input.FormFileProjectDocument)" />
+                    </span>
+
+                    @if (File != null)
+                    {
+                        <p>Name: @File.Name</p>
+                        <p>Size in bytes: @File.Size</p>
+                        <p>Content type: @File.Type</p>
+                    }
+                </div>
+            </div>
+
+        </EditForm>
+    </ChildContent>
+</BaseModal>

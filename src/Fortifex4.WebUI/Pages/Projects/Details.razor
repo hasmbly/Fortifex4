@@ -2,10 +2,12 @@
 @attribute [Authorize]
 
 @inject IProjectsServices _projectsServices
+@inject IProjectsDocumentService _projectsDocumentService
 @inject IDevService _devService
 @inject NavigationManager _navigationManager
 @inject GlobalState _globalState
 @inject ProjectState _projectState
+@inject NavigationManager _navigationManager
 
 @implements IDisposable
 
@@ -133,7 +135,7 @@
         @if (IsCreator && Project.ProjectDocuments.Count < ProjectDocumentsLimit)
         {
             <div class="mb-1">
-                <button class="btn btn-primary">Add Document</button>
+                <button class="btn btn-primary" @onclick="() => ModalCreateProjectDocument.BaseModal.Open()">Add Document</button>
             </div>
         }
     }
@@ -174,16 +176,16 @@
                             <td class="trans text-center">@indexProjectDocument</td>
                             <td class="trans text">@projectDocument.Title</td>
                             <td class="trans text">
-                                <a asp-controller="ProjectDocuments" asp-action="Download" asp-route-id="@projectDocument.ProjectDocumentID">@projectDocument.OriginalFileName <i class="fas fa-download"></i></a>
+                                <a href="@Constants.URI.ProjectsDocument.GetProjectDocumentDownload/@projectDocument.ProjectDocumentID">@projectDocument.OriginalFileName <i class="fas fa-download"></i></a>
                             </td>
                             <td>
-                                <a class="btn btn-primary btn-sm" asp-controller="ProjectDocuments" asp-action="Download" asp-route-id="@projectDocument.ProjectDocumentID">Download</a>
+                                <a href="@Constants.URI.ProjectsDocument.GetProjectDocumentDownload/@projectDocument.ProjectDocumentID" class="btn btn-primary btn-sm">Download</a>
                             </td>
                             <td>
                                 @if (Project.ProjectStatus == ProjectStatus.Draft || Project.ProjectStatus == ProjectStatus.Returned)
                                 {
-                                    <button class="btn btn-secondary btn-sm edit-modal-project-document" data-toggle="modal" data-target="#modal-edit-project-document" data-id="@projectDocument.ProjectDocumentID">Edit</button>
-                                    <button class="btn btn-danger btn-sm delete-modal-project-document" data-toggle="modal" data-target="#modal-delete-project-document" data-id="@projectDocument.ProjectDocumentID">Delete</button>
+                                    <button class="btn btn-secondary btn-sm" @onclick="() => ModalEditProjectDocument.BaseModal.OpenWithID(projectDocument.ProjectDocumentID)">Edit</button>
+                                    <button class="btn btn-danger btn-sm" @onclick="() => ModalDeleteProjectDocument.BaseModal.OpenWithID(projectDocument.ProjectDocumentID)">Delete</button>
                                 }
                             </td>
                         </tr>
@@ -284,7 +286,9 @@
 
 <ModalDeleteProjectContributors @ref="ModalDeleteProjectContributors" OnAfterSuccessful="UpdateStateHasChanged" />
 
-@*<ModalCreateProjectDocument @ref="ModalCreateProjectDocument" ProjectID="ProjectID" OnAfterSuccessful="UpdateStateHasChanged" />*@
+<ModalCreateProjectDocument @ref="ModalCreateProjectDocument" ProjectID="ProjectID" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalEditProjectDocument @ref="ModalEditProjectDocument" OnAfterSuccessful="UpdateStateHasChanged" />
+<ModalDeleteProjectDocument @ref="ModalDeleteProjectDocument" OnAfterSuccessful="UpdateStateHasChanged" />
 
 @*
     @await Component.InvokeAsync(nameof(ModalInviteProjectContributors), new { projectID=Project.ProjectID, projectName=Project.Name })

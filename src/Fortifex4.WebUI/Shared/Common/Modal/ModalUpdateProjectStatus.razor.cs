@@ -42,6 +42,14 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         {
             Input.NewProjectStatus = projectStatus;
 
+            Title = Input.NewProjectStatus switch
+            {
+                ProjectStatus.Approved => "Approve Project",
+                ProjectStatus.Returned => "Return Project",
+                ProjectStatus.Rejected => "Reject Project",
+                _ => "Request for Approval"
+            };
+
             StateHasChanged();
         }
 
