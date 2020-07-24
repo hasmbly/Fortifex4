@@ -99,6 +99,8 @@ namespace Fortifex4.Application.Charts.Queries.GetPortfolioByExchanges
                 result.Value.Add(amountExchangeCoin.Sum());
             }
 
+            result.IsSuccessful = true;
+
             return result;
         }
     }

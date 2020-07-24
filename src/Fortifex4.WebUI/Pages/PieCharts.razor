@@ -2,11 +2,11 @@
 @attribute [Authorize]
 
 @inject IPortfolioService _portfolioService
+@inject IChartsService _chartsService
+@inject ICurrenciesService _currenciesService
 @inject GlobalState globalState
 
 @implements IDisposable
-
-@using Fortifex4.Domain.Enums
 
 <PageTitle Title="Pie Charts" />
 
@@ -19,16 +19,39 @@
 </h1>
 
 <div class="d-inline-flex mb-3">
-    <p class="m-0">Chart Type:</p>
-    <select class="form-control-sm select-filtering" id="dropdown-pie" asp-items="DropdownOptions"></select>
-    <select class="select-filtering" id="coin-by-exchange"></select>
+    <p class="m-0">Chart Type: &nbsp;</p>
+
+    @if (DropdownOptions != null)
+    {
+        <select @bind="SelectDropdownOptions" class="form-control-sm select-filtering">
+            @if (DropdownOptions.Count > 0)
+            {
+                @foreach (var pieChartOptions in DropdownOptions)
+                {
+                    <option value="@pieChartOptions.Value">@pieChartOptions.Text</option>
+                }
+            }
+        </select>
+    }
+
+    @if (CryptoCurrency != null)
+    {
+        <p> &nbsp;</p>
+        <select @bind="SelectCryptoCurrency" class="form-control-sm select-filtering">
+            @if (CryptoCurrency.Count > 0)
+            {
+                @foreach (var cryptoCurrency in CryptoCurrency)
+                {
+                    <option value="@cryptoCurrency.CurrencyID">@cryptoCurrency.Name</option>
+                }
+            }
+        </select>
+    }
 </div>
 
 <div class="row">
     <div class="col-md-6">
         <div class="container-body shadow-sm text-center">
-            <div id="isLoading"></div>
-
             <div class="container-chart">
                 <canvas id="myChart" width="500" height="500"></canvas>
             </div>

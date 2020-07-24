@@ -104,6 +104,8 @@ namespace Fortifex4.Application.Charts.Queries.GetCoinByExchanges
                 }
             }
 
+            result.IsSuccessful = true;
+
             return result;
         }
     }

@@ -2,6 +2,7 @@
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Charts.Queries.GetCoinByExchanges;
+using Fortifex4.Shared.Charts.Queries.GetPortfolioByCoinsV2;
 using Fortifex4.Shared.Charts.Queries.GetPortfolioByExchanges;
 using Fortifex4.Shared.Common;
 using Fortifex4.Shared.Members.Queries.GetPortfolio;
@@ -13,7 +14,7 @@ namespace Fortifex4.WebUI.Services
 {
     public interface IChartsService
     {
-        public Task<ApiResponse<GetPortfolioResponse>> GetPortfolioByCoinsV2(string memberUsername);
+        public Task<ApiResponse<GetPortfolioByCoinsV2Response>> GetPortfolioByCoinsV2(string memberUsername);
         public Task<ApiResponse<GetPortfolioByExchangesResponse>> GetPortfolioByExchanges(string memberUsername);
         public Task<ApiResponse<GetCoinByExchangesResponse>> GetCoinByExchanges(string memberUsername, int currencyID);
     }
@@ -37,11 +38,11 @@ namespace Fortifex4.WebUI.Services
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Constants.Bearer, token);
         }
 
-        public async Task<ApiResponse<GetPortfolioResponse>> GetPortfolioByCoinsV2(string memberUsername)
+        public async Task<ApiResponse<GetPortfolioByCoinsV2Response>> GetPortfolioByCoinsV2(string memberUsername)
         {
             await SetHeader();
 
-            return await _httpClient.GetJsonAsync<ApiResponse<GetPortfolioResponse>>($"{Constants.URI.Charts.GetPortfolioByCoinsV2}/{memberUsername}");
+            return await _httpClient.GetJsonAsync<ApiResponse<GetPortfolioByCoinsV2Response>>($"{Constants.URI.Charts.GetPortfolioByCoinsV2}/{memberUsername}");
         }
 
         public async Task<ApiResponse<GetPortfolioByExchangesResponse>> GetPortfolioByExchanges(string memberUsername)

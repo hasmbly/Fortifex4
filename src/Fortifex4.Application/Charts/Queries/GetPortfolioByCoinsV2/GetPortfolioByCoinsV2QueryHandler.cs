@@ -163,6 +163,8 @@ namespace Fortifex4.Application.Charts.Queries.GetPortfolioByCoinsV2
                 }
             }
 
+            result.IsSuccessful = true;
+
             return result;
         }
     }
