@@ -10,19 +10,23 @@
 
     @if (!IsRegisterProjectState)
     {
-        <h1 class="mb-5">Log In</h1>
+        <h1 class="mb-5">Sign In</h1>
         <ActivationSucceed MemberUsername="@activateMemberState.Member.MemberUsername" />
     }
 
-    <div class="form-group col-12">
+    <div class="form-group">
         <InputText @bind-Value="MemberUsername" class="form-control-login" placeholder="Email address" />
-        <ValidationMessage For="@(() => Input.MemberUsername)" />
+        <span class="text-danger">
+            <ValidationMessage For="@(() => Input.MemberUsername)" />
+        </span>
     </div>
-    <div class="form-group col-12">
+    <div class="form-group">
         <InputText @bind-Value="Input.Password" type="password" class="form-control-login" placeholder="Password" />
-        <ValidationMessage For="@(() => Input.Password)" />
+        <span class="text-danger">
+            <ValidationMessage For="@(() => Input.Password)" />
+        </span>
     </div>
-    <div class="form-group col-12">
+    <div class="form-group">
         <button type="submit" class="btn-login">
             @if (IsLoading)
             {

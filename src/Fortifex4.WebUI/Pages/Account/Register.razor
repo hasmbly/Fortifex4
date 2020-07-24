@@ -7,31 +7,40 @@
 @implements IDisposable
 
 <PageTitle Title="Register" />
+
 <div class="row no-gutters h-100">
     <div class="col">
-        <div class="register-area">
-            @if (activateMemberState.ShowActivationMessage)
-            {
-                <RegistrationSucceed />
-            }
-            else
-            {
-                <SignUp />
+        <div class="centered-position">
+            <div class="row">
+                <div class="col-md-12">
+                    <section>
+                        @if (activateMemberState.ShowActivationMessage)
+                        {
+                            <RegistrationSucceed />
+                        }
+                        else
+                        {
+                            <SignUp />
 
-                <div class="external-providers">
-                    <a class="btn btn-icon" href="">
-                        <span class="icon icon-google"></span>
-                        <span class="icon icon-text">Sign in with Google</span>
-                    </a>
-                    <a class="btn btn-icon" href="">
-                        <span class="icon icon-facebook"></span>
-                        <span class="icon icon-text">Sign in with Facebook</span>
-                    </a>
+                            <div class="form-group">
+                                <p>
+                                    <a href="/account/login">I already have an account</a>
+                                </p>
+                                <div class="external-providers">
+                                    <a class="btn btn-icon" href="">
+                                        <span class="icon icon-google"></span>
+                                        <span class="icon icon-text">Sign in with Google</span>
+                                    </a>
+                                    <a class="btn btn-icon" href="">
+                                        <span class="icon icon-facebook"></span>
+                                        <span class="icon icon-text">Sign in with Facebook</span>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </section>
                 </div>
-                <div class="mt-5 pt-5 border-top">
-                    <a href="/account/login">I already have an account</a>
-                </div>
-            }
+            </div>
         </div>
     </div>
     <div class="col">

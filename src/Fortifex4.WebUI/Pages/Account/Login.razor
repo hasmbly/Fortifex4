@@ -7,20 +7,28 @@
 <PageTitle Title="Login" />
 <div class="row no-gutters h-100">
     <div class="col">
-        <div class="login-area">
-            <SignIn OnAfterSuccessful="UpdateStateHasChanged" />
-            <div class="external-providers">
-                <a class="btn btn-icon" href="">
-                    <span class="icon icon-google"></span>
-                    <span class="icon icon-text">Sign in with Google</span>
-                </a>
-                <a class="btn btn-icon" href="">
-                    <span class="icon icon-facebook"></span>
-                    <span class="icon icon-text">Sign in with Facebook</span>
-                </a>
-            </div>
-            <div class="mt-5 pt-5 border-top">
-                <a href="/account/register">Register as a new user</a>
+        <div class="centered-position">
+            <div class="row">
+                <div class="col-md-12">
+                    <section>
+                        <SignIn OnAfterSuccessful="UpdateStateHasChanged" />
+                        <div class="form-group">
+                            <div class="external-providers">
+                                <a class="btn btn-icon" href="">
+                                    <span class="icon icon-google"></span>
+                                    <span class="icon icon-text">Sign in with Google</span>
+                                </a>
+                                <a class="btn btn-icon" href="">
+                                    <span class="icon icon-facebook"></span>
+                                    <span class="icon icon-text">Sign in with Facebook</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <a href="/account/register" class="btn btn-secondary">Register as a new user</a>
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
     </div>

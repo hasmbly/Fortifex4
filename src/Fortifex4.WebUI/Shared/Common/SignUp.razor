@@ -8,24 +8,27 @@
 <EditForm Model="Input" OnValidSubmit="RegisterAsync">
     <DataAnnotationsValidator />
 
-
     @if (!IsRegisterProjectState)
     {
         <h1 class="mb-5">Register</h1>
     }
 
-    <div class="form-group col-12">
+    <div class="form-group">
         <InputText @bind-Value="MemberUsername" class="form-control-login" placeholder="Email address" />
-        <ValidationMessage For="@(() => Input.MemberUsername)" class="text-danger" />
+        <span class="text-danger">
+            <ValidationMessage For="@(() => Input.MemberUsername)" class="text-danger" />
+        </span>
     </div>
-    <div class="form-group col-12">
+    <div class="form-group">
         <InputText @bind-Value="Input.Password" type="password" class="form-control-login" placeholder="Password" />
-        <ValidationMessage For="@(() => Input.Password)" class="text-danger" />
+        <span class="text-danger">
+            <ValidationMessage For="@(() => Input.Password)" class="text-danger" />
+        </span>
     </div>
-    <div class="form-group col-12">
+    <div class="form-group">
         <InputText @bind-Value="ConfirmPassword" type="password" class="form-control-login" placeholder="Confirm Password" />
     </div>
-    <div class="form-group col-12">
+    <div class="form-group">
         <button type="submit" class="btn-login">
             @if (IsLoading)
             {
