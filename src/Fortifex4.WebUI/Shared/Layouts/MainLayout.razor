@@ -3,20 +3,22 @@
 
 @inject IJSRuntime JsRuntime
 
-<div class="outer">
-    <AuthorizeView>
-        <NavMenu />
-    </AuthorizeView>
-    <div class="main-container">
+<Animate Animation="Animations.FadeIn" Duration="TimeSpan.FromSeconds(0.5)" Delay="TimeSpan.FromSeconds(0.3)">
+    <div class="outer">
         <AuthorizeView>
-            <TopBar />
+            <NavMenu />
         </AuthorizeView>
+        <div class="main-container">
+            <AuthorizeView>
+                <TopBar />
+            </AuthorizeView>
 
-        <main role="main">
-            @Body
-        </main>
+            <main role="main">
+                @Body
+            </main>
+        </div>
     </div>
-</div>
+</Animate>
 
 @code
 {
