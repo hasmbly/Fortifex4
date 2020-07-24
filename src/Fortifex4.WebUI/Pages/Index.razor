@@ -5,22 +5,25 @@
 @inject NavigationManager _navigationManager
 
 <PageTitle Title="Index" />
-<div class="index-outer">
-    <img class="index-logo-image" src="images/fortifexlogo.png" />
-    <div>
-        <h1>
-            Centralised insights and control.
-        </h1>
-        <p>
-            Mission control for all your crypto, a place for all exchanges.
-        </p>
-        <h2>
-            Test our MVP today!
-        </h2>
+
+<Animate Animation="Animations.FadeIn" Duration="TimeSpan.FromSeconds(0.5)" Delay="TimeSpan.FromSeconds(0.3)">
+    <div class="index-outer">
+        <img class="index-logo-image" src="images/fortifexlogo.png" />
+        <div>
+            <h1>
+                Centralised insights and control.
+            </h1>
+            <p>
+                Mission control for all your crypto, a place for all exchanges.
+            </p>
+            <h2>
+                Test our MVP today!
+            </h2>
+        </div>
+        <div>
+            <a class="index-button" href="account/login">Sign In</a>
+            <a class="index-button" href="account/register">Register</a>
+        </div>
+        <img class="index-dashboard-image" src="images/dashboard.png" />
     </div>
-    <div>
-        <a class="index-button" href="account/login">Sign In</a>
-        <a class="index-button" href="account/register">Register</a>
-    </div>
-    <img class="index-dashboard-image" src="images/dashboard.png" />
-</div>
+</Animate>
