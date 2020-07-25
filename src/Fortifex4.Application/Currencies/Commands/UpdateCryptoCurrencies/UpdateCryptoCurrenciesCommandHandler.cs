@@ -7,16 +7,19 @@ using Fortifex4.Shared.Enums;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Shared.Currencies.Commands.UpdateCryptoCurrencies;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
 {
     public class UpdateCryptoCurrenciesCommandHandler : IRequestHandler<UpdateCryptoCurrenciesRequest, UpdateCryptoCurrenciesResponse>
     {
+        private readonly ILogger<UpdateCryptoCurrenciesCommandHandler> _logger;
         private readonly IFortifex4DBContext _context;
         private readonly ICryptoService _cryptoService;
 
-        public UpdateCryptoCurrenciesCommandHandler(IFortifex4DBContext context, ICryptoService cryptoService)
+        public UpdateCryptoCurrenciesCommandHandler(ILogger<UpdateCryptoCurrenciesCommandHandler> logger, IFortifex4DBContext context, ICryptoService cryptoService)
         {
+            _logger = logger;
             _context = context;
             _cryptoService = cryptoService;
         }
@@ -57,6 +60,7 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
                         };
 
                         _context.Blockchains.Add(blockchain);
+                        await _context.SaveChangesAsync(cancellationToken);
 
                         blockchainDTO.UpdateStatus = UpdateStatus.New;
                     }
@@ -93,6 +97,10 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
 
                         if (currency == null)
                         {
+                            _logger.LogDebug($"cryptoCurrency.CurrencyID {cryptoCurrency.CurrencyID}");
+                            _logger.LogDebug($"cryptoCurrency.Name {cryptoCurrency.Name}");
+                            _logger.LogDebug($"cryptoCurrency.Symbol {cryptoCurrency.Symbol}");
+
                             currency = new Currency
                             {
                                 CoinMarketCapID = cryptoCurrency.CurrencyID,
@@ -116,22 +124,24 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
                         }
                         else
                         {
-                            currency.Symbol = cryptoCurrency.Symbol;
-                            currency.Name = cryptoCurrency.Name;
-                            currency.Rank = cryptoCurrency.Rank;
-                            currency.UnitPriceInUSD = cryptoCurrency.UnitPriceInUSD;
-                            currency.Volume24h = cryptoCurrency.Volume24h;
-                            currency.PercentChange1h = cryptoCurrency.PercentChange1h;
-                            currency.PercentChange24h = cryptoCurrency.PercentChange24h;
-                            currency.PercentChange7d = cryptoCurrency.PercentChange7d;
-                            currency.LastUpdated = cryptoCurrency.LastUpdated;
-
-                            currencyDTO.UpdateStatus = UpdateStatus.Updated;
+                            //currency.Symbol = cryptoCurrency.Symbol;
+                            //currency.Name = cryptoCurrency.Name;
+                            //currency.Rank = cryptoCurrency.Rank;
+                            //currency.UnitPriceInUSD = cryptoCurrency.UnitPriceInUSD;
+                            //currency.Volume24h = cryptoCurrency.Volume24h;
+                            //currency.PercentChange1h = cryptoCurrency.PercentChange1h;
+                            //currency.PercentChange24h = cryptoCurrency.PercentChange24h;
+                            //currency.PercentChange7d = cryptoCurrency.PercentChange7d;
+                            //currency.LastUpdated = cryptoCurrency.LastUpdated;
+                            
+                            //currencyDTO.UpdateStatus = UpdateStatus.Updated;
                         }
+
+                        await _context.SaveChangesAsync(cancellationToken);
                     }
                 }
 
-                await _context.SaveChangesAsync(cancellationToken);
+                //await _context.SaveChangesAsync(cancellationToken);
             }
 
             return result;

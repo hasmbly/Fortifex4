@@ -90,24 +90,33 @@ namespace Fortifex4.Infrastructure.Crypto.CoinMarketCap
 
                 foreach (var tokenCurrencyJSON in tokenCurrencies)
                 {
-                    CryptoBlockchain cryptoBlockchain = result.Blockchains.Single(x => x.BlockchainID == tokenCurrencyJSON.platform.id);
+                    CryptoBlockchain cryptoBlockchain = result.Blockchains.SingleOrDefault(x => x.BlockchainID == tokenCurrencyJSON.platform.id);
 
-                    cryptoBlockchain.Currencies.Add(new CryptoCurrency
+                    if (cryptoBlockchain == null)
                     {
-                        CurrencyID = tokenCurrencyJSON.id,
-                        BlockchainID = cryptoBlockchain.BlockchainID,
-                        Name = tokenCurrencyJSON.name,
-                        Symbol = tokenCurrencyJSON.symbol,
-                        Slug = tokenCurrencyJSON.slug,
-                        Rank = tokenCurrencyJSON.cmc_rank,
-                        UnitPriceInUSD = tokenCurrencyJSON.quote.USD.price ?? 0m,
-                        Volume24h = tokenCurrencyJSON.quote.USD.volume_24h ?? 0m,
-                        PercentChange1h = tokenCurrencyJSON.quote.USD.percent_change_1h ?? 0f,
-                        PercentChange24h = tokenCurrencyJSON.quote.USD.percent_change_24h ?? 0f,
-                        PercentChange7d = tokenCurrencyJSON.quote.USD.percent_change_7d ?? 0f,
-                        LastUpdated = tokenCurrencyJSON.quote.USD.last_updated,
-                        CurrencyType = CurrencyType.Token
-                    });
+                        _logger.LogDebug($"tokenCurrencyJSON.id: {tokenCurrencyJSON.id}");
+                        _logger.LogDebug($"tokenCurrencyJSON.platform.id: {tokenCurrencyJSON.platform.id}");
+                    }
+                    else
+                    {
+
+                        cryptoBlockchain.Currencies.Add(new CryptoCurrency
+                        {
+                            CurrencyID = tokenCurrencyJSON.id,
+                            BlockchainID = cryptoBlockchain.BlockchainID,
+                            Name = tokenCurrencyJSON.name,
+                            Symbol = tokenCurrencyJSON.symbol,
+                            Slug = tokenCurrencyJSON.slug,
+                            Rank = tokenCurrencyJSON.cmc_rank,
+                            UnitPriceInUSD = tokenCurrencyJSON.quote.USD.price ?? 0m,
+                            Volume24h = tokenCurrencyJSON.quote.USD.volume_24h ?? 0m,
+                            PercentChange1h = tokenCurrencyJSON.quote.USD.percent_change_1h ?? 0f,
+                            PercentChange24h = tokenCurrencyJSON.quote.USD.percent_change_24h ?? 0f,
+                            PercentChange7d = tokenCurrencyJSON.quote.USD.percent_change_7d ?? 0f,
+                            LastUpdated = tokenCurrencyJSON.quote.USD.last_updated,
+                            CurrencyType = CurrencyType.Token
+                        });
+                    }
                 }
                 #endregion
             }
