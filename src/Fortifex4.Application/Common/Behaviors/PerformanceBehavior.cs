@@ -11,9 +11,9 @@ namespace Fortifex4.Application.Common.Behaviors
     {
         private readonly Stopwatch _timer;
         private readonly ILogger<TRequest> _logger;
-        private readonly ICurrentUser _currentUser;
+        private readonly ICurrentUserService _currentUser;
 
-        public PerformanceBehaviour(ILogger<TRequest> logger, ICurrentUser currentUser)
+        public PerformanceBehaviour(ILogger<TRequest> logger, ICurrentUserService currentUser)
         {
             _timer = new Stopwatch();
             _logger = logger;

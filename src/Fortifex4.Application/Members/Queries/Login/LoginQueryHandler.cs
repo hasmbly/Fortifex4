@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Domain.Constants;
 using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Members.Queries.Login;
@@ -58,7 +59,8 @@ namespace Fortifex4.Application.Members.Queries.Login
 
                             var claims = new[]
                             {
-                                new Claim(ClaimTypes.Name, request.MemberUsername)
+                                new Claim(ClaimTypes.Name, request.MemberUsername),
+                                new Claim(ClaimType.PictureUrl, "https://jwt.io/img/pic_logo.svg")
                             };
 
                             var token = new JwtSecurityToken(

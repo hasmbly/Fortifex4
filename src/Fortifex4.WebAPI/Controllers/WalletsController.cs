@@ -12,6 +12,7 @@ using Fortifex4.Shared.Wallets.Commands.CreatePersonalWallet;
 using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
 using Fortifex4.Shared.Wallets.Commands.SyncPersonalWallet;
 using Fortifex4.Shared.Wallets.Commands.UpdatePersonalWallet;
+using Fortifex4.Shared.Wallets.Queries.GetMyPersonalWallets;
 using Fortifex4.Shared.Wallets.Queries.GetPersonalWallets;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Fortifex4.WebAPI.Common.ApiEnvelopes;
@@ -28,6 +29,20 @@ namespace Fortifex4.WebAPI.Controllers
             try
             {
                 return Ok(new Success(await Mediator.Send(new GetPersonalWalletsRequest() { MemberUsername = memberUsername } )));
+            }
+            catch (Exception exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(exception));
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getMyPersonalWallets")]
+        public async Task<IActionResult> GetMyPersonalWallets()
+        {
+            try
+            {
+                return Ok(new Success(await Mediator.Send(new GetMyPersonalWalletsRequest())));
             }
             catch (Exception exception)
             {

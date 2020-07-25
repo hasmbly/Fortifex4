@@ -13,6 +13,7 @@ using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
 using Fortifex4.Shared.Wallets.Commands.SyncPersonalWallet;
 using Fortifex4.Shared.Wallets.Commands.UpdatePersonalWallet;
 using Fortifex4.Shared.Wallets.Queries.GetAllWalletsBySameUsernameAndBlockchain;
+using Fortifex4.Shared.Wallets.Queries.GetMyPersonalWallets;
 using Fortifex4.Shared.Wallets.Queries.GetPersonalWallets;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Fortifex4.Shared.Wallets.Queries.GetWalletsBySameUsernameAndBlockchain;
@@ -26,6 +27,7 @@ namespace Fortifex4.WebUI.Services
     {
         public Task<ApiResponse<GetWalletResponse>> GetWallet(int walletID);
         public Task<ApiResponse<GetPocketResponse>> GetPocket(int pocketID);
+        public Task<ApiResponse<GetMyPersonalWalletsResponse>> GetMyPersonalWallets();
         public Task<ApiResponse<GetPersonalWalletsResponse>> GetPersonalWallets(string memberUsername);
 
         public Task<ApiResponse<CreateExchangeWalletResponse>> CreateExchangeWallet(CreateExchangeWalletRequest request);
@@ -61,6 +63,15 @@ namespace Fortifex4.WebUI.Services
             string token = await ((ServerAuthenticationStateProvider)_authenticationStateProvider).GetTokenAsync();
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Constants.Bearer, token);
+        }
+
+        public async Task<ApiResponse<GetMyPersonalWalletsResponse>> GetMyPersonalWallets()
+        {
+            await SetHeader();
+
+            var getPersonalWalletsResponse = await _httpClient.GetJsonAsync<ApiResponse<GetMyPersonalWalletsResponse>>($"{Constants.URI.Wallets.GetMyPersonalWallets}");
+
+            return getPersonalWalletsResponse;
         }
 
         public async Task<ApiResponse<GetPersonalWalletsResponse>> GetPersonalWallets(string memberUsername)

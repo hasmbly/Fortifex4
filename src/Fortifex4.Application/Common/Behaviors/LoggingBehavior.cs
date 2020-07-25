@@ -9,9 +9,9 @@ namespace Fortifex4.Application.Common.Behaviors
     public class LoggingBehavior<TRequest> : IRequestPreProcessor<TRequest>
     {
         private readonly ILogger<TRequest> _logger;
-        private readonly ICurrentUser _currentUser;
+        private readonly ICurrentUserService _currentUser;
 
-        public LoggingBehavior(ILogger<TRequest> logger, ICurrentUser currentUser)
+        public LoggingBehavior(ILogger<TRequest> logger, ICurrentUserService currentUser)
         {
             _logger = logger;
             _currentUser = currentUser;

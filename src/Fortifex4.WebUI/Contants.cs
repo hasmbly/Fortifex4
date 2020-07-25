@@ -79,6 +79,7 @@
             public static class Wallets
             {
                 public static readonly string GetPersonalWallets = $"{BaseAPI}/wallets/getPersonalWallets";
+                public static readonly string GetMyPersonalWallets = $"{BaseAPI}/wallets/getMyPersonalWallets";
                 public static readonly string GetWallet = $"{BaseAPI}/wallets/getWallet";
                 public static readonly string GetPocket = $"{BaseAPI}/wallets/getPocket";
                 public static readonly string CreateExchangeWallet = $"{BaseAPI}/wallets/createExchangeWallet";

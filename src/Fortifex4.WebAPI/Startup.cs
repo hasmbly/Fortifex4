@@ -30,12 +30,11 @@ namespace Fortifex4.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddInfrastructure(Configuration);
-            services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddHttpContextAccessor();
             services.AddApplication();
             services.AddControllers();
             services.AddSingleton<ICurrentWeb, CurrentWeb>();
-            services.AddScoped<ICurrentUser, CurrentUser>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie("TempCookie", options =>
@@ -43,10 +42,16 @@ namespace Fortifex4.WebAPI
                     options.LoginPath = new PathString("/account/login");
                 });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(x =>
+            services.AddAuthentication(options =>
             {
-                x.TokenValidationParameters = new TokenValidationParameters
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("Fortifex:TokenSecurityKey").Value)),
