@@ -19,13 +19,12 @@ dotnet user-secrets set "Ethereum:Etherscan:APIKey" "CVMMDNQRGURVWCGMBUTEF14V4VM
 ----------------------------------------------------------------------------------------------------
 Hasilnya
 {
-  "Authentication:Google:ClientId": "669509010925-c3anu9kipuna9ogv96gt5g07ov9g65tm.apps.googleusercontent.com",
-  "Authentication:Google:ClientSecret": "__vZTi6TZ2u9XqJq-A6bvZmz",
-  "Authentication:Facebook:AppId": "2260839397335026",
-  "Authentication:Facebook:AppSecret": "05d71a72036d69dfb9163ed93921ec69",
   "Email:SendGrid:APIKey": "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",
-  "Fiat:Fixer:APIKey": "5beb9a289688683e21a744e43c7fb496",
   "Crypto:CoinMarketCap:APIKey": "be91b0e2-4f43-4fac-88de-1a1a5f098cec",
+  "Authentication:Google:ClientSecret": "FoPWyz2IdbmdfAw7Ks8fAxbD",
+  "Authentication:Google:ClientID": "234516294165-6knd1u19776eubgrobdc9oj8ku61dmd8.apps.googleusercontent.com",
+  "Authentication:Facebook:AppSecret": "05d71a72036d69dfb9163ed93921ec69",
+  "Authentication:Facebook:AppID": "2260839397335026",
   "Ethereum:Ethplorer:APIKey": "freekey"
 }
 ====================================================================================================

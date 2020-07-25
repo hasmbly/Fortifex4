@@ -1,0 +1,17 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles":
+  {
+    "Fortifex4.WebAPI":
+    {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/dev",
+      "applicationUrl": "https://localhost:5004",
+      "environmentVariables":
+      {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
