@@ -185,7 +185,7 @@
                                 @if (Project.ProjectStatus == ProjectStatus.Draft || Project.ProjectStatus == ProjectStatus.Returned)
                                 {
                                     <button class="btn btn-secondary btn-sm" @onclick="() => ModalEditProjectDocument.BaseModal.OpenWithID(projectDocument.ProjectDocumentID)">Edit</button>
-                                    <button class="btn btn-danger btn-sm" @onclick="() => ModalDeleteProjectDocument.BaseModal.OpenWithID(projectDocument.ProjectDocumentID)">Delete</button>
+                                    <button class="btn btn-danger btn-sm" @onclick="() => ModalDeleteProjectDocument.BaseModal.OpenWithDataAndID(projectDocument.ProjectDocumentID, projectDocument.OriginalFileName)">Delete</button>
                                 }
                             </td>
                         </tr>

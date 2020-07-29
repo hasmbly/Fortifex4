@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Fortifex4.Shared.ProjectDocuments.Commands.DeleteProjectDocument;
 using Microsoft.AspNetCore.Components;
 
@@ -20,6 +21,21 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         public bool IsLoading { get; set; } = false;
 
         private void SetID(int value) => ID = value;
+
+        private void SetDataAndID(Hashtable ht)
+        {
+            foreach (DictionaryEntry kv in ht)
+            {
+                if (kv.Key.ToString() == "id")
+                {
+                    ID = (int)kv.Value;
+                }
+                else if (kv.Key.ToString() == "data")
+                {
+                    Message = kv.Value.ToString();
+                }
+            }
+        }
 
         private async void OnSubmitAsync()
         {

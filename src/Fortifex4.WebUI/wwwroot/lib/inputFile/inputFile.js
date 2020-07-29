@@ -24,6 +24,16 @@
                     // Attach the blob data itself as a non-enumerable property so it doesn't appear in the JSON
                     Object.defineProperty(result, 'blob', { value: file });
 
+                    //#region modified by hasbi
+                    $("label[for='file_name'] b").html(file.name);
+                    $("label[for='file_default']").text('Selected File: ');
+
+                    if (file.name == "")
+                    {
+                        $("label[for='file_default']").text('No File Choosen');
+                    }
+                    //#endregion
+
                     return result;
                 });
 

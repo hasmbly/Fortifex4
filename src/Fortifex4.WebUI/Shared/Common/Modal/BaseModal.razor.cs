@@ -1,4 +1,5 @@
-﻿using Fortifex4.Domain.Enums;
+﻿using System.Collections;
+using Fortifex4.Domain.Enums;
 using Microsoft.AspNetCore.Components;
 
 namespace Fortifex4.WebUI.Shared.Common.Modal
@@ -22,6 +23,9 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         [Parameter]
         public EventCallback<int> IsOpenWithID { get; set; }
+
+        [Parameter]
+        public EventCallback<Hashtable> IsOpenWithDataAndID { get; set; }
 
         [Parameter]
         public EventCallback<ProjectStatus> IsOpenWithProjectStatus { get; set; }
@@ -51,10 +55,23 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
             StateHasChanged();
         }
-
+        
         public void OpenWithID(int id)
         {
             IsOpenWithID.InvokeAsync(id);
+
+            Open();
+        }
+
+        public void OpenWithDataAndID(int id, object data)
+        {
+            Hashtable ht = new Hashtable
+            {
+                { "id", id },
+                { "data", data }
+            };
+
+            IsOpenWithDataAndID.InvokeAsync(ht);
 
             Open();
         }
