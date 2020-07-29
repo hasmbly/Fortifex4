@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Shared;
 using Fortifex4.Shared.Currencies.Commands.UpdateCryptoCurrencies;
 using Fortifex4.Shared.Currencies.Commands.UpdateFiatCurrencies;
@@ -21,21 +23,41 @@ namespace Fortifex4.WebAPI.Controllers
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IConfiguration _configuration;
+        private readonly ICurrentUserService _currentUser;
 
-        public DevController(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
+        public DevController(
+            IWebHostEnvironment webHostEnvironment,
+            IConfiguration configuration,
+            ICurrentUserService currentUser)
         {
             _webHostEnvironment = webHostEnvironment;
             _configuration = configuration;
+            _currentUser = currentUser;
         }
 
-        public ActionResult Index()
+        [HttpGet("info")]
+        public IActionResult Info()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"ASPNETCORE_ENVIRONMENT: {_webHostEnvironment.EnvironmentName}");
-            sb.AppendLine($"AppContext.BaseDirectory: {AppContext.BaseDirectory}");
-            sb.AppendLine($"ConnectionString FortifexDatabase: {_configuration.GetSection("ConnectionStrings")["FortifexDatabase"]}");
+            return Ok(GetInfo());
+        }
 
-            return Content(sb.ToString());
+        [HttpGet("info2")]
+        public IDictionary<string, string> Info2()
+        {
+            return GetInfo();
+        }
+
+        private IDictionary<string, string> GetInfo()
+        {
+            IDictionary<string, string> settings = new Dictionary<string, string>();
+            settings.Add("ASPNETCORE_ENVIRONMENT", _webHostEnvironment.EnvironmentName);
+            settings.Add("AppContext.BaseDirectory", AppContext.BaseDirectory);
+            settings.Add("ConnectionString FortifexDatabase", _configuration.GetConnectionString("FortifexDatabase"));
+            settings.Add("_currentUser.IsAuthenticated", _currentUser.IsAuthenticated.ToString());
+            settings.Add("_currentUser.Username", _currentUser.Username);
+            settings.Add("_currentUser.PictureURL", _currentUser.PictureURL);
+
+            return settings;
         }
 
         [AllowAnonymous]

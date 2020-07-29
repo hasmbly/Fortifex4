@@ -1,20 +1,15 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Domain.Constants;
+using Fortifex4.Application.Members.Common;
 using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Members.Queries.Login;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Fortifex4.Application.Members.Queries.Login
 {
@@ -51,29 +46,12 @@ namespace Fortifex4.Application.Members.Queries.Login
 
                         if (member.ActivationStatus == ActivationStatus.Active)
                         {
+                            string securityKey = _config.GetSection("Fortifex:TokenSecurityKey").Value;
+
                             result.AccountIsActive = true;
                             result.IsSuccessful = true;
 
-                            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Fortifex:TokenSecurityKey").Value));
-                            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-                            var claims = new[]
-                            {
-                                new Claim(ClaimTypes.Name, request.MemberUsername),
-                                new Claim(ClaimType.PictureUrl, "https://jwt.io/img/pic_logo.svg")
-                            };
-
-                            var token = new JwtSecurityToken(
-                                null,
-                                null,
-                                claims,
-                                expires: DateTime.Now.AddDays(1),
-                                signingCredentials: credentials
-                            );
-
-                            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-
-                            result.Token = tokenHandler.WriteToken(token);
+                            result.Token = TokenHelper.GenerateToken(member, securityKey);
                         }
                         else
                         {
@@ -102,6 +80,6 @@ namespace Fortifex4.Application.Members.Queries.Login
             }
 
             return result;
-        }
+        }        
     }
 }

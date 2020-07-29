@@ -1,11 +1,13 @@
 using System.Text;
 using Fortifex4.Application;
+using Fortifex4.Application.Common;
 using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Domain.Constants;
 using Fortifex4.Infrastructure;
 using Fortifex4.Shared;
 using Fortifex4.WebAPI.Common;
 using Fortifex4.WebAPI.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,29 +38,35 @@ namespace Fortifex4.WebAPI
             services.AddSingleton<ICurrentWeb, CurrentWeb>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie("TempCookie", options =>
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = SchemeProvider.Fortifex;
+                })
+                .AddCookie(SchemeProvider.Fortifex, options =>
                 {
                     options.LoginPath = new PathString("/account/login");
-                });
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
+                })
+                .AddJwtBearer(options =>
                 {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("Fortifex:TokenSecurityKey").Value)),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("Fortifex:TokenSecurityKey").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                })
+                .AddGoogle(options =>
+                {
+                    options.ClientId = Configuration[ConfigurationKey.Authentication.Google.ClientId];
+                    options.ClientSecret = Configuration[ConfigurationKey.Authentication.Google.ClientSecret];
+                    options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+                    options.ClaimActions.MapJsonKey("urn:google:locale", "locale", "string");
+                    options.SaveTokens = true;
+                });
 
             var physicalProvider = new PhysicalFileProvider(Configuration.GetSection(FortifexOptions.RootSection).Get<FortifexOptions>().ProjectDocumentsRootFolderPath);
             services.AddSingleton<IFileProvider>(physicalProvider);

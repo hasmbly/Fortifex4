@@ -1,0 +1,15 @@
+﻿@layout AnonymousLayout
+@page "/account/login-external"
+
+@inject IAuthenticationService _authenticationService
+@inject NavigationManager _navigationManager
+
+<PageTitle Title="Login External" />
+
+<div>
+    The Token is
+
+    <div class="alert alert-info">
+        @Token
+    </div>
+</div>

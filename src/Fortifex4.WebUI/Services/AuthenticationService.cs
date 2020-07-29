@@ -15,6 +15,7 @@ namespace Fortifex4.WebUI.Services
     interface IAuthenticationService
     {
         public Task<ApiResponse<LoginResponse>> Login(LoginRequest request);
+        public Task LoginExternal(string token);
         public Task<ApiResponse<CreateMemberResponse>> Register(CreateMemberRequest request);
         public Task<ApiResponse<ActivateMemberResponse>> ActivateMember(Guid ActivationCode);
         public Task<ApiResponse<MemberUsernameAlreadyExistsResponse>> CheckUsername(string memberUsername);
@@ -41,6 +42,11 @@ namespace Fortifex4.WebUI.Services
                 await ((ServerAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticatedAsync(loginResponse.Result.Token);
 
             return loginResponse;
+        }
+
+        public async Task LoginExternal(string token)
+        {
+            await ((ServerAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticatedAsync(token);
         }
 
         public async Task<ApiResponse<CreateMemberResponse>> Register(CreateMemberRequest request)

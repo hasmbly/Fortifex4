@@ -1,0 +1,14 @@
+﻿@page "/account/logout"
+
+
+@inject Blazored.LocalStorage.ILocalStorageService _localStorage
+
+@code {
+
+    protected async override Task OnInitializedAsync()
+    {
+        await _localStorage.RemoveItemAsync(Constants.StorageKey.Token);
+        //await _authenticationService.Logout();
+        //StateHasChanged();
+    }
+}
