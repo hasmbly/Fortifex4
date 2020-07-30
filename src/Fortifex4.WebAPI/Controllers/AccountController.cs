@@ -93,14 +93,6 @@ namespace Fortifex4.WebAPI.Controllers
 
                 if (!string.IsNullOrEmpty(response.Token))
                 {
-                    //if (response.IsNewMember)
-                    //{
-                    //    return Redirect($"{webUIBaseURL}/myprofile");
-                    //}
-                    //else
-                    //{
-                    //    return Redirect($"{webUIBaseURL}/portfolio");
-                    //}
                     return Redirect($"{webUIBaseURL}/account/login-external?token={response.Token}");
                 }
                 else
@@ -125,11 +117,6 @@ namespace Fortifex4.WebAPI.Controllers
             };
 
             var response = await Mediator.Send(request);
-
-            if (response.PasswordIsCorrect)
-            {
-
-            }
 
             return Ok(response);
         }

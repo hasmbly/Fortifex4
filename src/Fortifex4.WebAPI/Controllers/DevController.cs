@@ -38,17 +38,6 @@ namespace Fortifex4.WebAPI.Controllers
         [HttpGet("info")]
         public IActionResult Info()
         {
-            return Ok(GetInfo());
-        }
-
-        [HttpGet("info2")]
-        public IDictionary<string, string> Info2()
-        {
-            return GetInfo();
-        }
-
-        private IDictionary<string, string> GetInfo()
-        {
             IDictionary<string, string> settings = new Dictionary<string, string>();
             settings.Add("ASPNETCORE_ENVIRONMENT", _webHostEnvironment.EnvironmentName);
             settings.Add("AppContext.BaseDirectory", AppContext.BaseDirectory);
@@ -57,7 +46,7 @@ namespace Fortifex4.WebAPI.Controllers
             settings.Add("_currentUser.Username", _currentUser.Username);
             settings.Add("_currentUser.PictureURL", _currentUser.PictureURL);
 
-            return settings;
+            return Ok(settings);
         }
 
         [AllowAnonymous]
