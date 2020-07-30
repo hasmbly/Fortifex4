@@ -12,6 +12,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 {
     public partial class ModalEditStartingBalance
     {
+        private bool _disposed = false;
 
         public string Title { get; set; } = "Edit Starting Balance";
 
@@ -76,7 +77,23 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         public void Dispose()
         {
-            _toggleCheckboxState.OnChange -= StateHasChanged;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _toggleCheckboxState.OnChange -= StateHasChanged;
+            }
+
+            _disposed = true;
         }
 
         private async Task LoadDataAsync(int transactionID)

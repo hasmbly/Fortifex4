@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Fortifex4.Domain.Exceptions;
 using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Fortifex4.WebUI.Shared.Common.Modal;
@@ -8,6 +9,8 @@ namespace Fortifex4.WebUI.Pages.Wallets
 {
     public partial class Details
     {
+        private bool _disposed = false;
+
         [Parameter]
         public int WalletID { get; set; }
 
@@ -25,14 +28,30 @@ namespace Fortifex4.WebUI.Pages.Wallets
 
         protected async override Task OnInitializedAsync()
         {
-            _globalState.ShouldRender += RefreshMe;
+            globalState.ShouldRender += RefreshMe;
 
             await InitAsync();
         }
 
         public void Dispose()
         {
-            _globalState.ShouldRender -= RefreshMe;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                globalState.ShouldRender -= RefreshMe;
+            }
+
+            _disposed = true;
         }
 
         private async void RefreshMe()

@@ -18,6 +18,8 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 {
     public partial class ModalCreateTrade
     {
+        private bool _disposed = false;
+
         public string Title { get; set; } = "Add Trade";
 
         [CascadingParameter]
@@ -146,10 +148,26 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
             _toggleCheckboxState.OnChange += StateHasChanged;
         }
-        
+
         public void Dispose()
         {
-            _toggleCheckboxState.OnChange -= StateHasChanged;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _toggleCheckboxState.OnChange -= StateHasChanged;
+            }
+
+            _disposed = true;
         }
 
         private async Task LoadDataAsync()

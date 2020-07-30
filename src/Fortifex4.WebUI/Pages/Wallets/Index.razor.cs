@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Wallets.Queries.GetMyPersonalWallets;
 using Fortifex4.Shared.Wallets.Queries.GetPersonalWallets;
@@ -10,6 +11,8 @@ namespace Fortifex4.WebUI.Pages.Wallets
 {
     public partial class Index
     {
+        private bool _disposed = false;
+
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -31,7 +34,23 @@ namespace Fortifex4.WebUI.Pages.Wallets
 
         public void Dispose()
         {
-            globalState.ShouldRender -= RefreshMe;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                globalState.ShouldRender -= RefreshMe;
+            }
+
+            _disposed = true;
         }
 
         private async void RefreshMe()

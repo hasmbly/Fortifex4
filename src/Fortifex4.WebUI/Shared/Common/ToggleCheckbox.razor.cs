@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Fortifex4.WebUI.Common;
 using Fortifex4.WebUI.Common.StateContainer;
@@ -9,6 +10,8 @@ namespace Fortifex4.WebUI.Shared.Common
 {
     public partial class ToggleCheckbox
     {
+        private bool _disposed = false;
+
         [Parameter]
         public ToggleCheckboxAttributes Attributes { get; set; }
 
@@ -32,13 +35,29 @@ namespace Fortifex4.WebUI.Shared.Common
 
         public void Dispose()
         {
-            _toggleCheckboxState.SetDefaultState();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-            _toggleCheckboxState.SetToggleChange -= SetToggle;
-            _toggleCheckboxState.ToggleHasChanged -= ToggleHasChanged;
-            _toggleCheckboxState.SetTogglePropChange -= SetToggleProp;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
 
-            ToggleCheckboxState?.Dispose();
+            if (disposing)
+            {
+                _toggleCheckboxState.SetDefaultState();
+
+                _toggleCheckboxState.SetToggleChange -= SetToggle;
+                _toggleCheckboxState.ToggleHasChanged -= ToggleHasChanged;
+                _toggleCheckboxState.SetTogglePropChange -= SetToggleProp;
+
+                ToggleCheckboxState?.Dispose();
+            }
+
+            _disposed = true;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

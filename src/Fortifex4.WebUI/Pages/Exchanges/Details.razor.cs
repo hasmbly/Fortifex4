@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Fortifex4.Shared.Owners.Queries.GetOwner;
 using Fortifex4.WebUI.Shared.Common.Modal;
 using Microsoft.AspNetCore.Components;
@@ -7,6 +8,8 @@ namespace Fortifex4.WebUI.Pages.Exchanges
 {
     public partial class Details
     {
+        private bool _disposed = false;
+
         [Parameter]
         public int OwnerID { get; set; }
 
@@ -29,7 +32,23 @@ namespace Fortifex4.WebUI.Pages.Exchanges
 
         public void Dispose()
         {
-            globalState.ShouldRender -= RefreshMe;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                globalState.ShouldRender -= RefreshMe;
+            }
+
+            _disposed = true;
         }
 
         private async void RefreshMe()

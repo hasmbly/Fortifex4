@@ -51,7 +51,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             await InitAsync();
         }
 
-        public void Dispose()
+        void Dispose()
         {
         }
 

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Fortifex4.Domain.Enums;
@@ -13,6 +12,8 @@ namespace Fortifex4.WebUI.Pages.Projects
 {
     public partial class Details
     {
+        private bool _disposed = false;
+
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -55,11 +56,27 @@ namespace Fortifex4.WebUI.Pages.Projects
 
         public void Dispose()
         {
-            _globalState.ShouldRender -= RefreshMe;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-            _projectState.OnChange -= StateHasChanged;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
 
-            _projectState.ResetState();
+            if (disposing)
+            {
+                _globalState.ShouldRender -= RefreshMe;
+
+                _projectState.OnChange -= StateHasChanged;
+
+                _projectState.ResetState();
+            }
+
+            _disposed = true;
         }
 
         private async void RefreshMe()

@@ -14,6 +14,8 @@ namespace Fortifex4.WebUI.Shared.Common
 {
     public partial class CreateProject
     {
+        private bool _disposed = false;
+
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -58,11 +60,27 @@ namespace Fortifex4.WebUI.Shared.Common
             await InitAsync();
         }
 
-        public void Dispose() 
-        { 
-            _projectState.OnChangeBlockchainID -= SetBlockchainID;
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-            ProjectState?.Dispose();
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _projectState.OnChangeBlockchainID -= SetBlockchainID;
+
+                ProjectState?.Dispose();
+            }
+
+            _disposed = true;
         }
 
         private async Task InitAsync()

@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Transactions.Queries.GetTransactionsByMemberUsername;
 using Fortifex4.WebUI.Shared.Common.Modal;
@@ -10,6 +11,8 @@ namespace Fortifex4.WebUI.Pages
 {
     public partial class Transactions
     {
+        private bool _disposed = false;
+
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -52,7 +55,23 @@ namespace Fortifex4.WebUI.Pages
 
         public void Dispose()
         {
-            globalState.ShouldRender -= RefreshMe;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                globalState.ShouldRender -= RefreshMe;
+            }
+
+            _disposed = true;
         }
 
         private async void RefreshMe()

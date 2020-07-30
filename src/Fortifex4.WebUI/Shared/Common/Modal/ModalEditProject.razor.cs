@@ -15,6 +15,8 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 {
     public partial class ModalEditProject
     {
+        private bool _disposed = false;
+
         public string Title { get; set; } = "Edit Project";
 
         [CascadingParameter]
@@ -65,9 +67,25 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         public void Dispose()
         {
-            _projectState.OnChangeBlockchainID -= SetBlockchainID;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-            ProjectState?.Dispose();
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _projectState.OnChangeBlockchainID -= SetBlockchainID;
+
+                ProjectState?.Dispose();
+            }
+
+            _disposed = true;
         }
 
         private async Task InitAsync()

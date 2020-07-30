@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -7,6 +8,8 @@ namespace Fortifex4.WebUI.Pages
 {
     public partial class RegisterProject
     {
+        private bool _disposed = false;
+
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -21,7 +24,23 @@ namespace Fortifex4.WebUI.Pages
 
         public void Dispose()
         {
-            _projectState.OnChange -= StateHasChanged;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _projectState.OnChange -= StateHasChanged;
+            }
+
+            _disposed = true;
         }
 
         private void OnSubmitRegisterProject(bool isSuccessful)
