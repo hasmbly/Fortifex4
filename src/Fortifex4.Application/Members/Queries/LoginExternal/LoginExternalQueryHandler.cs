@@ -64,7 +64,7 @@ namespace Fortifex4.Application.Members.Queries.LoginExternal
                     MemberUsername = request.MemberUsername,
                     FirstName = firstName,
                     LastName = lastName,
-                    AuthenticationScheme = request.AuthenticationScheme,
+                    AuthenticationScheme = request.SchemeProvider,
                     ExternalID = request.ExternalID,
                     RegionID = defaultRegion.RegionID,
                     GenderID = GenderID.Default,

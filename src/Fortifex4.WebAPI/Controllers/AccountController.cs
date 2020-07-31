@@ -3,6 +3,8 @@ using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Fortifex4.Application.Common.Exceptions;
+using Fortifex4.Application.Common.Interfaces;
+using Fortifex4.Shared.Common;
 using Fortifex4.Shared.Members.Commands.ActivateMember;
 using Fortifex4.Shared.Members.Queries.GetMember;
 using Fortifex4.Shared.Members.Queries.Login;
@@ -18,6 +20,13 @@ namespace Fortifex4.WebAPI.Controllers
 {
     public class AccountController : ApiController
     {
+        private readonly ICurrentWeb _currentWeb;
+
+        public AccountController(ICurrentWeb currentWeb)
+        {
+            _currentWeb = currentWeb;
+        }
+
         [AllowAnonymous]
         [HttpGet("checkUsername/{memberUsername}")]
         public async Task<ActionResult> CheckUsername(string memberUsername)
@@ -65,7 +74,6 @@ namespace Fortifex4.WebAPI.Controllers
         public async Task<IActionResult> LoginExternalCallbackAsync(string scheme)
         {
             AuthenticateResult authenticateResult = await HttpContext.AuthenticateAsync(scheme);
-            string webUIBaseURL = "https://localhost:5004";
 
             if (authenticateResult.Succeeded)
             {
@@ -79,7 +87,7 @@ namespace Fortifex4.WebAPI.Controllers
                 {
                     MemberUsername = memberUsername,
                     ExternalID = externalID,
-                    AuthenticationScheme = scheme,
+                    SchemeProvider = SchemeProvider.FromString(scheme),
                     FullName = name,
                     PictureURL = pictureUrl
                 };
@@ -88,16 +96,16 @@ namespace Fortifex4.WebAPI.Controllers
 
                 if (!string.IsNullOrEmpty(response.Token))
                 {
-                    return Redirect($"{webUIBaseURL}/account/login-external?token={response.Token}");
+                    return Redirect($"{_currentWeb.BaseURL}/account/login-external?token={response.Token}");
                 }
                 else
                 {
-                    return Redirect($"{webUIBaseURL}/account/login");
+                    return Redirect($"{_currentWeb.BaseURL}/account/login");
                 }
             }
             else
             {
-                return Redirect($"{webUIBaseURL}/account/login");
+                return Redirect($"{_currentWeb.BaseURL}/account/login");
             }
         }
 

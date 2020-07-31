@@ -9,13 +9,13 @@ namespace Fortifex4.WebAPI.Common
     {
         public static string GetPictureURL(AuthenticateResult authenticateResult)
         {
-            string authenticationScheme = authenticateResult.Ticket.AuthenticationScheme;
+            SchemeProvider schemeProvider = SchemeProvider.FromString(authenticateResult.Ticket.AuthenticationScheme);
 
-            if (authenticationScheme == SchemeProvider.Google)
+            if (schemeProvider == SchemeProvider.Google)
             {
                 return GetGooglePictureUrl(authenticateResult.Ticket.Properties.Items[".Token.access_token"]);
             }
-            else if (authenticationScheme == SchemeProvider.Facebook)
+            else if (schemeProvider == SchemeProvider.Facebook)
             {
                 return GetFacebookPictureUrl(authenticateResult.Principal.FindFirstValue(ClaimTypes.NameIdentifier));
             }

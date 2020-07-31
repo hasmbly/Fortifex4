@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Fortifex4.Shared.Common;
+using MediatR;
 
 namespace Fortifex4.Shared.Members.Queries.LoginExternal
 {
@@ -6,7 +7,7 @@ namespace Fortifex4.Shared.Members.Queries.LoginExternal
     {
         public string MemberUsername { get; set; }
         public string ExternalID { get; set; }
-        public string AuthenticationScheme { get; set; }
+        public SchemeProvider SchemeProvider { get; set; }
         public string FullName { get; set; }
         public string PictureURL { get; set; }
     }

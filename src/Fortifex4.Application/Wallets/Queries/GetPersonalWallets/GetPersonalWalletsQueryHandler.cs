@@ -96,8 +96,6 @@ namespace Fortifex4.Application.Wallets.Queries.GetPersonalWallets
 
             result.IsSuccessful = true;
 
-            global::System.Console.WriteLine("Get Personal Wallet Succesfully");
-
             return result;
         }
     }
