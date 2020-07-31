@@ -5,6 +5,7 @@ using Fortifex4.Application.Common;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Members.Common;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Common;
 using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.Members.Queries.Login;
 using MediatR;

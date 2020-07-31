@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Fortifex4.Shared.Common;
 using Fortifex4.WebAPI.Models;
 using Microsoft.AspNetCore.Authentication;
 
@@ -8,14 +9,20 @@ namespace Fortifex4.WebAPI.Common
     {
         public static string GetPictureURL(AuthenticateResult authenticateResult)
         {
-            string pictureUrl = authenticateResult.Ticket.AuthenticationScheme switch
-            {
-                "Google" => GetGooglePictureUrl(authenticateResult.Ticket.Properties.Items[".Token.access_token"]),
-                "Facebook" => GetFacebookPictureUrl(authenticateResult.Principal.FindFirstValue(ClaimTypes.NameIdentifier)),
-                _ => string.Empty
-            };
+            string authenticationScheme = authenticateResult.Ticket.AuthenticationScheme;
 
-            return pictureUrl;
+            if (authenticationScheme == SchemeProvider.Google)
+            {
+                return GetGooglePictureUrl(authenticateResult.Ticket.Properties.Items[".Token.access_token"]);
+            }
+            else if (authenticationScheme == SchemeProvider.Facebook)
+            {
+                return GetFacebookPictureUrl(authenticateResult.Principal.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         private static string GetGooglePictureUrl(string accessToken)

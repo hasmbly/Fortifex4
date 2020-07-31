@@ -1,10 +1,10 @@
 using System.Text;
 using Fortifex4.Application;
-using Fortifex4.Application.Common;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Constants;
 using Fortifex4.Infrastructure;
 using Fortifex4.Shared;
+using Fortifex4.Shared.Common;
 using Fortifex4.WebAPI.Common;
 using Fortifex4.WebAPI.Services;
 using Microsoft.AspNetCore.Authentication;

@@ -9,6 +9,7 @@ using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Application.Common.Interfaces.Email;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Common;
 using Fortifex4.Shared.Members.Commands.CreateMember;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
