@@ -66,6 +66,11 @@ namespace Fortifex4.WebAPI
                     options.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
                     options.ClaimActions.MapJsonKey("urn:google:locale", "locale", "string");
                     options.SaveTokens = true;
+                })
+                .AddFacebook(options =>
+                {
+                    options.AppId = Configuration[ConfigurationKey.Authentication.Facebook.AppId];
+                    options.AppSecret = Configuration[ConfigurationKey.Authentication.Facebook.AppSecret];
                 });
 
             var physicalProvider = new PhysicalFileProvider(Configuration.GetSection(FortifexOptions.RootSection).Get<FortifexOptions>().ProjectDocumentsRootFolderPath);

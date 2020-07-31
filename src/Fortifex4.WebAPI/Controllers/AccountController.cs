@@ -10,7 +10,6 @@ using Fortifex4.Shared.Members.Queries.LoginExternal;
 using Fortifex4.Shared.Members.Queries.MemberUsernameAlreadyExists;
 using Fortifex4.WebAPI.Common;
 using Fortifex4.WebAPI.Common.ApiEnvelopes;
-using Fortifex4.WebAPI.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -74,11 +73,7 @@ namespace Fortifex4.WebAPI.Controllers
                 string externalID = authenticateResult.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
                 string name = authenticateResult.Principal.FindFirstValue(ClaimTypes.Name);
 
-                string pictureUrl = scheme switch
-                {
-                    "Google" => GetGooglePictureUrl(authenticateResult.Ticket.Properties.Items[".Token.access_token"]),
-                    _ => string.Empty
-                };
+                string pictureUrl = PictureURLHelper.GetPictureURL(authenticateResult);
 
                 LoginExternalRequest request = new LoginExternalRequest
                 {
@@ -168,16 +163,6 @@ namespace Fortifex4.WebAPI.Controllers
             {
                 return Ok(new InternalServerError(exception));
             }
-        }
-
-
-        private static string GetGooglePictureUrl(string accessToken)
-        {
-            string uri = $"https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token={accessToken}";
-
-            GoogleUserInfo googleUserInfo = WebRequestHelper.Get<GoogleUserInfo>(uri);
-
-            return googleUserInfo.picture;
         }
     }
 }
