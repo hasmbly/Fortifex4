@@ -155,6 +155,10 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolio
 
             foreach (var currencyDTO in validCurrencies)
             {
+                // debug why token with amount > 1 USD doesn't occur?
+                _logger.LogDebug($"validCurrencies - Coin Symbol: {currencyDTO.Symbol}");
+                _logger.LogDebug($"validCurrencies - Coin TotalAmount: {currencyDTO.TotalAmount}");
+
                 var latestQuotesResult = await _cryptoService.GetLatestQuoteAsync(currencyDTO.Symbol, result.MemberPreferredFiatCurrencySymbol);
 
                 if (latestQuotesResult != null)

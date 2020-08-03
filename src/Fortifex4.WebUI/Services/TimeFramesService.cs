@@ -47,6 +47,8 @@ namespace Fortifex4.WebUI.Services
             {
                 // if unauthorized 401 then redirect to login page
                 System.Console.WriteLine($"HttpRequestException: {e.Message}");
+
+                await ((ServerAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOutAsync();
             }
 
             return result;
