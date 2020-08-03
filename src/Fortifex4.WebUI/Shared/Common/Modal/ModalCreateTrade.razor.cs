@@ -321,6 +321,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         }
         #endregion
 
+        // apakah mungkin lebih bagus di pisah ke class helper? atau di masukan kedalam class service yang terkait terhadap component ini?
         private async Task GetUnitPriceInUSD()
         {
             string symbol = GetFromCurrencySymbol(Input.FromCurrencyID);
@@ -334,6 +335,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             CalculateAmount();
         }
 
+        // apakah mungkin lebih bagus di pisah ke class helper? atau di masukan kedalam class service yang terkait terhadap component ini?
         private async Task GetUnitPrice()
         {
             string fromCurrencySymbol = GetFromCurrencySymbol(Input.FromCurrencyID);
@@ -348,6 +350,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             CalculateAmount();
         }
 
+        // apakah mungkin lebih bagus di pisah ke class helper? atau di masukan kedalam class service yang terkait terhadap component ini?
         private void CalculateAmount()
         {
             Total = Input.Amount * Input.UnitPrice;
@@ -356,6 +359,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             StateHasChanged();
         }
 
+        // apakah mungkin lebih bagus di pisah ke class helper? atau di masukan kedalam class service yang terkait terhadap component ini?
         private decimal ToFixed4(decimal value)
         {
             value = decimal.Parse(value.ToString("N4").Replace(".0000", ""));
@@ -363,16 +367,19 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             return value;
         }
 
+        // apakah mungkin lebih bagus di pisah ke class helper? atau di masukan kedalam class service yang terkait terhadap component ini?
         private string GetFromCurrencySymbol(int currencyID)
         {
             return FromCurrencies.Where(x => x.CurrencyID == currencyID).First().Symbol;
         }
 
+        // apakah mungkin lebih bagus di pisah ke class helper? atau di masukan kedalam class service yang terkait terhadap component ini?
         private string GetPairCurrencySymbol(int currencyID)
         {
             return PairCurrencies.Where(x => x.CurrencyID == currencyID).First().Symbol;
         }
 
+        // semua component modal nama method (pada saat submit) nya disamakan namanya "OnSubmitAsync"
         private async void OnSubmitAsync()
         {
             StateHasChanged();
