@@ -4,6 +4,7 @@
     {
         public const string Real = "real";
         public const string Decimal2920 = "decimal(29,20)";
+        public const string Decimal2918 = "decimal(29,18)";
         public const string Decimal2910 = "decimal(29,10)";
         public const string Decimal2915 = "decimal(29,15)";
         public const string Varchar5 = "varchar(5)";

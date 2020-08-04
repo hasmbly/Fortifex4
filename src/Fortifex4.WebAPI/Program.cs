@@ -14,22 +14,22 @@ namespace Fortifex4.WebAPI
         {
             var host = CreateHostBuilder(args).Build();
 
-            //using (var scope = host.Services.CreateScope())
-            //{
-            //    var services = scope.ServiceProvider;
-            //    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-            //    try
-            //    {
-            //        var fortifexDBContext = services.GetRequiredService<Fortifex4DBContext>();
-            //        fortifexDBContext.Database.Migrate();
-            //        logger.LogInformation("Fortifex4DB database has been successfully migrated.");
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        logger.LogError(ex, "An error occurred while migrating or initializing the database.");
-            //    }
-            //}
+                try
+                {
+                    var fortifexDBContext = services.GetRequiredService<Fortifex4DBContext>();
+                    fortifexDBContext.Database.Migrate();
+                    logger.LogInformation("Fortifex4DB database has been successfully migrated.");
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "An error occurred while migrating or initializing the database.");
+                }
+            }
 
             host.Run();
         }

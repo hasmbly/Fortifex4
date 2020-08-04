@@ -23,6 +23,7 @@ namespace Fortifex4.Domain.Entities
         public float PercentChange24h { get; set; }
         public float PercentChange7d { get; set; }
         public DateTimeOffset LastUpdated { get; set; }
+        public bool IsFromCoinMarketCap { get; set; }
 
         public Blockchain Blockchain { get; set; }
 
@@ -48,5 +49,10 @@ namespace Fortifex4.Domain.Entities
         public static readonly IList<string> SynchronizationOptions = new List<string> { BTC, ETH, DOGE, STEEM, HIVE };
 
         public static bool IsSynchronizable(string currencySymbol) => SynchronizationOptions.Any(x => x == currencySymbol);
+    }
+
+    public static class ProblematicCurrency
+    {
+        public static readonly IList<int> ByIDs = new List<int> { 5819 };
     }
 }

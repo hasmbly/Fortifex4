@@ -4,14 +4,16 @@ using Fortifex4.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fortifex4.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(Fortifex4DBContext))]
-    partial class Fortifex4DBContextModelSnapshot : ModelSnapshot
+    [Migration("20200804132915_Fortifex4DB_004")]
+    partial class Fortifex4DB_004
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,9 +115,6 @@ namespace Fortifex4.Infrastructure.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsForPreferredOption")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsFromCoinMarketCap")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsShownInTradePair")

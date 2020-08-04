@@ -3,6 +3,8 @@ dotnet ef migrations remove --project src/Fortifex4.Infrastructure --startup-pro
 dotnet ef migrations add Fortifex4DB_001 --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI --output-dir Persistence/Migrations
 dotnet ef migrations add Fortifex4DB_002 --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI --output-dir Persistence/Migrations
 dotnet ef migrations add Fortifex4DB_003 --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI --output-dir Persistence/Migrations
+dotnet ef migrations add Fortifex4DB_004 --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI --output-dir Persistence/Migrations
+dotnet ef migrations add Fortifex4DB_005 --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI --output-dir Persistence/Migrations
 dotnet ef database update --project src/Fortifex4.Infrastructure --startup-project src/Fortifex4.WebAPI
 ====================================================================================================
 User Secrets
