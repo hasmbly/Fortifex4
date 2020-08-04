@@ -49,4 +49,9 @@ namespace Fortifex4.Domain.Entities
 
         public static bool IsSynchronizable(string currencySymbol) => SynchronizationOptions.Any(x => x == currencySymbol);
     }
+
+    public static class ProblematicCurrency
+    {
+        public static readonly IList<int> ByIDs = new List<int> { 5819 };
+    }
 }

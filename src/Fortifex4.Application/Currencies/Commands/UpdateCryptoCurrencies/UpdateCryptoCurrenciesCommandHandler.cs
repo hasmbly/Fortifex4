@@ -33,7 +33,8 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
             if (cryptoBlockchainCollection != null)
             {
                 result.IsSuccessful = true;
-                // Segala sesuatunya haarus berdasarkan CoinMarketCapID
+
+                // Segala sesuatunya harus berdasarkan CoinMarketCapID
                 // Di entity Blockchain, isi BlockchainID adalah CoinMarketCapID
                 foreach (var cryptoBlockchain in cryptoBlockchainCollection.Blockchains)
                 {
@@ -97,6 +98,12 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
 
                         if (currency == null)
                         {
+                            // Buat jaga-jaga kalo ada Currency yang bermasalah
+                            //if (ProblematicCurrency.ByIDs.Any(x => x == currency.CurrencyID))
+                            //{
+                            //    continue;
+                            //}
+
                             _logger.LogDebug($"cryptoCurrency.CurrencyID {cryptoCurrency.CurrencyID}");
                             _logger.LogDebug($"cryptoCurrency.Name {cryptoCurrency.Name}");
                             _logger.LogDebug($"cryptoCurrency.Symbol {cryptoCurrency.Symbol}");
@@ -124,24 +131,24 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
                         }
                         else
                         {
-                            //currency.Symbol = cryptoCurrency.Symbol;
-                            //currency.Name = cryptoCurrency.Name;
-                            //currency.Rank = cryptoCurrency.Rank;
-                            //currency.UnitPriceInUSD = cryptoCurrency.UnitPriceInUSD;
-                            //currency.Volume24h = cryptoCurrency.Volume24h;
-                            //currency.PercentChange1h = cryptoCurrency.PercentChange1h;
-                            //currency.PercentChange24h = cryptoCurrency.PercentChange24h;
-                            //currency.PercentChange7d = cryptoCurrency.PercentChange7d;
-                            //currency.LastUpdated = cryptoCurrency.LastUpdated;
-                            
-                            //currencyDTO.UpdateStatus = UpdateStatus.Updated;
+                            currency.Symbol = cryptoCurrency.Symbol;
+                            currency.Name = cryptoCurrency.Name;
+                            currency.Rank = cryptoCurrency.Rank;
+                            currency.UnitPriceInUSD = cryptoCurrency.UnitPriceInUSD;
+                            currency.Volume24h = cryptoCurrency.Volume24h;
+                            currency.PercentChange1h = cryptoCurrency.PercentChange1h;
+                            currency.PercentChange24h = cryptoCurrency.PercentChange24h;
+                            currency.PercentChange7d = cryptoCurrency.PercentChange7d;
+                            currency.LastUpdated = cryptoCurrency.LastUpdated;
+
+                            currencyDTO.UpdateStatus = UpdateStatus.Updated;
                         }
 
                         await _context.SaveChangesAsync(cancellationToken);
                     }
                 }
 
-                //await _context.SaveChangesAsync(cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
             }
 
             return result;
