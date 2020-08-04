@@ -23,6 +23,7 @@ namespace Fortifex4.Domain.Entities
         public float PercentChange24h { get; set; }
         public float PercentChange7d { get; set; }
         public DateTimeOffset LastUpdated { get; set; }
+        public bool IsFromCoinMarketCap { get; set; }
 
         public Blockchain Blockchain { get; set; }
 

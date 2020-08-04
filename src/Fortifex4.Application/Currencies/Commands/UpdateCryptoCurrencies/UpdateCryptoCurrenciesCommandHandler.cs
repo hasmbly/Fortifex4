@@ -76,8 +76,6 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
 
                     foreach (var cryptoCurrency in cryptoBlockchain.Currencies)
                     {
-                        Currency currency = _context.Currencies.SingleOrDefault(x => x.CoinMarketCapID == cryptoCurrency.CurrencyID);
-
                         CurrencyDTO currencyDTO = new CurrencyDTO
                         {
                             BlockchainID = blockchain.BlockchainID,
@@ -96,7 +94,11 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
 
                         blockchainDTO.Currencies.Add(currencyDTO);
 
-                        if (currency == null)
+                        var query = _context.Currencies.Where(x => x.CoinMarketCapID == cryptoCurrency.CurrencyID);
+
+                        var currencies = query.ToList();
+
+                        if (currencies.Count == 0)
                         {
                             // Buat jaga-jaga kalo ada Currency yang bermasalah
                             //if (ProblematicCurrency.ByIDs.Any(x => x == currency.CurrencyID))
@@ -108,7 +110,7 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
                             _logger.LogDebug($"cryptoCurrency.Name {cryptoCurrency.Name}");
                             _logger.LogDebug($"cryptoCurrency.Symbol {cryptoCurrency.Symbol}");
 
-                            currency = new Currency
+                            var currency = new Currency
                             {
                                 CoinMarketCapID = cryptoCurrency.CurrencyID,
                                 Symbol = cryptoCurrency.Symbol,
@@ -122,29 +124,36 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
                                 PercentChange1h = cryptoCurrency.PercentChange1h,
                                 PercentChange24h = cryptoCurrency.PercentChange24h,
                                 PercentChange7d = cryptoCurrency.PercentChange7d,
-                                LastUpdated = cryptoCurrency.LastUpdated
+                                LastUpdated = cryptoCurrency.LastUpdated,
+                                IsFromCoinMarketCap = true
                             };
 
                             blockchain.Currencies.Add(currency);
+                            await _context.SaveChangesAsync(cancellationToken);
 
                             currencyDTO.UpdateStatus = UpdateStatus.New;
                         }
                         else
                         {
-                            currency.Symbol = cryptoCurrency.Symbol;
-                            currency.Name = cryptoCurrency.Name;
-                            currency.Rank = cryptoCurrency.Rank;
-                            currency.UnitPriceInUSD = cryptoCurrency.UnitPriceInUSD;
-                            currency.Volume24h = cryptoCurrency.Volume24h;
-                            currency.PercentChange1h = cryptoCurrency.PercentChange1h;
-                            currency.PercentChange24h = cryptoCurrency.PercentChange24h;
-                            currency.PercentChange7d = cryptoCurrency.PercentChange7d;
-                            currency.LastUpdated = cryptoCurrency.LastUpdated;
+                            foreach (var currency in currencies)
+                            {
+                                if (currency.IsFromCoinMarketCap)
+                                {
+                                    currency.Symbol = cryptoCurrency.Symbol;
+                                    currency.Name = cryptoCurrency.Name;
+                                    currency.Rank = cryptoCurrency.Rank;
+                                }
 
-                            currencyDTO.UpdateStatus = UpdateStatus.Updated;
-                        }
+                                currency.UnitPriceInUSD = cryptoCurrency.UnitPriceInUSD;
+                                currency.Volume24h = cryptoCurrency.Volume24h;
+                                currency.PercentChange1h = cryptoCurrency.PercentChange1h;
+                                currency.PercentChange24h = cryptoCurrency.PercentChange24h;
+                                currency.PercentChange7d = cryptoCurrency.PercentChange7d;
+                                currencyDTO.UpdateStatus = UpdateStatus.Updated;
+                            }
 
-                        await _context.SaveChangesAsync(cancellationToken);
+                            await _context.SaveChangesAsync(cancellationToken);
+                        }                        
                     }
                 }
 
