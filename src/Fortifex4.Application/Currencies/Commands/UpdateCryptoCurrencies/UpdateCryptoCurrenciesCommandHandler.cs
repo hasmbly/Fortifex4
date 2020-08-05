@@ -141,9 +141,9 @@ namespace Fortifex4.Application.Currencies.Commands.UpdateCryptoCurrencies
                                 {
                                     currency.Symbol = cryptoCurrency.Symbol;
                                     currency.Name = cryptoCurrency.Name;
-                                    currency.Rank = cryptoCurrency.Rank;
                                 }
 
+                                currency.Rank = cryptoCurrency.Rank;
                                 currency.UnitPriceInUSD = cryptoCurrency.UnitPriceInUSD;
                                 currency.Volume24h = cryptoCurrency.Volume24h;
                                 currency.PercentChange1h = cryptoCurrency.PercentChange1h;
