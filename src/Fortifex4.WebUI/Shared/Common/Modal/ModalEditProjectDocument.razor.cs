@@ -26,7 +26,21 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         public IFileListEntry File { get; set; }
 
-        private void SetProjectDocumentID(int projectDocumentID) => Input.ProjectDocumentID = projectDocumentID;
+        private async Task GetExistingData(int projectDocumentID) 
+        {
+            IsLoading = true;
+
+            Input.ProjectDocumentID = projectDocumentID;
+
+            var getProjectDocument = Task.FromResult(await _projectsDocumentService.GetProjectDocument(projectDocumentID)).Result.Result;
+
+            if (getProjectDocument.IsSuccessful)
+            {
+                Input.Title = getProjectDocument.Title;
+
+                IsLoading = false;
+            }
+        }
 
         private void HandleFileSelected(IFileListEntry[] files)
         {
@@ -64,6 +78,8 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
                 BaseModal.Close();
             }
+
+            IsLoading = false;
         }
     }
 }

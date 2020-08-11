@@ -3,7 +3,6 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Fortifex4.Shared.Common;
 using Fortifex4.Shared.ProjectDocuments.Commands.DeleteProjectDocument;
-using Fortifex4.Shared.ProjectDocuments.Commands.UpdateProjectDocument;
 using Fortifex4.Shared.ProjectDocuments.Queries.GetProjectDocument;
 using Fortifex4.WebUI.Common;
 using Microsoft.AspNetCore.Components;

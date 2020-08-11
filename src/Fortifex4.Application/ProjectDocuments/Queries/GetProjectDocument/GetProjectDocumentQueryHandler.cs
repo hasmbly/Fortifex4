@@ -27,6 +27,7 @@ namespace Fortifex4.Application.ProjectDocuments.Queries.GetProjectDocument
 
             if (projectDocument != null)
             {
+                result.IsSuccessful = true;
                 result.ProjectDocumentID = projectDocument.ProjectDocumentID;
                 result.ProjectID = projectDocument.ProjectID;
                 result.Title = projectDocument.Title;

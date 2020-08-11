@@ -289,11 +289,3 @@
 <ModalCreateProjectDocument @ref="ModalCreateProjectDocument" ProjectID="ProjectID" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalEditProjectDocument @ref="ModalEditProjectDocument" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalDeleteProjectDocument @ref="ModalDeleteProjectDocument" OnAfterSuccessful="UpdateStateHasChanged" />
-
-@*
-    @await Component.InvokeAsync(nameof(ModalInviteProjectContributors), new { projectID=Project.ProjectID, projectName=Project.Name })
-    @await Component.InvokeAsync(nameof(ModalDeleteProjectContributors))
-    @await Component.InvokeAsync(nameof(ModalCreateProjectDocument), new { projectID=Project.ProjectID })
-    @await Component.InvokeAsync(nameof(ModalEditProjectDocument))
-    @await Component.InvokeAsync(nameof(ModalDeleteProjectDocument))
-*@
