@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BlazorInputFile;
 using Fortifex4.Shared.ProjectDocuments.Commands.CreateProjectDocument;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace Fortifex4.WebUI.Shared.Common.Modal
 {
@@ -47,6 +48,8 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         {
             File = files.FirstOrDefault();
         }
+
+        private async void ResetInputFile() => await JsRuntime.InvokeVoidAsync("BlazorInputFile.reset");
 
         private async Task SubmitAsync()
         {

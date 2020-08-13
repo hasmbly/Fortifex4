@@ -4,11 +4,13 @@
 @inject IAuthenticationService _authenticationService
 @inject IBlockchainsService _blockchainsService
 @inject IProjectsDocumentService _projectsDocumentService
+@inject IJSRuntime JsRuntime
 
 <BaseModal @ref="BaseModal"
            ModalTitle="@Title"
            IsLoading="IsLoading"
-           OnSubmit="SubmitAsync">
+           OnSubmit="SubmitAsync"
+           OnClose="ResetInputFile">
     <ChildContent>
         <EditForm Model="Input" OnValidSubmit="SubmitAsync">
             <DataAnnotationsValidator />
@@ -28,7 +30,7 @@
                     <InputFile OnChange="HandleFileSelected" class="text-center form-control-file custom_file" id="upload" />
                     <label for="file_default">No File Choosen </label>
                     <label for="file_name"><b></b></label>
-                    
+
                     <span class="text-danger">
                         <ValidationMessage For="@(() => Input.FormFileProjectDocument)" />
                     </span>

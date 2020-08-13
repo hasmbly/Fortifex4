@@ -1,6 +1,7 @@
 ﻿(function ()
 {
     window.BlazorInputFile = {
+
         init: function init(elem, componentInstance)
         {
             elem._blazorInputFileNextFileId = 0;
@@ -47,7 +48,14 @@
                     elem.value = '';
                     throw new Error(err);
                 });
+
             });
+        },
+
+        reset: function ()
+        {
+            $("label[for='file_name'] b").html('');
+            $("label[for='file_default']").text('No File Choosen');
         },
 
         toImageFile(elem, fileId, format, maxWidth, maxHeight)

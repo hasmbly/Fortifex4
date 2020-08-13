@@ -22,6 +22,9 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         public EventCallback OnSubmit { get; set; }
 
         [Parameter]
+        public EventCallback OnClose { get; set; }
+
+        [Parameter]
         public EventCallback<int> IsOpenWithID { get; set; }
 
         [Parameter]
@@ -88,6 +91,8 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             ModalDisplay = "none";
             ModalClass = string.Empty;
             ShowBackdrop = false;
+
+            OnClose.InvokeAsync(null);
 
             StateHasChanged();
         }

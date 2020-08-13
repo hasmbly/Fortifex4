@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BlazorInputFile;
 using Fortifex4.Shared.ProjectDocuments.Commands.UpdateProjectDocument;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace Fortifex4.WebUI.Shared.Common.Modal
 {
@@ -40,6 +41,8 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
                 IsLoading = false;
             }
+
+            StateHasChanged();
         }
 
         private void HandleFileSelected(IFileListEntry[] files)
@@ -47,18 +50,21 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             File = files.FirstOrDefault();
         }
 
+        private async void ResetInputFile() => await JsRuntime.InvokeVoidAsync("BlazorInputFile.reset");
+
         private async Task SubmitAsync()
         {
             IsLoading = true;
 
             var content = new MultipartFormDataContent();
 
+            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+
+            content.Add(new StringContent(Input.ProjectDocumentID.ToString()), "ProjectDocumentID");
+            content.Add(new StringContent(Input.Title), "Title");
+
             if (File != null)
             {
-                content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
-
-                content.Add(new StringContent(Input.ProjectDocumentID.ToString()), "ProjectDocumentID");
-                content.Add(new StringContent(Input.Title), "Title");
                 content.Add(new StreamContent(File.Data, (int)File.Data.Length), "FormFileProjectDocument", File.Name);
             }
 
