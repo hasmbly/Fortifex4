@@ -71,11 +71,12 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         public IList<WalletSameCurrencyDTO> Wallets { get; set; } = new List<WalletSameCurrencyDTO>();
 
-        protected async override Task OnInitializedAsync() 
+        protected async override Task OnInitializedAsync()
         {
             User = Task.FromResult(await AuthenticationStateTask).Result.User;
 
             _toggleCheckboxState.OnChange += StateHasChanged;
+            _toggleCheckboxState.DirectionHasChange += OnChangeDirection;
         }
 
         public void Dispose()
@@ -94,6 +95,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             if (disposing)
             {
                 _toggleCheckboxState.OnChange -= StateHasChanged;
+                _toggleCheckboxState.DirectionHasChange -= OnChangeDirection;
             }
 
             _disposed = true;
@@ -140,17 +142,27 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         private void OnChangeDirection(bool state)
         {
-            Console.WriteLine($"OnChangeDirection - state: {state}");
-
             if (state)
             {
                 Input.TransferDirection = TransferDirection.IN;
+
+                // change amount to positive
+                if (Input.Amount < 0)
+                {
+                    Input.Amount = Input.Amount * -1;
+                }
 
                 StateHasChanged();
             }
             else
             {
                 Input.TransferDirection = TransferDirection.OUT;
+
+                // change amount to negative
+                if (Input.Amount > 0)
+                {
+                    Input.Amount = Input.Amount * -1;
+                }
 
                 StateHasChanged();
             }
@@ -165,7 +177,33 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         private decimal ToFixed4(decimal value)
         {
+            ToFixedInOrOut(value);
+
             value = decimal.Parse(value.ToString("N4").Replace(".0000", ""));
+
+            return value;
+        }
+
+        private decimal ToFixedInOrOut(decimal value)
+        {
+            if (Input.TransferDirection == TransferDirection.IN)
+            {
+                if (value < 0)
+                {
+                    value = value * -1;
+                }
+
+                StateHasChanged();
+            }
+            else
+            {
+                if (value > 0)
+                {
+                    value = value * -1;
+                }
+
+                StateHasChanged();
+            }
 
             return value;
         }
@@ -176,7 +214,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
             StateHasChanged();
 
-            OnChangeDirection(_toggleCheckboxState.IsChecked);
+            //OnChangeDirection(_toggleCheckboxState.IsChecked);
 
             var result = await _externalTransfersService.UpdateExternalTransfer(Input);
 

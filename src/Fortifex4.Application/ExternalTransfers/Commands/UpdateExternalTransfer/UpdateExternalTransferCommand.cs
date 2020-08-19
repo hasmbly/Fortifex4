@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
-using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Constants;
 using Fortifex4.Shared.ExternalTransfers.Commands.UpdateExternalTransfer;
@@ -47,7 +44,9 @@ namespace Fortifex4.Application.ExternalTransfers.Commands.UpdateExternalTransfe
             if (request.TransferDirection == TransferDirection.OUT)
             {
                 transactionType = TransactionType.ExternalTransferOUT;
-                amount = -request.Amount;
+
+                if (amount > 0)
+                    amount = -request.Amount;
             }
 
             transaction.PairWalletName = string.IsNullOrEmpty(request.PairWalletName) ? "External Wallet" : request.PairWalletName;

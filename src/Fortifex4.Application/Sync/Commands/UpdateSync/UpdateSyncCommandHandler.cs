@@ -1,13 +1,13 @@
-﻿using Fortifex4.Application.Common.Exceptions;
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Transactions;
+using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Enums;
 using Fortifex4.Shared.Sync.Commands.UpdateSync;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace Fortifex4.Application.Sync.Commands.UpdateSync
 {

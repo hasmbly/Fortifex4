@@ -42,7 +42,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         public CreateExternalTransferRequest Input { get; set; } = new CreateExternalTransferRequest();
 
         public GetWalletResponse Wallet { get; set; } = new GetWalletResponse();
-      
+
         // this select option will use in Transaction Index (IsPublic -> True)
         public string SelectWallet
         {
@@ -80,8 +80,8 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         public IList<WalletSameCurrencyDTO> Wallets { get; set; } = new List<WalletSameCurrencyDTO>();
 
         public ToggleCheckboxAttributes Attributes { get; set; } = new ToggleCheckboxAttributes
-            (new ToggleCheckboxAttributesValue 
-            { 
+            (new ToggleCheckboxAttributesValue
+            {
                 ElementID = "create-external-transfer-direction"
             });
 
@@ -141,7 +141,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
             StateHasChanged();
         }
-        
+
         private void SetDefaultValue()
         {
             Input.TransferDirection = TransferDirection.IN;
@@ -184,7 +184,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             Wallet.MainPocket.CurrencyName = Wallets.Where(x => x.WalletID == walletID).First().CurrencyName;
 
             string symbol = Wallets.Where(x => x.WalletID == walletID).First().CurrencySymbol;
-            
+
             await ConvertPrice(symbol);
 
             CalculateAmount();

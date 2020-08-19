@@ -13,6 +13,8 @@ namespace Fortifex4.WebUI.Common.StateContainer
 
         public event Action<string, bool> SetToggleChange;
 
+        public event Action<bool> DirectionHasChange;
+
         public event Action<string> ToggleHasChanged;
 
         public event Action<string, string, bool> SetTogglePropChange;
@@ -26,6 +28,8 @@ namespace Fortifex4.WebUI.Common.StateContainer
                 LabelAmount = "Outgoing Amount";
 
             IsChecked = isChecked;
+
+            DirectionHasChange.Invoke(isChecked);
 
             ToggleHasChanged.Invoke(elementID);
 
@@ -45,7 +49,7 @@ namespace Fortifex4.WebUI.Common.StateContainer
             SetToggleChange.Invoke(elementID, isChecked);
         }
 
-        public void SetToggleProp(string elementID, string propName, bool propState) 
+        public void SetToggleProp(string elementID, string propName, bool propState)
         {
             SetTogglePropChange.Invoke(elementID, propName, propState);
         }
