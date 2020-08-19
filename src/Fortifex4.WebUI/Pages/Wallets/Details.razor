@@ -151,7 +151,7 @@
 }
 
 <ModalEditPersonalWallet @ref="ModalEditPersonalWallet" WalletID="@WalletID" OnAfterSuccessful="UpdateStateHasChanged" />
-<ModalDeletePersonalWallet @ref="ModalDeletePersonalWallet" WalletID="@WalletID" />
+<ModalDeletePersonalWallet @ref="ModalDeletePersonalWallet" Wallet="@Wallet" />
 
 <ModalCreateInternalTransfer @ref="ModalCreateInternalTransfer" WalletID="@WalletID" OnAfterSuccessful="UpdateStateHasChanged" />
 <ModalCreateExternalTransfer @ref="ModalCreateExternalTransfer" WalletID="@WalletID" OnAfterSuccessful="UpdateStateHasChanged" />

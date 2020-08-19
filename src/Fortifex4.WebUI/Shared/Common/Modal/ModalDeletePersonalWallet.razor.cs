@@ -1,4 +1,6 @@
-﻿using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
+﻿using Fortifex4.Domain.Enums;
+using Fortifex4.Shared.Wallets.Commands.DeleteWallet;
+using Fortifex4.Shared.Wallets.Queries.GetWallet;
 using Microsoft.AspNetCore.Components;
 
 namespace Fortifex4.WebUI.Shared.Common.Modal
@@ -8,7 +10,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         public string Title { get; set; } = "Delete Wallet";
 
         [Parameter]
-        public int WalletID { get; set; }
+        public GetWalletResponse Wallet { get; set; }
 
         public BaseModal BaseModal { get; set; }
 
@@ -18,7 +20,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         {
             IsLoading = true;
 
-            var result = await _walletsService.DeleteWallet(new DeleteWalletRequest() { WalletID = WalletID });
+            var result = await _walletsService.DeleteWallet(new DeleteWalletRequest() { WalletID = Wallet.WalletID });
 
             if (result.Status.IsError)
             {
@@ -28,7 +30,10 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             {
                 if (result.Result.IsSuccessful)
                 {
-                    _navigationManager.NavigateTo($"/wallets");
+                    if (Wallet.ProviderType == ProviderType.Personal)
+                        _navigationManager.NavigateTo($"/wallets");
+                    else
+                        _navigationManager.NavigateTo($"/exchanges/details/{Wallet.OwnerID}");
 
                     IsLoading = false;
 
