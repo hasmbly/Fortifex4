@@ -23,7 +23,7 @@ namespace Fortifex4.WebUI.Pages.Wallets
         private ModalCreateInternalTransfer ModalCreateInternalTransfer { get; set; }
 
         public string SyncMessage { get; set; }
-        
+
         public bool IsLoading { get; set; }
 
         protected async override Task OnInitializedAsync()
@@ -68,10 +68,12 @@ namespace Fortifex4.WebUI.Pages.Wallets
             try
             {
                 var result = await _walletsService.SyncPersonalWallet(WalletID);
-                
+
                 if (result.Status.IsError)
                 {
-                    SyncMessage = "There's a problem in Synchronization process";
+                    SyncMessage = result.Status.Message;
+
+                    IsLoading = false;
 
                     StateHasChanged();
                 }
@@ -90,6 +92,8 @@ namespace Fortifex4.WebUI.Pages.Wallets
                     {
                         SyncMessage = "There's a problem in Synchronization process";
 
+                        IsLoading = false;
+
                         StateHasChanged();
                     }
                 }
@@ -97,6 +101,8 @@ namespace Fortifex4.WebUI.Pages.Wallets
             catch (InvalidWalletAddressException iwaex)
             {
                 SyncMessage = iwaex.Message;
+
+                IsLoading = false;
 
                 StateHasChanged();
             }
@@ -113,10 +119,10 @@ namespace Fortifex4.WebUI.Pages.Wallets
             IsLoading = true;
 
             var result = await _walletsService.GetWallet(WalletID);
-            
+
             if (result.Result.IsSuccessful)
                 Wallet = result.Result;
-                IsLoading = false;
+            IsLoading = false;
 
             StateHasChanged();
         }

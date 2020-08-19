@@ -28,7 +28,7 @@ namespace Fortifex4.WebAPI.Controllers
         {
             try
             {
-                return Ok(new Success(await Mediator.Send(new GetPersonalWalletsRequest() { MemberUsername = memberUsername } )));
+                return Ok(new Success(await Mediator.Send(new GetPersonalWalletsRequest() { MemberUsername = memberUsername })));
             }
             catch (Exception exception)
             {
@@ -145,7 +145,9 @@ namespace Fortifex4.WebAPI.Controllers
             }
             catch (InvalidWalletAddressException iwaex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new InternalServerError(iwaex.Message));
+                Console.WriteLine($"syncPersonalWallet: {iwaex.Message}");
+
+                return Ok(new InternalServerError(iwaex.Message));
             }
             catch (Exception exception)
             {
