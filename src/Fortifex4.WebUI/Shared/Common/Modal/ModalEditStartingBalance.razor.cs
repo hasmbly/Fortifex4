@@ -115,7 +115,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
 
         private void LoadExistingData()
         {
-            _toggleCheckboxState.SetToggleProp(ToggleCheckboxElementID, "checked", true);
+            _toggleCheckboxState.SetToggle(ToggleCheckboxElementID, true);
 
             _toggleCheckboxState.SetToggleProp(ToggleCheckboxElementID, "disabled", true);
 
