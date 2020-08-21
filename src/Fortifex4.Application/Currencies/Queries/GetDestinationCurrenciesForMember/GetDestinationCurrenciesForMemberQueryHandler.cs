@@ -53,7 +53,8 @@ namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMe
             try
             {
                 var currencyUSD = await _context.Currencies
-                    .Where(x => x.Symbol == CurrencySymbol.USD)
+                    .Where(x => x.Symbol == CurrencySymbol.USD &&
+                                x.CurrencyType == CurrencyType.Fiat)
                     .Include(a => a.Blockchain)
                     .SingleOrDefaultAsync(cancellationToken);
 
