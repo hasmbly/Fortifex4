@@ -59,28 +59,21 @@ namespace Fortifex4.WebUI.Pages
 
         private async void RefreshMe()
         {
-            System.Console.WriteLine($"Portfolio was Reloaded");
-
             await InitAsync();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            System.Console.WriteLine($"--OnAfterRender--");
-
             if (firstRender)
             {
-                System.Console.WriteLine($"OnAfterRender - This is First Render");
             }
             else if (FirstStage)
             {
-                System.Console.WriteLine($"OnAfterRender - First Stage Done");
-
                 // Finally, after so long.. the datables plugin from js can only be initialize after DOM element (with related id) was Ready
                 await JsRuntime.InvokeVoidAsync("Portfolio.init");
 
                 FirstStage = false;
-             
+
                 StateHasChanged();
             }
         }
