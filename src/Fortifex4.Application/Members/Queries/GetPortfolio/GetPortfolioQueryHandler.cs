@@ -159,7 +159,19 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolio
                 _logger.LogDebug($"validCurrencies - Coin Symbol: {currencyDTO.Symbol}");
                 _logger.LogDebug($"validCurrencies - Coin TotalAmount: {currencyDTO.TotalAmount}");
 
-                var latestQuotesResult = await _cryptoService.GetLatestQuoteAsync(currencyDTO.Symbol, result.MemberPreferredFiatCurrencySymbol);
+                #region Just For Debug. *Note: Maybe Problems Occur from "Too Many Request from Coin Market Cap"
+                CryptoLatestQuotesResult latestQuotesResult = null;
+
+                try
+                {
+                    latestQuotesResult = await _cryptoService.GetLatestQuoteAsync(currencyDTO.Symbol, result.MemberPreferredFiatCurrencySymbol);
+                }
+                catch (Exception ex)
+                {
+                    result.IsSuccessful = false;
+                    result.ErrorMessage = ex.Message;
+                }
+                #endregion
 
                 if (latestQuotesResult != null)
                 {

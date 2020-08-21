@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Fortifex4.Shared.Common;
 
 namespace Fortifex4.Shared.Members.Queries.GetPortfolio
 {
-    public class GetPortfolioResponse
+    public class GetPortfolioResponse : GeneralResponse
     {
         public int MemberPreferredFiatCurrencyID { get; set; }
         public string MemberPreferredFiatCurrencySymbol { get; set; }

@@ -130,7 +130,7 @@ namespace Fortifex4.Infrastructure.Crypto.CoinMarketCap
 
         public async Task<CryptoLatestQuotesResult> GetLatestQuoteAsync(string fromCurrencySymbol, string toCurrencySymbol)
         {
-            var result =  new CryptoLatestQuotesResult();
+            var result = new CryptoLatestQuotesResult();
 
             string uri = $"{CryptoServiceProviders.CoinMarketCap.CryptoCurrencyQuotesLatestEndpointURL}?symbol={fromCurrencySymbol}&convert={toCurrencySymbol}";
 
@@ -178,11 +178,13 @@ namespace Fortifex4.Infrastructure.Crypto.CoinMarketCap
             }
             catch (WebException ex) when ((ex.Response as HttpWebResponse)?.StatusCode == HttpStatusCode.BadRequest)
             {
-                result = null;
+                //result = null;
+                throw;
             }
             catch (WebException ex) when ((ex.Response as HttpWebResponse)?.StatusCode != HttpStatusCode.OK)
             {
-                result = null;
+                //result = null;
+                throw;
             }
 
             return result;
