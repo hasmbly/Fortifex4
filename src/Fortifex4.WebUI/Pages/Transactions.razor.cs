@@ -16,15 +16,12 @@ namespace Fortifex4.WebUI.Pages
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
-        [Inject]
-        public IJSRuntime JsRuntime { get; set; }
-
         public bool FirstStage { get; set; }
 
         public string TransactionsTableID { get; set; } = "data-table-transactions";
 
         public bool IsLoading { get; set; }
-        
+
         public ClaimsPrincipal User { get; set; }
 
         public GetTransactionsByMemberUsernameResponse _Transactions { get; set; } = new GetTransactionsByMemberUsernameResponse();
@@ -81,11 +78,17 @@ namespace Fortifex4.WebUI.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender) { }
+            if (firstRender)
+            {
 
+            }
             else if (FirstStage)
             {
                 await JsRuntime.InvokeVoidAsync("DataTable.init", $"#{TransactionsTableID}");
+
+                FirstStage = false;
+
+                StateHasChanged();
             }
         }
 

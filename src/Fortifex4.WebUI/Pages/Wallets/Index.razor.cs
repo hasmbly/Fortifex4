@@ -78,20 +78,5 @@ namespace Fortifex4.WebUI.Pages.Wallets
 
             StateHasChanged();
         }
-
-        //private async Task InitAsync()
-        //{
-        //    IsLoading = true;
-
-        //    User = Task.FromResult(await AuthenticationStateTask).Result.User;
-
-        //    var result = await _walletsService.GetMyPersonalWallets();
-
-        //    if (result.Result.IsSuccessful)
-        //        GetMyPersonalWalletsResponse = result.Result;
-        //    IsLoading = false;
-
-        //    StateHasChanged();
-        //}
     }
 }

@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Fortifex4.Application.Common.Exceptions;
 using Fortifex4.Application.Common.Interfaces;
 using Fortifex4.Domain.Entities;
 using Fortifex4.Domain.Enums;
@@ -40,7 +40,7 @@ namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMe
 
             if (member.PreferredFiatCurrency.Symbol != CurrencySymbol.USD)
             {
-                result.Currencies.Add(new CurrencyDTO 
+                result.Currencies.Add(new CurrencyDTO
                 {
                     CurrencyID = member.PreferredFiatCurrency.CurrencyID,
                     Name = member.PreferredFiatCurrency.Name,
@@ -50,19 +50,29 @@ namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMe
                 });
             }
 
-            var currencyUSD = await _context.Currencies
-                .Where(x => x.Symbol == CurrencySymbol.USD)
-                .Include(a => a.Blockchain)
-                .SingleOrDefaultAsync(cancellationToken);
-
-            result.Currencies.Add(new CurrencyDTO
+            try
             {
-                CurrencyID = currencyUSD.CurrencyID,
-                Name = currencyUSD.Name,
-                Symbol = currencyUSD.Symbol,
-                CurrencyType = currencyUSD.CurrencyType,
-                BlockchainName = currencyUSD.Blockchain.Name
-            });            
+                var currencyUSD = await _context.Currencies
+                    .Where(x => x.Symbol == CurrencySymbol.USD)
+                    .Include(a => a.Blockchain)
+                    .SingleOrDefaultAsync(cancellationToken);
+
+                result.Currencies.Add(new CurrencyDTO
+                {
+                    CurrencyID = currencyUSD.CurrencyID,
+                    Name = currencyUSD.Name,
+                    Symbol = currencyUSD.Symbol,
+                    CurrencyType = currencyUSD.CurrencyType,
+                    BlockchainName = currencyUSD.Blockchain.Name
+                });
+            }
+            catch (Exception e)
+            {
+                result.IsSuccessful = false;
+                result.ErrorMessage = e.Message;
+
+                return result;
+            }
 
             var availableCoinCurrenciesForPreferredOptions = await _context.Currencies
                 .Where(x => x.CurrencyType == CurrencyType.Coin && x.IsForPreferredOption)
@@ -83,7 +93,7 @@ namespace Fortifex4.Application.Currencies.Queries.GetDestinationCurrenciesForMe
             }
 
             result.IsSuccessful = true;
-            
+
             return result;
         }
     }

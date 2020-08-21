@@ -46,7 +46,7 @@ namespace Fortifex4.Application.Members.Queries.GetPortfolio
                 MemberPreferredFiatCurrencyID = member.PreferredFiatCurrencyID,
                 MemberPreferredFiatCurrencySymbol = member.PreferredFiatCurrency.Symbol,
                 MemberPreferredFiatCurrencyUnitPriceInUSD = member.PreferredFiatCurrency.UnitPriceInUSD,
-                MemberPreferredCoinCurrencyID= member.PreferredCoinCurrencyID,
+                MemberPreferredCoinCurrencyID = member.PreferredCoinCurrencyID,
                 MemberPreferredCoinCurrencySymbol = member.PreferredCoinCurrency.Symbol,
                 MemberPreferredCoinCurrencyUnitPriceInUSD = member.PreferredCoinCurrency.UnitPriceInUSD,
                 MemberPreferredTimeFrameName = member.PreferredTimeFrame.Name
