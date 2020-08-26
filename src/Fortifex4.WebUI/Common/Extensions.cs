@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Microsoft.AspNetCore.Components;
 
 namespace Fortifex4.WebUI.Common
 {
@@ -33,6 +34,11 @@ namespace Fortifex4.WebUI.Common
         public static string ToString4Decimals(this float number)
         {
             return number.ToString("N4").Replace(".0000", "");
+        }
+
+        public static MarkupString ToRawHtml(this string html)
+        {
+            return (MarkupString)html;
         }
 
         public static string ToStringFriendly(this TimeSpan duration)
