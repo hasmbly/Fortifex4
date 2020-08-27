@@ -28,6 +28,7 @@ using Fortifex4.Infrastructure.Fiat.Fixer;
 using Fortifex4.Infrastructure.File.Default;
 using Fortifex4.Infrastructure.Hive.Fake;
 using Fortifex4.Infrastructure.Hive.OpenHive;
+using Fortifex4.Infrastructure.Logging;
 using Fortifex4.Infrastructure.Persistence;
 using Fortifex4.Infrastructure.Services;
 using Fortifex4.Infrastructure.Steem.Fake;
@@ -53,6 +54,8 @@ namespace Fortifex4.Infrastructure
                         options.UseSqlServer(configuration.GetConnectionString("FortifexDatabase")));
 
             services.AddScoped<IFortifex4DBContext>(provider => provider.GetService<Fortifex4DBContext>());
+
+            services.AddSerilog(configuration);
 
             AddEmailService(services, fortifexOptions);
             AddFiatService(services, fortifexOptions);
