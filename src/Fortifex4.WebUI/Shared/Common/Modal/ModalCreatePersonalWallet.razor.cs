@@ -17,10 +17,6 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         [Inject]
         public IJSRuntime JsRuntime { get; set; }
 
-        public string MetaMaskMessage { get; set; }
-
-        public bool IsEthereum { get; set; }
-
         [CascadingParameter]
         public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
@@ -38,74 +34,10 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
         public string SelectedBlockchain
         {
             get => Input.BlockchainID.ToString();
-            set
-            {
-                Input.BlockchainID = int.Parse(value);
-
-                CheckIsEthereum(Input.BlockchainID);
-            }
+            set => Input.BlockchainID = int.Parse(value);
         }
 
         public IList<BlockchainDTO> Blockchains { get; set; } = new List<BlockchainDTO>();
-
-        private void CheckIsEthereum(int blockchainID)
-        {
-            var isETH = Blockchains.Where(x => x.BlockchainID == blockchainID).First().Symbol;
-
-            if (isETH == "ETH")
-            {
-                IsEthereum = true;
-            }
-            else
-            {
-                IsEthereum = false;
-                MetaMaskMessage = string.Empty;
-            }
-        }
-
-        private async Task ConnectToMetaMasukAsync()
-        {
-            IsLoading = true;
-
-            var currentUrl = $"{_navigationManager.BaseUri}wallets";
-
-            var isEthereumWalletInstalled = await JsRuntime.InvokeAsync<bool>("MetaMask.IsEthereumWalletInstalled");
-
-            if (isEthereumWalletInstalled)
-            {
-                var isMetaMask = await JsRuntime.InvokeAsync<bool>("MetaMask.IsMetaMask");
-
-                if (!isMetaMask)
-                {
-                    MetaMaskMessage = $"MetaMask not Installed on your Browser, please <a href=\"https://metamask.io/\" target=\"_blank\">Download here</a>, " +
-                        $"after MetaMask was ready, <a href=\"{currentUrl}\">refresh this page</a>, then try again.";
-
-                    IsLoading = false;
-                }
-                else
-                {
-                    var connectToMetaMask = await JsRuntime.InvokeAsync<List<string>>("MetaMask.ConnectToMetaMask");
-
-                    if (connectToMetaMask.Count > 0)
-                    {
-                        string accountAddress = connectToMetaMask.First();
-
-                        MetaMaskMessage = $"Succeed, MetaMask Accounts: {accountAddress}";
-
-                        Input.Address = accountAddress;
-
-                        IsLoading = false;
-                    }
-                }
-            }
-            else
-            {
-                MetaMaskMessage = $"MetaMask not Installed on your Browser, please <a href=\"https://metamask.io/\" target=\"_blank\">Download here</a>, " +
-                    $"after MetaMask was ready, <a href=\"javascript:history.go(0)\">refresh this page</a>, then try again.";
-
-                IsLoading = false;
-            }
-        }
 
         protected async override Task OnInitializedAsync()
         {

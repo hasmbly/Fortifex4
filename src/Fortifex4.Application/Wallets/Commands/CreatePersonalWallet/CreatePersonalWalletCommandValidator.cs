@@ -25,8 +25,8 @@ namespace Fortifex4.Application.Wallets.Commands.CreatePersonalWallet
                 .NotEmpty().WithMessage("Address is required.")
                 .MaximumLength(200).WithMessage("Address must not exceed 200 characters.");
 
-            RuleFor(v => v)
-                .MustAsync(BeUniqueName).WithMessage("The specified wallet name already exists.");
+            //RuleFor(v => v)
+            //    .MustAsync(BeUniqueName).WithMessage("The specified wallet name already exists.");
         }
 
         public async Task<bool> BeUniqueName(CreatePersonalWalletRequest command, CancellationToken cancellationToken)
