@@ -76,7 +76,6 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             User = Task.FromResult(await AuthenticationStateTask).Result.User;
 
             _toggleCheckboxState.OnChange += StateHasChanged;
-            _toggleCheckboxState.DirectionHasChange += OnChangeDirection;
         }
 
         public void Dispose()
@@ -95,7 +94,6 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             if (disposing)
             {
                 _toggleCheckboxState.OnChange -= StateHasChanged;
-                _toggleCheckboxState.DirectionHasChange -= OnChangeDirection;
             }
 
             _disposed = true;

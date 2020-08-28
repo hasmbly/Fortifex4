@@ -385,7 +385,7 @@ namespace Fortifex4.WebUI.Shared.Common.Modal
             StateHasChanged();
 
             OnChangeWithHold(_toggleCheckboxState.IsChecked);
-            
+
             IsLoading = true;
 
             var result = await _tradesService.CreateTrade(Input);

@@ -18,6 +18,9 @@ namespace Fortifex4.WebUI.Shared.Common
         [Parameter]
         public EventCallback<string> OnChangeChecked { get; set; }
 
+        [Parameter]
+        public EventCallback<bool> OnChangeDirection { get; set; }
+
         public DotNetObjectReference<ToggleCheckboxState> ToggleCheckboxState { get; set; }
 
         public bool _shouldRender { get; set; }
@@ -30,6 +33,7 @@ namespace Fortifex4.WebUI.Shared.Common
 
             _toggleCheckboxState.SetToggleChange += SetToggle;
             _toggleCheckboxState.ToggleHasChanged += ToggleHasChanged;
+            _toggleCheckboxState.DirectionHasChange += DirectionHasChanged;
             _toggleCheckboxState.SetTogglePropChange += SetToggleProp;
         }
 
@@ -71,10 +75,15 @@ namespace Fortifex4.WebUI.Shared.Common
                 await JsRuntime.InvokeVoidAsync("Toggle.onChangeToggle", $"#{Attributes.Value.ElementID}", ToggleCheckboxState);
             }
         }
-        
+
         private async void ToggleHasChanged(string elementID)
         {
             await OnChangeChecked.InvokeAsync(elementID);
+        }
+
+        private async void DirectionHasChanged(bool state)
+        {
+            await OnChangeDirection.InvokeAsync(state);
         }
 
         public async void SetToggle(string elementID, bool isChecked)
