@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Fortifex4.WebAPI.Controllers
 {
@@ -24,15 +25,18 @@ namespace Fortifex4.WebAPI.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IConfiguration _configuration;
         private readonly ICurrentUserService _currentUser;
+        private readonly ILogger<DevController> _logger;
 
         public DevController(
             IWebHostEnvironment webHostEnvironment,
             IConfiguration configuration,
-            ICurrentUserService currentUser)
+            ICurrentUserService currentUser,
+            ILogger<DevController> logger)
         {
             _webHostEnvironment = webHostEnvironment;
             _configuration = configuration;
             _currentUser = currentUser;
+            _logger = logger;
         }
 
         [HttpGet("info")]
@@ -45,6 +49,9 @@ namespace Fortifex4.WebAPI.Controllers
             settings.Add("_currentUser.IsAuthenticated", _currentUser.IsAuthenticated.ToString());
             settings.Add("_currentUser.Username", _currentUser.Username);
             settings.Add("_currentUser.PictureURL", _currentUser.PictureURL);
+
+            _logger.LogCritical("this is Logcritical");
+            _logger.LogInformation("this is LogInformation");
 
             return Ok(settings);
         }
